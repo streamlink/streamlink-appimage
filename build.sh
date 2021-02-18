@@ -62,29 +62,26 @@ cd "${tempdir}"
 
 get_appimagekit() {
   log "Checking AppImageKit assets"
-  local data=""
-  local curl_gh_api_args=(
-    -H "Accept: application/vnd.github.v3+json"
-    -H "User-Agent: ${GITHUB_REPOSITORY:-"streamlink/streamlink-appimage"}"
-  )
-  local source=$(jq -r '.dependencies.appimagekit.source' <<< "${config}")
-  local tag=$(jq -r '.dependencies.appimagekit.tag' <<< "${config}")
-  local url="https://api.github.com/repos/${source}/releases/tags/${tag}"
 
-  while read -r file hash; do
-    if ! [[ -f "${DIR_CACHE}/${file}" ]]; then
-      if [[ -z "${data}" ]]; then
-        log "Getting AppImageKit assets list from ${source}@${tag}"
-        data=$(curl -sSL "${curl_gh_api_args[@]}" "${url}")
-      fi
-      log "Downloading: ${file}"
-      curl -SL "${curl_gh_api_args[@]}" \
-        -o "${DIR_CACHE}/${file}" \
-        "$(jq -r ".assets[] | select(.name == \"${file}\") | .browser_download_url" <<< "${data}")"
-    fi
-    log "Validating: ${file}"
-    sha256sum --check <<< "${hash}  ${DIR_CACHE}/${file}"
-  done < <(jq -r '.dependencies.appimagekit.files | to_entries | map("\(.key) \(.value)") | .[]' <<< "${config}")
+  if ! [[ -f "${DIR_CACHE}/${appimagetool}" ]]; then
+    log "Getting AppImageKit assets list from ${source}@${tag}"
+    local source=$(jq -r '.dependencies.appimagekit.source' <<< "${config}")
+    local tag=$(jq -r '.dependencies.appimagekit.tag' <<< "${config}")
+    local url="https://api.github.com/repos/${source}/releases/tags/${tag}"
+    local curl_gh_api_args=(
+      -H "Accept: application/vnd.github.v3+json"
+      -H "User-Agent: ${GITHUB_REPOSITORY:-"streamlink/streamlink-appimage"}"
+    )
+    local data=$(curl -sSL "${curl_gh_api_args[@]}" "${url}")
+    log "Downloading: ${appimagetool}"
+    curl -SL "${curl_gh_api_args[@]}" \
+      -o "${DIR_CACHE}/${appimagetool}" \
+      "$(jq -r ".assets[] | select(.name == \"${appimagetool}\") | .browser_download_url" <<< "${data}")"
+  fi
+
+  log "Validating: ${appimagetool}"
+  local hash=$(jq -r ".dependencies.appimagekit.files[\"${appimagetool}\"]" <<< "${config}")
+  sha256sum --check <<< "${hash}  ${DIR_CACHE}/${appimagetool}"
 }
 
 
