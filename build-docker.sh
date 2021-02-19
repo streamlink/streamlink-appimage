@@ -1,13 +1,43 @@
 #!/usr/bin/env bash
 set -e
 
-APPDIR="${1}"
-ABI="${2}"
-EXCLUDELIST="${3}"
-REQUIREMENTSFILE="${4}"
+DEST="${1}"
+APPDIR="${2}"
+ABI="${3}"
+APPIMAGETOOL="${4}"
+EXCLUDELIST="${5}"
+SQUASHFSTOOLS="${6}"
+REQUIREMENTSFILE="${7}"
+MTIME="${8}"
 
 
 # ----
+
+
+SELF=$(basename "$(readlink -f "${0}")")
+log() {
+  echo "[${SELF}] $@"
+}
+err() {
+  log >&2 "$@"
+  exit 1
+}
+
+[[ -f /.dockerenv ]] || err "This script is supposed to be run from build.sh inside a docker container"
+
+declare -A excludelist
+for lib in $(cat "${EXCLUDELIST}" | sed -e '/#.*/d; /^[[:space:]]*|[[:space:]]*$/d; /^$/d'); do
+  excludelist["${lib}"]="${lib}"
+done
+
+export MAKEFLAGS=-j$(nproc)
+
+
+# ----
+
+
+# based on niess/python-appimage (GPLv3)
+# https://github.com/niess/python-appimage/blob/d0d64c3316ced7660476d50b5c049f3939213519/python_appimage/appimage/relocate.py
 
 
 PYTHON="/opt/python/${ABI}/bin/python"
@@ -29,31 +59,6 @@ PYTHON_INC="${PYTHON_PREFIX}/include/${PYTHON_X_Y}"
 PYTHON_LIB="${PYTHON_PREFIX}/lib"
 PYTHON_PKG="${PYTHON_LIB}/${PYTHON_X_Y}"
 
-
-# ----
-
-
-SELF=$(basename "$(readlink -f "${0}")")
-log() {
-  echo "[${SELF}] $@"
-}
-err() {
-  log >&2 "$@"
-  exit 1
-}
-
-
-declare -A excludelist
-for lib in $(cat "${EXCLUDELIST}" | sed -e '/#.*/d; /^[[:space:]]*|[[:space:]]*$/d; /^$/d'); do
-  excludelist["${lib}"]="${lib}"
-done
-
-
-# ----
-
-
-# based on niess/python-appimage (GPLv3)
-# https://github.com/niess/python-appimage/blob/d0d64c3316ced7660476d50b5c049f3939213519/python_appimage/appimage/relocate.py
 
 patch_binary() {
   local path="${1}"
@@ -126,9 +131,59 @@ install_application() {
 }
 
 
+build_squashfstools() {
+  log "Building squashfs-tools"
+  local tempdir=$(mktemp -d)
+  tar -C "${tempdir}" --strip-components=1 -xzf "${SQUASHFSTOOLS}"
+  yum install -q -y zlib-devel libattr-devel 2>/dev/null
+  pushd "${tempdir}/squashfs-tools"
+  make \
+    GZIP_SUPPORT=1 \
+    XZ_SUPPORT=0 \
+    LZO_SUPPORT=0 \
+    LZMA_XZ_SUPPORT=0 \
+    LZ4_SUPPORT=0 \
+    ZSTD_SUPPORT=0 \
+    XATTR_SUPPORT=1
+  make install \
+    INSTALL_DIR=/usr/local/bin
+  /usr/local/bin/mksquashfs -version | head -n1
+  popd
+  rm -rf "${tempdir}"
+}
+
+
+build_appimage() {
+  log "Fixing appimagetool"
+  "./${APPIMAGETOOL}" --appimage-extract >/dev/null
+
+  # replace appimagetool's internal mksquashfs tool with the system's one
+  cat > ./squashfs-root/usr/lib/appimagekit/mksquashfs <<EOF
+#!/bin/sh
+args=\$(echo "\$@" | sed -e 's/-mkfs-fixed-time 0//')
+/usr/local/bin/mksquashfs \${args}
+EOF
+
+  log "Building appimage"
+  find "${APPDIR}" -exec touch --no-dereference "--date=${MTIME}" '{}' '+'
+  ARCH=$(uname -m) SOURCE_DATE_EPOCH="${mtime}" ./squashfs-root/AppRun \
+    --verbose \
+    --comp gzip \
+    --no-appstream \
+    "${APPDIR}" \
+    "${DEST}"
+  chmod +x "${DEST}"
+
+  log "Successfully built appimage"
+  sha256sum "${DEST}"
+}
+
+
 build() {
+  build_squashfstools
   setup_python
   install_application
+  build_appimage
 }
 
 build

@@ -65,6 +65,11 @@
       "url": "https://raw.githubusercontent.com/AppImage/pkg2appimage/d61672ff4f90cf793a0bee7b056186fcdeb9b510/excludelist",
       "file": "excludelist",
       "sha256": "1a23ff720850b0c36d604663001b0ad9560b85ad51e0f3aac452714a9b67e042"
+    },
+    "squashfstools": {
+      "url": "https://github.com/plougher/squashfs-tools/archive/6997ab25d500193c7d8536debaa9fbac9954e4c8.tar.gz",
+      "file": "squashfs-tools-6997ab25d500193c7d8536debaa9fbac9954e4c8.tar.gz",
+      "sha256": "15938e0a618535f8336e40a095b9f851509a2fe17f51f5ca712a53f1b202f5d6"
     }
   }
 }

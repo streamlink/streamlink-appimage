@@ -51,6 +51,7 @@ tag=$(jq -r ".builds[\"${ARCH}\"].tag" <<< "${config}")
 abi=$(jq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
 appimagetool=$(jq -r ".dependencies.appimagekit.appimagetool[\"${ARCH}\"]" <<< "${config}")
 excludelist=$(jq -r ".dependencies.excludelist.file" <<< "${config}")
+squashfstools=$(jq -r ".dependencies.squashfstools.file" <<< "${config}")
 
 mkdir -p "${DIR_BUILD}" "${DIR_CACHE}"
 tempdir=$(mktemp -d) && trap "rm -rf ${tempdir}" EXIT || exit 255
@@ -61,10 +62,10 @@ cd "${tempdir}"
 
 
 get_appimagekit() {
-  log "Checking AppImageKit assets"
+  log "Getting AppImageKit"
 
   if ! [[ -f "${DIR_CACHE}/${appimagetool}" ]]; then
-    log "Getting AppImageKit assets list from ${source}@${tag}"
+    log "Reading AppImageKit assets list from ${source}@${tag}"
     local source=$(jq -r '.dependencies.appimagekit.source' <<< "${config}")
     local tag=$(jq -r '.dependencies.appimagekit.tag' <<< "${config}")
     local url="https://api.github.com/repos/${source}/releases/tags/${tag}"
@@ -85,11 +86,11 @@ get_appimagekit() {
 }
 
 
-get_excludelist() {
-  log "Checking library excludelist"
-  local url=$(jq -r '.dependencies.excludelist.url' <<< "${config}")
-  local file=$(jq -r '.dependencies.excludelist.file' <<< "${config}")
-  local hash=$(jq -r '.dependencies.excludelist.sha256' <<< "${config}")
+get_file() {
+  log "${2}"
+  local url=$(jq -r ".dependencies[\"${1}\"].url" <<< "${config}")
+  local file=$(jq -r ".dependencies[\"${1}\"].file" <<< "${config}")
+  local hash=$(jq -r ".dependencies[\"${1}\"].sha256" <<< "${config}")
   if ! [[ -f "${DIR_CACHE}/${file}" ]]; then
     log "Downloading: ${file}"
     curl -SL -o "${DIR_CACHE}/${file}" "${url}"
@@ -100,7 +101,7 @@ get_excludelist() {
 
 
 get_docker_image() {
-  log "Checking docker image"
+  log "Getting docker image"
   local image="${docker_image}@${docker_digest}"
   docker image ls --digests "${docker_image}" | grep "${docker_digest}" 2>&1 >/dev/null \
     || docker image pull "${image}"
@@ -111,7 +112,10 @@ prepare_tempdir() {
   log "Copying container build files"
   cp -vt "${tempdir}" \
     "${SCRIPT_DOCKER}" \
-    "${DIR_CACHE}/${excludelist}"
+    "${DIR_CACHE}/${appimagetool}" \
+    "${DIR_CACHE}/${excludelist}" \
+    "${DIR_CACHE}/${squashfstools}"
+  chmod +x "${tempdir}/${appimagetool}"
 
   log "Building requirements.txt"
   jq -r ".builds[\"${ARCH}\"].dependencies | to_entries | .[] | \"\(.key)==\(.value)\"" <<< "${config}" \
@@ -136,8 +140,9 @@ EOF
 
 
 build_app() {
-  log "Building app in container"
+  log "Building app inside container"
   local target=/app
+  local name="${app_name}-${app_version}-${abi}-${tag}.AppImage"
   local uid=$(id -u)
   local gid=$(id -g)
   docker run \
@@ -146,48 +151,31 @@ build_app() {
     --mount "type=bind,source=${tempdir},target=${target}" \
     "${docker_image}@${docker_digest}" \
     /usr/bin/bash <<EOF
-'${target}/$(basename "${SCRIPT_DOCKER}")' '${target}/AppDir' '${abi}' '${target}/${excludelist}' '${target}/requirements.txt'
-chown -R ${uid}:${gid} '${target}/AppDir'
-EOF
-}
-
-
-build_appimage() {
-  log "Fixing appimagetool"
-  install -Dm777 "${DIR_CACHE}/${appimagetool}" "${tempdir}/${appimagetool}"
-  "./${appimagetool}" --appimage-extract >/dev/null
-
-  # replace appimagetool's internal mksquashfs tool with the system's one
-  cat > ./squashfs-root/usr/lib/appimagekit/mksquashfs <<EOF
-#!/bin/sh
-args=\$(echo "\$@" | sed -e 's/-mkfs-fixed-time 0//')
-"$(command -v mksquashfs)" \${args}
+cd '${target}'
+'./$(basename "${SCRIPT_DOCKER}")' \
+  '${name}' \
+  AppDir \
+  '${abi}' \
+  '${appimagetool}' \
+  '${excludelist}' \
+  '${squashfstools}' \
+  requirements.txt \
+  '${mtime}'
+chown -R ${uid}:${gid} .
 EOF
 
-  log "Building appimage"
-  local dest="${DIR_BUILD}/${app_name}-${app_version}-${abi}-${tag}.AppImage"
-  find ./AppDir -exec touch --no-dereference "--date=${mtime}" '{}' '+'
-  ARCH="${ARCH}" ./squashfs-root/AppRun \
-    --verbose \
-    --comp gzip \
-    --no-appstream \
-    ./AppDir \
-    "${dest}"
-  chmod +x "${dest}"
-
-  log "Successfully built appimage"
-  sha256sum "${dest}"
+  install -m777 "${tempdir}/${name}" "${DIR_BUILD}/${name}"
 }
 
 
 build() {
   get_appimagekit
-  get_excludelist
+  get_file excludelist "Getting library excludelist"
+  get_file squashfstools "Getting squashfs-tools"
   get_docker_image
 
   prepare_tempdir
   build_app
-  build_appimage
 }
 
 build

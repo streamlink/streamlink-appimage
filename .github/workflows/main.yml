@@ -13,9 +13,6 @@ jobs:
           - x86_64
     steps:
       - uses: actions/checkout@v2
-      - name: squashfs-tools
-        run: |
-          ./build-squashfs-tools.sh
       - name: appimage
         run: |
           SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh ${{ matrix.arch }}
