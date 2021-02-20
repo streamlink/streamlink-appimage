@@ -8,7 +8,6 @@ APPIMAGETOOL="${4}"
 EXCLUDELIST="${5}"
 SQUASHFSTOOLS="${6}"
 REQUIREMENTSFILE="${7}"
-MTIME="${8}"
 
 
 # ----
@@ -165,8 +164,9 @@ args=\$(echo "\$@" | sed -e 's/-mkfs-fixed-time 0//')
 EOF
 
   log "Building appimage"
-  find "${APPDIR}" -exec touch --no-dereference "--date=${MTIME}" '{}' '+'
-  ARCH=$(uname -m) SOURCE_DATE_EPOCH="${mtime}" ./squashfs-root/AppRun \
+  [ "${SOURCE_DATE_EPOCH}" ] && mtime="@${SOURCE_DATE_EPOCH}" || mtime=now
+  find "${APPDIR}" -exec touch --no-dereference "--date=${mtime}" '{}' '+'
+  ARCH=$(uname -m) ./squashfs-root/AppRun \
     --verbose \
     --comp gzip \
     --no-appstream \

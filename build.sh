@@ -35,7 +35,6 @@ for dep in "${!DEPS[@]}"; do
 done
 
 config=$(cat "${CONFIG}")
-[ "${SOURCE_DATE_EPOCH}" ] && mtime="@${SOURCE_DATE_EPOCH}" || mtime=now
 
 jq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
  || jq -e ".dependencies.appimagekit.appimagetool[\"${ARCH}\"]" >/dev/null <<< "${config}" \
@@ -147,9 +146,11 @@ build_app() {
   docker run \
     --interactive \
     --rm \
+    --env SOURCE_DATE_EPOCH \
     --mount "type=bind,source=${tempdir},target=${target}" \
     "${docker_image}@${docker_digest}" \
     /usr/bin/bash <<EOF
+set -e
 cd '${target}'
 './$(basename "${SCRIPT_DOCKER}")' \
   '${name}' \
@@ -158,8 +159,7 @@ cd '${target}'
   '${appimagetool}' \
   '${excludelist}' \
   '${squashfstools}' \
-  requirements.txt \
-  '${mtime}'
+  requirements.txt
 chown -R ${uid}:${gid} .
 EOF
 
