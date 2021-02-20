@@ -13,7 +13,6 @@ SCRIPT_DOCKER="${ROOT}/build-docker.sh"
 declare -A DEPS=(
   [curl]=curl
   [jq]=jq
-  [mksquashfs]=squashfs-tools
   [docker]=docker
 )
 
