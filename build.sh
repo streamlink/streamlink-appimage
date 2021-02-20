@@ -141,8 +141,7 @@ build_app() {
   log "Building app inside container"
   local target=/app
   local name="${app_name}-${app_version}-${abi}-${tag}.AppImage"
-  local uid=$(id -u)
-  local gid=$(id -g)
+
   docker run \
     --interactive \
     --rm \
@@ -151,6 +150,7 @@ build_app() {
     "${docker_image}@${docker_digest}" \
     /usr/bin/bash <<EOF
 set -e
+trap "chown -R $(id -u):$(id -g) '${target}'" EXIT
 cd '${target}'
 './$(basename "${SCRIPT_DOCKER}")' \
   '${name}' \
@@ -160,7 +160,6 @@ cd '${target}'
   '${excludelist}' \
   '${squashfstools}' \
   requirements.txt
-chown -R ${uid}:${gid} .
 EOF
 
   install -m777 "${tempdir}/${name}" "${DIR_BUILD}/${name}"
