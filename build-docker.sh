@@ -123,7 +123,6 @@ install_application() {
   "${PYTHON_BIN}/${PYTHON_X_Y}" -m pip install \
     --disable-pip-version-check \
     --no-cache-dir \
-    --no-compile \
     --no-deps \
     --require-hashes \
     -r "${REQUIREMENTSFILE}"
