@@ -32,53 +32,45 @@ done
 
 config=$(cat "${CONFIG}")
 
+jq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
+ || err "Unsupported arch"
+
+docker_image=$(jq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
+docker_digest=$(jq -r ".builds[\"${ARCH}\"].digest" <<< "${config}")
+abi=$(jq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
+
 
 # ----
 
 
+get_docker_image() {
+  log "Getting docker image"
+  local image="${docker_image}@${docker_digest}"
+  docker image ls --digests "${docker_image}" | grep "${docker_digest}" 2>&1 >/dev/null \
+    || docker image pull "${image}"
+}
+
+
 get_deps() {
-  local docker_image=$(jq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
-  local docker_digest=$(jq -r ".builds[\"${ARCH}\"].digest" <<< "${config}")
-  local abi=$(jq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
-  local jq_url=$(jq -r ".dependencies.jq.url" <<< "${config}")
-  local jq_sha256=$(jq -r ".dependencies.jq.sha256" <<< "${config}")
-
   log "Finding dependencies (${ARCH} / ${abi}) for ${PACKAGES}"
-  docker run \
-    --interactive \
-    --rm \
-    "${docker_image}@${docker_digest}" \
-    /usr/bin/bash <<EOF
+  local script=$(cat <<EOF
 shopt -s nullglob
-
-if ! yum -q -y install jq 2>/dev/null; then
-  echo jq package missing, compiling from source...
-  cd "\$(mktemp -d)"
-  curl -sSL -o jq.tar.gz '${jq_url}'
-  sha256sum --check <<< '${jq_sha256}  jq.tar.gz'
-  tar --strip-components=1 -xzf jq.tar.gz
-  (
-    export MAKEFLAGS=-j\$(nproc)
-    autoreconf -fi
-    ./configure --prefix=/usr
-    make
-    make prefix=/usr install
-  ) >/dev/null 2>&1
-fi
 
 cd "\$(mktemp -d)"
 PYTHON="/opt/python/${abi}/bin/python"
 
-"\${PYTHON}" -m pip download ${PACKAGES}
-"\${PYTHON}" -m pip install --no-deps --no-compile * >/dev/null
-echo
+(
+  "\${PYTHON}" -m pip download ${PACKAGES}
+  "\${PYTHON}" -m pip install --no-deps --no-compile * >/dev/null
+  echo
+) 1>&2
 
 packages=\$("\${PYTHON}" -m pip list \
-  --format json \
+  --format columns \
   --exclude setuptools \
   --exclude pip \
   --exclude wheel \
-  | jq -r '.[] | "\(.name) \(.version)"'
+  | tail -n+3
 )
 
 while read -r name version; do
@@ -88,9 +80,18 @@ while read -r name version; do
     | tail -n1
   )
   echo "\${name}==\${version} \${hash}"
-done <<< "\${packages}" \
-  | jq -CRn '[(inputs | split("\n")) | .[] | split("==") | {key: .[0], value: .[1]}] | from_entries'
+done <<< "\${packages}"
 EOF
+  )
+
+  docker run \
+    --interactive \
+    --rm \
+    "${docker_image}@${docker_digest}" \
+    /usr/bin/bash <<< "${script}" \
+    | jq -CRn '[(inputs | split("\n")) | .[] | split("==") | {key: .[0], value: .[1]}] | from_entries'
 }
 
+
+get_docker_image
 get_deps
