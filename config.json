@@ -7,7 +7,7 @@
   "builds": {
     "i686": {
       "image": "quay.io/pypa/manylinux2014_i686",
-      "digest": "sha256:4f869564396f6e5e5d6253034206594b9cd2a03698e38cfa4c6f25e4ad20e93f",
+      "digest": "sha256:8c4cf95399d0c618d79d603ecb4b16d122c44e55b720e65ffa0f186189ee8c48",
       "tag": "manylinux2014_i686",
       "abi": "cp39-cp39",
       "dependencies": {
@@ -28,7 +28,7 @@
     },
     "x86_64": {
       "image": "quay.io/pypa/manylinux2014_x86_64",
-      "digest": "sha256:2bb2258ab55d358546cfc043468085fe8f5991fb1daab73df7861131dbfd8681",
+      "digest": "sha256:521186079154ad6dfdc5e22dc460c576fd295cd1ab156e7d637f4a85e0b55427",
       "tag": "manylinux2014_x86_64",
       "abi": "cp39-cp39",
       "dependencies": {
