@@ -67,9 +67,9 @@
       "sha256": "1a23ff720850b0c36d604663001b0ad9560b85ad51e0f3aac452714a9b67e042"
     },
     "squashfstools": {
-      "url": "https://github.com/plougher/squashfs-tools/archive/6997ab25d500193c7d8536debaa9fbac9954e4c8.tar.gz",
-      "file": "squashfs-tools-6997ab25d500193c7d8536debaa9fbac9954e4c8.tar.gz",
-      "sha256": "15938e0a618535f8336e40a095b9f851509a2fe17f51f5ca712a53f1b202f5d6"
+      "url": "https://github.com/plougher/squashfs-tools/archive/c37bb4da4a5fa8c1cf114237ba364692dd522262.tar.gz",
+      "file": "squashfs-tools-c37bb4da4a5fa8c1cf114237ba364692dd522262.tar.gz",
+      "sha256": "2b26783a0d4a172b18be96e73e8458eba8d2bb3361f72dd13dbd1d7fbf6a5e9a"
     }
   }
 }
