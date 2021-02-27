@@ -5,6 +5,27 @@
     "entry": "streamlink"
   },
   "builds": {
+    "aarch64": {
+      "image": "quay.io/pypa/manylinux2014_aarch64",
+      "digest": "sha256:fa218b0f3946dba59801405ae5c4cf80e9cfaa18c71b491f2f912ae86ab1e8ff",
+      "tag": "manylinux2014_aarch64",
+      "abi": "cp39-cp39",
+      "dependencies": {
+        "certifi": "2020.12.5 --hash=sha256:719a74fb9e33b9bd44cc7f3a8d94bc35e4049deebe19ba7d8e108280cfd59830",
+        "chardet": "4.0.0 --hash=sha256:f864054d66fd9118f2e67044ac8981a54775ec5b67aed0441892edb553d21da5",
+        "idna": "2.10 --hash=sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0",
+        "iso-639": "0.4.5 --hash=sha256:dc9cd4b880b898d774c47fe9775167404af8a85dd889d58f9008035109acce49",
+        "iso3166": "1.0.1 --hash=sha256:b07208703bd881a4f974e39fa013c4498dddd64913ada15f24be75d02ae68a44",
+        "isodate": "0.6.0 --hash=sha256:aa4d33c06640f5352aca96e4b81afd8ab3b47337cc12089822d6f322ac772c81",
+        "pycryptodome": "3.10.1 --hash=sha256:fc7489a50323a0df02378bc2fff86eb69d94cc5639914346c736be981c6a02e7",
+        "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
+        "requests": "2.25.1 --hash=sha256:c210084e36a42ae6b9219e00e48287def368a26d03a048ddad7bfee44f75871e",
+        "six": "1.15.0 --hash=sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced",
+        "streamlink": "2.0.0 --hash=sha256:4bc9dd5bacf094ed8a778eece177b77ac805b2235544649f7a68240f0a469a6a",
+        "urllib3": "1.26.3 --hash=sha256:1b465e494e3e0d8939b50680403e3aedaa2bc434b7d5af64dfd3c958d7f5ae80",
+        "websocket-client": "0.57.0 --hash=sha256:0fc45c961324d79c781bab301359d5a1b00b13ad1b10415a4780229ef71a5549"
+      }
+    },
     "i686": {
       "image": "quay.io/pypa/manylinux2014_i686",
       "digest": "sha256:8c4cf95399d0c618d79d603ecb4b16d122c44e55b720e65ffa0f186189ee8c48",
@@ -53,10 +74,12 @@
       "source": "AppImage/AppImageKit",
       "tag": "12",
       "files": {
+        "appimagetool-aarch64.AppImage": "c9d058310a4e04b9fbbd81340fff2b5fb44943a630b31881e321719f271bd41a",
         "appimagetool-i686.AppImage": "3af6839ab6d236cd62ace9fbc2f86487f0bf104f521d82da6dea4dab8d3ce4ca",
         "appimagetool-x86_64.AppImage": "d918b4df547b388ef253f3c9e7f6529ca81a885395c31f619d9aaf7030499a13"
       },
       "appimagetool": {
+        "aarch64": "appimagetool-aarch64.AppImage",
         "i686": "appimagetool-i686.AppImage",
         "x86_64": "appimagetool-x86_64.AppImage"
       }

@@ -153,6 +153,9 @@ build_squashfstools() {
 
 build_appimage() {
   log "Fixing appimagetool"
+  # Remove AppImage type-2 magic hex from appimagetool, so it can be extracted in the container
+  # https://github.com/AppImage/AppImageKit/issues/965#issuecomment-496611778
+  sed -i 's|\x41\x49\x02|\x00\x00\x00|' "./${APPIMAGETOOL}"
   "./${APPIMAGETOOL}" --appimage-extract >/dev/null
 
   # replace appimagetool's internal mksquashfs tool with the system's one
