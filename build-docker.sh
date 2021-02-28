@@ -29,6 +29,8 @@ for lib in $(cat "${EXCLUDELIST}" | sed -e '/#.*/d; /^[[:space:]]*|[[:space:]]*$
   excludelist["${lib}"]="${lib}"
 done
 
+libraries=()
+
 export MAKEFLAGS=-j$(nproc)
 
 
@@ -80,6 +82,7 @@ patch_binary() {
     local target="${libdir}/${name}"
     if ! [[ -f "${target}" ]]; then
       log "Bundling library: ${dep} (${target})"
+      libraries+=("${dep}")
       install -Dm777 "${dep}" "${target}"
       if [[ "${recursive}" == true ]]; then
         patch_binary "${target}" "${libdir}" true
@@ -126,6 +129,51 @@ install_application() {
     --no-deps \
     --require-hashes \
     -r "${REQUIREMENTSFILE}"
+}
+
+
+copy_licenses() {
+  log "Finding library licenses"
+  declare -A packages
+  for library in "${libraries[@]}"; do
+    local package=$(repoquery --installed --file "${library}")
+    if [[ -z "${package}" ]]; then
+      log "Could not find package for library ${library}"
+      continue
+    fi
+    packages["${package}"]="${library}"
+  done
+
+  for package in "${!packages[@]}"; do
+    if ! find_licenses "${package}" >/dev/null; then
+      log "Could not find license files for package ${package}"
+      for dependency in $(repoquery --installed --requires --resolve "${package}"); do
+        if [[ -z "${packages["${dependency}"]}" ]]; then
+          # ignore dependencies with files in the excludelist
+          for depfile in $(repoquery --installed --list "${dependency}"); do
+            [[ "${excludelist["$(basename "${depfile}")"]}" ]] && continue 2
+          done
+          echo "Attempting to find licenses in dependency ${dependency}"
+          packages["${dependency}"]="${packages["${package}"]}"
+        fi
+      done
+    fi
+  done
+
+  log "Re-installing packages without suppressing license files: ${!packages[@]}"
+  yum reinstall -q -y --setopt=tsflags= "${!packages[@]}"
+
+  for package in "${!packages[@]}"; do
+    log "Copying license files for package ${package}"
+    for file in $(find_licenses "${package}" || true); do
+      install -vDm644 "${file}" "${APPDIR}${file}"
+    done
+  done
+}
+
+find_licenses() {
+  repoquery --installed --list "${1}" \
+    | grep -Ei '^/usr/share/(doc|licenses)/.*(copying|licen[cs]e|readme|terms).*'
 }
 
 
@@ -184,6 +232,7 @@ EOF
 build() {
   build_squashfstools
   setup_python
+  copy_licenses
   install_application
   build_appimage
 }
