@@ -27,3 +27,18 @@ jobs:
         with:
           name: appimage-${{ matrix.arch }}
           path: build/*.AppImage
+  deploy:
+    name: Deploy
+    needs:
+      - build
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir -p build
+      - uses: actions/download-artifact@v2
+        with:
+          path: build
+      - run: ./deploy.sh build/**/*.AppImage
+        env:
+          RELEASES_API_KEY: ${{ secrets.RELEASES_API_KEY }}
