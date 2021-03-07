@@ -5,18 +5,17 @@ Linux [AppImage][appimage] build config for [Streamlink][streamlink]
 
 ### How to
 
-1. [Download the latest Streamlink AppImage from the Github releases page.][releases]  
-   *Streamlink-AppImages have not been released yet. Check the Github actions build artifacts for now.*
+1. [Download the latest Streamlink AppImage from the Github releases page.][releases]
 2. **Set the executable flag**  
    This can either be done via a GUI or command line shell.  
    ```bash
    # Note that all AppImage release file names include the
    # release version, Python version, platform name and CPU architecture
-   chmod +x ./streamlink-2.0.0-cp39-cp39-manylinux2014_x86_64.AppImage
+   chmod +x ./streamlink-2.0.0-1-cp39-cp39-manylinux2014_x86_64.AppImage
    ```
 3. **Run the AppImage**  
    ```
-   ./streamlink-2.0.0-cp39-cp39-manylinux2014_x86_64.AppImage --version
+   ./streamlink-2.0.0-1-cp39-cp39-manylinux2014_x86_64.AppImage --version
    ```
 
 ### What are AppImages
@@ -33,18 +32,15 @@ These AppImages are built using the [`pypa/manylinux`][manylinux] project and th
 
 ### Build
 
-Requirements: `curl`, `jq`, `docker`
+Requirements: `curl`, `jq`, `docker`  
+Architectures currently supported: `x86_64`, `i686`, `aarch64`
 
 ```bash
 # Build
-./build.sh x86_86
-./build.sh i686
-./build.sh aarch64
+./build.sh $ARCH
 
 # Get new list of Python dependencies (for updating config.json)
-./get-dependencies.sh streamlink==VERSION x86_64
-./get-dependencies.sh streamlink==VERSION i686
-./get-dependencies.sh streamlink==VERSION aarch64
+./get-dependencies.sh streamlink==VERSION $ARCH
 ```
 
 The AppImages are reproducible when `SOURCE_DATE_EPOCH` is set:
@@ -58,7 +54,7 @@ export SOURCE_DATE_EPOCH=$(git show -s --format=%ct)
 [appimage-documentation]: https://docs.appimage.org/user-guide/run-appimages.html
 [appimage-fuse]: https://docs.appimage.org/user-guide/troubleshooting/fuse.html
 [streamlink]: https://github.com/streamlink/streamlink
-[releases]: https://github.com/bastimeyer/streamlink-appimage/releases
+[releases]: https://github.com/streamlink/streamlink-appimage/releases
 [appimagelauncher]: https://github.com/TheAssassin/AppImageLauncher
 [manylinux]: https://github.com/pypa/manylinux
 [manylinux2014]: https://github.com/pypa/manylinux#manylinux2014-centos-7-based
