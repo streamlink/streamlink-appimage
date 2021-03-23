@@ -21,9 +21,9 @@
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.25.1 --hash=sha256:c210084e36a42ae6b9219e00e48287def368a26d03a048ddad7bfee44f75871e",
         "six": "1.15.0 --hash=sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced",
-        "streamlink": "2.0.0 --hash=sha256:4bc9dd5bacf094ed8a778eece177b77ac805b2235544649f7a68240f0a469a6a",
-        "urllib3": "1.26.3 --hash=sha256:1b465e494e3e0d8939b50680403e3aedaa2bc434b7d5af64dfd3c958d7f5ae80",
-        "websocket-client": "0.57.0 --hash=sha256:0fc45c961324d79c781bab301359d5a1b00b13ad1b10415a4780229ef71a5549"
+        "streamlink": "2.1.0 --hash=sha256:862758e8848fa8eae2884c65d9bc7c94e5aedd26da0d32abf1dad0f61513aff2",
+        "urllib3": "1.26.4 --hash=sha256:2f4da4594db7e1e110a944bb1b551fdf4e6c136ad42e4234131391e21eb5b0df",
+        "websocket-client": "0.58.0 --hash=sha256:44b5df8f08c74c3d82d28100fdc81f4536809ce98a17f0757557813275fbb663"
       }
     },
     "i686": {
@@ -42,9 +42,9 @@
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.25.1 --hash=sha256:c210084e36a42ae6b9219e00e48287def368a26d03a048ddad7bfee44f75871e",
         "six": "1.15.0 --hash=sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced",
-        "streamlink": "2.0.0 --hash=sha256:4bc9dd5bacf094ed8a778eece177b77ac805b2235544649f7a68240f0a469a6a",
-        "urllib3": "1.26.3 --hash=sha256:1b465e494e3e0d8939b50680403e3aedaa2bc434b7d5af64dfd3c958d7f5ae80",
-        "websocket-client": "0.57.0 --hash=sha256:0fc45c961324d79c781bab301359d5a1b00b13ad1b10415a4780229ef71a5549"
+        "streamlink": "2.1.0 --hash=sha256:862758e8848fa8eae2884c65d9bc7c94e5aedd26da0d32abf1dad0f61513aff2",
+        "urllib3": "1.26.4 --hash=sha256:2f4da4594db7e1e110a944bb1b551fdf4e6c136ad42e4234131391e21eb5b0df",
+        "websocket-client": "0.58.0 --hash=sha256:44b5df8f08c74c3d82d28100fdc81f4536809ce98a17f0757557813275fbb663"
       }
     },
     "x86_64": {
@@ -63,9 +63,9 @@
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.25.1 --hash=sha256:c210084e36a42ae6b9219e00e48287def368a26d03a048ddad7bfee44f75871e",
         "six": "1.15.0 --hash=sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced",
-        "streamlink": "2.0.0 --hash=sha256:4bc9dd5bacf094ed8a778eece177b77ac805b2235544649f7a68240f0a469a6a",
-        "urllib3": "1.26.3 --hash=sha256:1b465e494e3e0d8939b50680403e3aedaa2bc434b7d5af64dfd3c958d7f5ae80",
-        "websocket-client": "0.57.0 --hash=sha256:0fc45c961324d79c781bab301359d5a1b00b13ad1b10415a4780229ef71a5549"
+        "streamlink": "2.1.0 --hash=sha256:862758e8848fa8eae2884c65d9bc7c94e5aedd26da0d32abf1dad0f61513aff2",
+        "urllib3": "1.26.4 --hash=sha256:2f4da4594db7e1e110a944bb1b551fdf4e6c136ad42e4234131391e21eb5b0df",
+        "websocket-client": "0.58.0 --hash=sha256:44b5df8f08c74c3d82d28100fdc81f4536809ce98a17f0757557813275fbb663"
       }
     }
   },
