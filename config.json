@@ -6,8 +6,8 @@
   },
   "builds": {
     "aarch64": {
-      "image": "quay.io/pypa/manylinux2014_aarch64",
-      "digest": "sha256:fa218b0f3946dba59801405ae5c4cf80e9cfaa18c71b491f2f912ae86ab1e8ff",
+      "image": "ghcr.io/streamlink/appimage-buildenv-aarch64",
+      "digest": "sha256:53e098f4ab9d89ea3136ca06dbe9f2b48d6bff0507b9ea68e2812eb630d91485",
       "tag": "manylinux2014_aarch64",
       "abi": "cp39-cp39",
       "dependencies": {
@@ -27,8 +27,8 @@
       }
     },
     "i686": {
-      "image": "quay.io/pypa/manylinux2014_i686",
-      "digest": "sha256:8c4cf95399d0c618d79d603ecb4b16d122c44e55b720e65ffa0f186189ee8c48",
+      "image": "ghcr.io/streamlink/appimage-buildenv-i686",
+      "digest": "sha256:cebe6266fee12cf5e64dbf7324bdf358cd1b97ff647d16e818ea66342d8c9ea4",
       "tag": "manylinux2014_i686",
       "abi": "cp39-cp39",
       "dependencies": {
@@ -48,8 +48,8 @@
       }
     },
     "x86_64": {
-      "image": "quay.io/pypa/manylinux2014_x86_64",
-      "digest": "sha256:521186079154ad6dfdc5e22dc460c576fd295cd1ab156e7d637f4a85e0b55427",
+      "image": "ghcr.io/streamlink/appimage-buildenv-x86_64",
+      "digest": "sha256:bd6d8c4a945e108e4d9198a551e2c7aaeb44995ddb1780bc2aa3f25636e47606",
       "tag": "manylinux2014_x86_64",
       "abi": "cp39-cp39",
       "dependencies": {
@@ -67,32 +67,6 @@
         "urllib3": "1.26.4 --hash=sha256:2f4da4594db7e1e110a944bb1b551fdf4e6c136ad42e4234131391e21eb5b0df",
         "websocket-client": "0.58.0 --hash=sha256:44b5df8f08c74c3d82d28100fdc81f4536809ce98a17f0757557813275fbb663"
       }
-    }
-  },
-  "dependencies": {
-    "appimagekit": {
-      "source": "AppImage/AppImageKit",
-      "tag": "12",
-      "files": {
-        "appimagetool-aarch64.AppImage": "c9d058310a4e04b9fbbd81340fff2b5fb44943a630b31881e321719f271bd41a",
-        "appimagetool-i686.AppImage": "3af6839ab6d236cd62ace9fbc2f86487f0bf104f521d82da6dea4dab8d3ce4ca",
-        "appimagetool-x86_64.AppImage": "d918b4df547b388ef253f3c9e7f6529ca81a885395c31f619d9aaf7030499a13"
-      },
-      "appimagetool": {
-        "aarch64": "appimagetool-aarch64.AppImage",
-        "i686": "appimagetool-i686.AppImage",
-        "x86_64": "appimagetool-x86_64.AppImage"
-      }
-    },
-    "excludelist": {
-      "url": "https://raw.githubusercontent.com/AppImage/pkg2appimage/d61672ff4f90cf793a0bee7b056186fcdeb9b510/excludelist",
-      "file": "excludelist",
-      "sha256": "1a23ff720850b0c36d604663001b0ad9560b85ad51e0f3aac452714a9b67e042"
-    },
-    "squashfstools": {
-      "url": "https://github.com/plougher/squashfs-tools/archive/c37bb4da4a5fa8c1cf114237ba364692dd522262.tar.gz",
-      "file": "squashfs-tools-c37bb4da4a5fa8c1cf114237ba364692dd522262.tar.gz",
-      "sha256": "2b26783a0d4a172b18be96e73e8458eba8d2bb3361f72dd13dbd1d7fbf6a5e9a"
     }
   }
 }

@@ -4,10 +4,7 @@ set -e
 DEST="${1}"
 APPDIR="${2}"
 ABI="${3}"
-APPIMAGETOOL="${4}"
-EXCLUDELIST="${5}"
-SQUASHFSTOOLS="${6}"
-REQUIREMENTSFILE="${7}"
+REQUIREMENTSFILE="${4}"
 
 
 # ----
@@ -25,13 +22,11 @@ err() {
 [[ -f /.dockerenv ]] || err "This script is supposed to be run from build.sh inside a docker container"
 
 declare -A excludelist
-for lib in $(cat "${EXCLUDELIST}" | sed -e '/#.*/d; /^[[:space:]]*|[[:space:]]*$/d; /^$/d'); do
+for lib in $(sed -e '/#.*/d; /^[[:space:]]*|[[:space:]]*$/d; /^$/d' /usr/local/share/appimage/excludelist); do
   excludelist["${lib}"]="${lib}"
 done
 
 libraries=()
-
-export MAKEFLAGS=-j$(nproc)
 
 
 # ----
@@ -177,46 +172,11 @@ find_licenses() {
 }
 
 
-build_squashfstools() {
-  log "Building squashfs-tools"
-  local tempdir=$(mktemp -d)
-  tar -C "${tempdir}" --strip-components=1 -xzf "${SQUASHFSTOOLS}"
-  yum install -q -y zlib-devel libattr-devel 2>/dev/null
-  pushd "${tempdir}/squashfs-tools"
-  make \
-    GZIP_SUPPORT=1 \
-    XZ_SUPPORT=0 \
-    LZO_SUPPORT=0 \
-    LZMA_XZ_SUPPORT=0 \
-    LZ4_SUPPORT=0 \
-    ZSTD_SUPPORT=0 \
-    XATTR_SUPPORT=1
-  make install \
-    INSTALL_DIR=/usr/local/bin
-  /usr/local/bin/mksquashfs -version | head -n1
-  popd
-  rm -rf "${tempdir}"
-}
-
-
 build_appimage() {
-  log "Fixing appimagetool"
-  # Remove AppImage type-2 magic hex from appimagetool, so it can be extracted in the container
-  # https://github.com/AppImage/AppImageKit/issues/965#issuecomment-496611778
-  sed -i 's|\x41\x49\x02|\x00\x00\x00|' "./${APPIMAGETOOL}"
-  "./${APPIMAGETOOL}" --appimage-extract >/dev/null
-
-  # replace appimagetool's internal mksquashfs tool with the system's one
-  cat > ./squashfs-root/usr/lib/appimagekit/mksquashfs <<EOF
-#!/bin/sh
-args=\$(echo "\$@" | sed -e 's/-mkfs-fixed-time 0//')
-/usr/local/bin/mksquashfs \${args}
-EOF
-
   log "Building appimage"
   [ "${SOURCE_DATE_EPOCH}" ] && mtime="@${SOURCE_DATE_EPOCH}" || mtime=now
   find "${APPDIR}" -exec touch --no-dereference "--date=${mtime}" '{}' '+'
-  ARCH=$(uname -m) ./squashfs-root/AppRun \
+  ARCH=$(uname -m) /usr/local/bin/appimagetool \
     --verbose \
     --comp gzip \
     --no-appstream \
@@ -230,7 +190,6 @@ EOF
 
 
 build() {
-  build_squashfstools
   setup_python
   copy_licenses
   install_application
