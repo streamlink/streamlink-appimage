@@ -17,8 +17,6 @@ jobs:
       - name: docker qemu multi-arch
         if: matrix.arch != 'x86_64'
         run: |
-          sudo apt-get update -q -y
-          sudo apt-get -qq install -y binfmt-support qemu qemu-user-static
           docker run --rm --privileged multiarch/qemu-user-static --reset --persistent yes
       - name: appimage
         run: |

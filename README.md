@@ -28,11 +28,11 @@ Additional information, like for example how to inspect the AppImage contents or
 
 ### About
 
-These AppImages are built using the [`pypa/manylinux`][manylinux] project and the [`manylinux2014`][manylinux2014] platform (based on CentOS 7). The pre-built Python 3.9 install and its needed runtime libraries are copied from the docker container (see the manylinux build files and CentOS 7 packages for the available sources) into the AppImages, in addition to the main Python application code, namely Streamlink and its dependencies, which are pulled from PyPI.
+These AppImages are built using the [`streamlink/appimage-buildenv-*`][streamlink-appimage-buildenv] containers, which are based on the [`pypa/manylinux`][manylinux] project and the [`manylinux2014`][manylinux2014] platform, which is based on CentOS 7. The pre-built Python 3.9 install and its needed runtime libraries are copied from the docker container (see the manylinux build files and CentOS 7 packages for the available sources) into the AppImages, in addition to the main Python application code, namely Streamlink and its dependencies, which are pulled from PyPI.
 
 ### Build
 
-Requirements: `curl`, `jq`, `docker`  
+Requirements: `jq`, `docker`  
 Architectures currently supported: `x86_64`, `i686`, `aarch64`
 
 ```bash
@@ -40,7 +40,7 @@ Architectures currently supported: `x86_64`, `i686`, `aarch64`
 ./build.sh $ARCH
 
 # Get new list of Python dependencies (for updating config.json)
-./get-dependencies.sh streamlink==VERSION $ARCH
+./get-dependencies.sh streamlink==$VERSION $ARCH
 ```
 
 The AppImages are reproducible when `SOURCE_DATE_EPOCH` is set:
@@ -54,6 +54,7 @@ export SOURCE_DATE_EPOCH=$(git show -s --format=%ct)
 [appimage-documentation]: https://docs.appimage.org/user-guide/run-appimages.html
 [appimage-fuse]: https://docs.appimage.org/user-guide/troubleshooting/fuse.html
 [streamlink]: https://github.com/streamlink/streamlink
+[streamlink-appimage-buildenv]: https://github.com/streamlink/appimage-buildenv
 [releases]: https://github.com/streamlink/streamlink-appimage/releases
 [appimagelauncher]: https://github.com/TheAssassin/AppImageLauncher
 [manylinux]: https://github.com/pypa/manylinux

@@ -10,7 +10,6 @@ DIR_BUILD="${ROOT}/build"
 SCRIPT_DOCKER="${ROOT}/build-docker.sh"
 
 declare -A DEPS=(
-  [curl]=curl
   [jq]=jq
   [docker]=docker
 )
