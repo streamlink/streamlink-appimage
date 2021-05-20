@@ -70,6 +70,11 @@ packages=\$("\${PYTHON}" -m pip list \
   --exclude setuptools \
   --exclude pip \
   --exclude wheel \
+  --exclude build \
+  --exclude packaging \
+  --exclude pep517 \
+  --exclude pyparsing \
+  --exclude toml \
   | tail -n+3
 )
 
