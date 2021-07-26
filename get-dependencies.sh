@@ -60,12 +60,13 @@ cd "\$(mktemp -d)"
 PYTHON="/opt/python/${abi}/bin/python"
 
 (
-  "\${PYTHON}" -m pip download ${PACKAGES}
-  "\${PYTHON}" -m pip install --no-deps --no-compile * >/dev/null
+  "\${PYTHON}" -m pip download --disable-pip-version-check ${PACKAGES}
+  "\${PYTHON}" -m pip install --disable-pip-version-check --no-deps --no-compile * >/dev/null
   echo
 ) 1>&2
 
 packages=\$("\${PYTHON}" -m pip list \
+  --disable-pip-version-check \
   --format columns \
   --exclude setuptools \
   --exclude pip \
