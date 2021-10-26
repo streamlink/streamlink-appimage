@@ -66,14 +66,14 @@ PYTHON="/opt/python/${abi}/bin/python"
 packages=\$("\${PYTHON}" -m pip list \
   --disable-pip-version-check \
   --format columns \
-  --exclude setuptools \
-  --exclude pip \
-  --exclude wheel \
   --exclude build \
   --exclude packaging \
   --exclude pep517 \
+  --exclude pip \
   --exclude pyparsing \
-  --exclude toml \
+  --exclude setuptools \
+  --exclude tomli \
+  --exclude wheel \
   | tail -n+3
 )
 
