@@ -41,7 +41,6 @@ app_name=$(jq -r '.app.name' <<< "${config}")
 app_version=$(jq -r '.app.version' <<< "${config}")
 app_entry=$(jq -r '.app.entry' <<< "${config}")
 docker_image=$(jq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
-docker_digest=$(jq -r ".builds[\"${ARCH}\"].digest" <<< "${config}")
 tag=$(jq -r ".builds[\"${ARCH}\"].tag" <<< "${config}")
 abi=$(jq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
 
@@ -55,8 +54,8 @@ cd "${tempdir}"
 
 get_docker_image() {
   log "Getting docker image"
-  docker image ls --digests "${docker_image}" | grep "${docker_digest}" 2>&1 >/dev/null \
-    || docker image pull "${docker_image}@${docker_digest}"
+  [[ -n "$(docker image ls -q "${docker_image}")" ]] \
+    || docker image pull "${docker_image}"
 }
 
 
@@ -96,7 +95,7 @@ build_app() {
     --rm \
     --env SOURCE_DATE_EPOCH \
     --mount "type=bind,source=${tempdir},target=${target}" \
-    "${docker_image}@${docker_digest}" \
+    "${docker_image}" \
     /usr/bin/bash <<EOF
 set -e
 trap "chown -R $(id -u):$(id -g) '${target}'" EXIT

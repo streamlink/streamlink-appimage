@@ -36,7 +36,6 @@ jq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
  || err "Unsupported arch"
 
 docker_image=$(jq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
-docker_digest=$(jq -r ".builds[\"${ARCH}\"].digest" <<< "${config}")
 abi=$(jq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
 
 
@@ -45,9 +44,8 @@ abi=$(jq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
 
 get_docker_image() {
   log "Getting docker image"
-  local image="${docker_image}@${docker_digest}"
-  docker image ls --digests "${docker_image}" | grep "${docker_digest}" 2>&1 >/dev/null \
-    || docker image pull "${image}"
+  [[ -n "$(docker image ls -q "${docker_image}")" ]] \
+    || docker image pull "${docker_image}"
 }
 
 
@@ -93,7 +91,7 @@ EOF
   docker run \
     --interactive \
     --rm \
-    "${docker_image}@${docker_digest}" \
+    "${docker_image}" \
     /usr/bin/bash <<< "${script}" \
     | jq -CRn '[(inputs | split("\n")) | .[] | split("==") | {key: .[0], value: .[1]}] | from_entries'
 }
