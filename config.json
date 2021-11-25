@@ -11,7 +11,7 @@
       "abi": "cp39-cp39",
       "dependencies": {
         "certifi": "2021.10.8 --hash=sha256:d62a0163eb4c2344ac042ab2bdf75399a71a2d8c7d47eac2e2ee91b9d6339569",
-        "charset-normalizer": "2.0.7 --hash=sha256:f7af805c321bfa1ce6714c51f254e0d5bb5e5834039bc17db7ebe3a4cec9492b",
+        "charset-normalizer": "2.0.8 --hash=sha256:83fcdeb225499d6344c8f7f34684c2981270beacc32ede2e669e94f7fa544405",
         "idna": "3.3 --hash=sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff",
         "isodate": "0.6.0 --hash=sha256:aa4d33c06640f5352aca96e4b81afd8ab3b47337cc12089822d6f322ac772c81",
         "lxml": "4.6.4 --hash=sha256:0c15e1cd55055956e77b0732270f1c6005850696bc3ef3e03d01e78af84eaa42",
@@ -20,7 +20,7 @@
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.26.0 --hash=sha256:6c1246513ecd5ecd4528a0906f910e8f0f9c6b8ec72030dc9fd154dc1a6efd24",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
-        "streamlink": "3.0.1 --hash=sha256:2c40c1701754a916a488f0e47f7cfa38241f3814121a117eaa81c3b542357667",
+        "streamlink": "3.0.2 --hash=sha256:2e8c85a4c1aa11a88fc278b12b592e3d3f6013b2ec2d508002795de8bf43cd81",
         "urllib3": "1.26.7 --hash=sha256:c4fdf4019605b6e5423637e01bc9fe4daef873709a7973e195ceba0a62bbc844",
         "websocket-client": "1.2.1 --hash=sha256:0133d2f784858e59959ce82ddac316634229da55b498aac311f1620567a710ec"
       }
@@ -31,7 +31,7 @@
       "abi": "cp39-cp39",
       "dependencies": {
         "certifi": "2021.10.8 --hash=sha256:d62a0163eb4c2344ac042ab2bdf75399a71a2d8c7d47eac2e2ee91b9d6339569",
-        "charset-normalizer": "2.0.7 --hash=sha256:f7af805c321bfa1ce6714c51f254e0d5bb5e5834039bc17db7ebe3a4cec9492b",
+        "charset-normalizer": "2.0.8 --hash=sha256:83fcdeb225499d6344c8f7f34684c2981270beacc32ede2e669e94f7fa544405",
         "idna": "3.3 --hash=sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff",
         "isodate": "0.6.0 --hash=sha256:aa4d33c06640f5352aca96e4b81afd8ab3b47337cc12089822d6f322ac772c81",
         "lxml": "4.6.4 --hash=sha256:afd60230ad9d8bcba005945ec3a343722f09e0b7f8ae804246e5d2cfc6bd71a6",
@@ -40,7 +40,7 @@
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.26.0 --hash=sha256:6c1246513ecd5ecd4528a0906f910e8f0f9c6b8ec72030dc9fd154dc1a6efd24",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
-        "streamlink": "3.0.1 --hash=sha256:2c40c1701754a916a488f0e47f7cfa38241f3814121a117eaa81c3b542357667",
+        "streamlink": "3.0.2 --hash=sha256:2e8c85a4c1aa11a88fc278b12b592e3d3f6013b2ec2d508002795de8bf43cd81",
         "urllib3": "1.26.7 --hash=sha256:c4fdf4019605b6e5423637e01bc9fe4daef873709a7973e195ceba0a62bbc844",
         "websocket-client": "1.2.1 --hash=sha256:0133d2f784858e59959ce82ddac316634229da55b498aac311f1620567a710ec"
       }
@@ -51,7 +51,7 @@
       "abi": "cp39-cp39",
       "dependencies": {
         "certifi": "2021.10.8 --hash=sha256:d62a0163eb4c2344ac042ab2bdf75399a71a2d8c7d47eac2e2ee91b9d6339569",
-        "charset-normalizer": "2.0.7 --hash=sha256:f7af805c321bfa1ce6714c51f254e0d5bb5e5834039bc17db7ebe3a4cec9492b",
+        "charset-normalizer": "2.0.8 --hash=sha256:83fcdeb225499d6344c8f7f34684c2981270beacc32ede2e669e94f7fa544405",
         "idna": "3.3 --hash=sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff",
         "isodate": "0.6.0 --hash=sha256:aa4d33c06640f5352aca96e4b81afd8ab3b47337cc12089822d6f322ac772c81",
         "lxml": "4.6.4 --hash=sha256:6d422b3c729737d8a39279a25fa156c983a56458f8b2f97661ee6fb22b80b1d6",
@@ -60,7 +60,7 @@
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.26.0 --hash=sha256:6c1246513ecd5ecd4528a0906f910e8f0f9c6b8ec72030dc9fd154dc1a6efd24",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
-        "streamlink": "3.0.1 --hash=sha256:2c40c1701754a916a488f0e47f7cfa38241f3814121a117eaa81c3b542357667",
+        "streamlink": "3.0.2 --hash=sha256:2e8c85a4c1aa11a88fc278b12b592e3d3f6013b2ec2d508002795de8bf43cd81",
         "urllib3": "1.26.7 --hash=sha256:c4fdf4019605b6e5423637e01bc9fe4daef873709a7973e195ceba0a62bbc844",
         "websocket-client": "1.2.1 --hash=sha256:0133d2f784858e59959ce82ddac316634229da55b498aac311f1620567a710ec"
       }
