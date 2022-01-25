@@ -16,11 +16,11 @@
         "isodate": "0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96",
         "lxml": "4.7.1 --hash=sha256:3e26ad9bc48d610bf6cc76c506b9e5ad9360ed7a945d9be3b5b2c8535a0145e3",
         "pycountry": "22.1.10 --hash=sha256:b9a6d9cdbf53f81ccdf73f6f5de01b0d8493cab2213a230af3e34458de85ea32",
-        "pycryptodome": "3.12.0 --hash=sha256:6bb0d340c93bcb674ea8899e2f6408ec64c6c21731a59481332b4b2a8143cc60",
+        "pycryptodome": "3.13.0 --hash=sha256:073dedf0f9c490ae22ca081b86357646ac9b76f3e2bd89119d137fc697a9e3b6",
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.27.1 --hash=sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
-        "streamlink": "3.1.0 --hash=sha256:009c5cc98a100a66a7f1fd233366e0f1cd61ca1450c5fc876316ce7c643f3de8",
+        "streamlink": "3.1.1 --hash=sha256:90f8ab43751550fd0d3415af19275d74b796267f177c3c41fbc44f6f1cde2c2b",
         "urllib3": "1.26.8 --hash=sha256:000ca7f471a233c2251c6c7023ee85305721bfdf18621ebff4fd17a8653427ed",
         "websocket-client": "1.2.3 --hash=sha256:2eed4cc58e4d65613ed6114af2f380f7910ff416fc8c46947f6e76b6815f56c0"
       }
@@ -36,11 +36,11 @@
         "isodate": "0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96",
         "lxml": "4.7.1 --hash=sha256:4c093c571bc3da9ebcd484e001ba18b8452903cd428c0bc926d9b0141bcb710e",
         "pycountry": "22.1.10 --hash=sha256:b9a6d9cdbf53f81ccdf73f6f5de01b0d8493cab2213a230af3e34458de85ea32",
-        "pycryptodome": "3.12.0 --hash=sha256:4cded12e13785bbdf4ba1ff5fb9d261cd98162145f869e4fbc4a4b9083392f0b",
+        "pycryptodome": "3.13.0 --hash=sha256:857c16bffd938254e3a834cd6b2a755ed24e1a953b1a86e33da136d3e4c16a6f",
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.27.1 --hash=sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
-        "streamlink": "3.1.0 --hash=sha256:009c5cc98a100a66a7f1fd233366e0f1cd61ca1450c5fc876316ce7c643f3de8",
+        "streamlink": "3.1.1 --hash=sha256:90f8ab43751550fd0d3415af19275d74b796267f177c3c41fbc44f6f1cde2c2b",
         "urllib3": "1.26.8 --hash=sha256:000ca7f471a233c2251c6c7023ee85305721bfdf18621ebff4fd17a8653427ed",
         "websocket-client": "1.2.3 --hash=sha256:2eed4cc58e4d65613ed6114af2f380f7910ff416fc8c46947f6e76b6815f56c0"
       }
@@ -56,11 +56,11 @@
         "isodate": "0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96",
         "lxml": "4.7.1 --hash=sha256:a5f623aeaa24f71fce3177d7fee875371345eb9102b355b882243e33e04b7175",
         "pycountry": "22.1.10 --hash=sha256:b9a6d9cdbf53f81ccdf73f6f5de01b0d8493cab2213a230af3e34458de85ea32",
-        "pycryptodome": "3.12.0 --hash=sha256:1181c90d1a6aee68a84826825548d0db1b58d8541101f908d779d601d1690586",
+        "pycryptodome": "3.13.0 --hash=sha256:ca6db61335d07220de0b665bfee7b8e9615b2dfc67a54016db4826dac34c2dd2",
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.27.1 --hash=sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
-        "streamlink": "3.1.0 --hash=sha256:009c5cc98a100a66a7f1fd233366e0f1cd61ca1450c5fc876316ce7c643f3de8",
+        "streamlink": "3.1.1 --hash=sha256:90f8ab43751550fd0d3415af19275d74b796267f177c3c41fbc44f6f1cde2c2b",
         "urllib3": "1.26.8 --hash=sha256:000ca7f471a233c2251c6c7023ee85305721bfdf18621ebff4fd17a8653427ed",
         "websocket-client": "1.2.3 --hash=sha256:2eed4cc58e4d65613ed6114af2f380f7910ff416fc8c46947f6e76b6815f56c0"
       }
