@@ -21,7 +21,7 @@
         "requests": "2.28.1 --hash=sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
         "streamlink": "4.2.0 --hash=sha256:b6a485c6cddb25c69acc95d0e1e5e42098847080873717fad51672c824ec3a6b",
-        "urllib3": "1.26.10 --hash=sha256:8298d6d56d39be0e3bc13c1c97d133f9b45d797169a0e11cdd0e0489d786f7ec",
+        "urllib3": "1.26.11 --hash=sha256:c33ccba33c819596124764c23a97d25f32b28433ba0dedeb77d873a38722c9bc",
         "websocket-client": "1.3.3 --hash=sha256:5d55652dc1d0b3c734f044337d929aaf83f4f9138816ec680c1aefefb4dc4877"
       }
     },
@@ -41,7 +41,7 @@
         "requests": "2.28.1 --hash=sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
         "streamlink": "4.2.0 --hash=sha256:b6a485c6cddb25c69acc95d0e1e5e42098847080873717fad51672c824ec3a6b",
-        "urllib3": "1.26.10 --hash=sha256:8298d6d56d39be0e3bc13c1c97d133f9b45d797169a0e11cdd0e0489d786f7ec",
+        "urllib3": "1.26.11 --hash=sha256:c33ccba33c819596124764c23a97d25f32b28433ba0dedeb77d873a38722c9bc",
         "websocket-client": "1.3.3 --hash=sha256:5d55652dc1d0b3c734f044337d929aaf83f4f9138816ec680c1aefefb4dc4877"
       }
     },
@@ -61,7 +61,7 @@
         "requests": "2.28.1 --hash=sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
         "streamlink": "4.2.0 --hash=sha256:b6a485c6cddb25c69acc95d0e1e5e42098847080873717fad51672c824ec3a6b",
-        "urllib3": "1.26.10 --hash=sha256:8298d6d56d39be0e3bc13c1c97d133f9b45d797169a0e11cdd0e0489d786f7ec",
+        "urllib3": "1.26.11 --hash=sha256:c33ccba33c819596124764c23a97d25f32b28433ba0dedeb77d873a38722c9bc",
         "websocket-client": "1.3.3 --hash=sha256:5d55652dc1d0b3c734f044337d929aaf83f4f9138816ec680c1aefefb4dc4877"
       }
     }
