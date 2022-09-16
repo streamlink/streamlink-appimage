@@ -20,7 +20,7 @@
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.28.1 --hash=sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
-        "streamlink": "4.3.0 --hash=sha256:31a14451a47405ec385d10a404bb796be2995c3f8e4b7642d2fb74de117be1fa",
+        "streamlink": "5.0.0 --hash=sha256:5eeb859b287097af763366a2a24cff65bca8440edc8aee642d575684ebe30bac",
         "urllib3": "1.26.12 --hash=sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997",
         "websocket-client": "1.4.1 --hash=sha256:398909eb7e261f44b8f4bd474785b6ec5f5b499d4953342fe9755e01ef624090"
       }
@@ -40,7 +40,7 @@
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.28.1 --hash=sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
-        "streamlink": "4.3.0 --hash=sha256:31a14451a47405ec385d10a404bb796be2995c3f8e4b7642d2fb74de117be1fa",
+        "streamlink": "5.0.0 --hash=sha256:5eeb859b287097af763366a2a24cff65bca8440edc8aee642d575684ebe30bac",
         "urllib3": "1.26.12 --hash=sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997",
         "websocket-client": "1.4.1 --hash=sha256:398909eb7e261f44b8f4bd474785b6ec5f5b499d4953342fe9755e01ef624090"
       }
@@ -60,7 +60,7 @@
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
         "requests": "2.28.1 --hash=sha256:8fefa2a1a1365bf5520aac41836fbee479da67864514bdb821f31ce07ce65349",
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
-        "streamlink": "4.3.0 --hash=sha256:31a14451a47405ec385d10a404bb796be2995c3f8e4b7642d2fb74de117be1fa",
+        "streamlink": "5.0.0 --hash=sha256:5eeb859b287097af763366a2a24cff65bca8440edc8aee642d575684ebe30bac",
         "urllib3": "1.26.12 --hash=sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997",
         "websocket-client": "1.4.1 --hash=sha256:398909eb7e261f44b8f4bd474785b6ec5f5b499d4953342fe9755e01ef624090"
       }
