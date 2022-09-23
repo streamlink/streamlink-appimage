@@ -13,7 +13,7 @@ jobs:
           - i686
           - x86_64
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: docker qemu multi-arch
         if: matrix.arch != 'x86_64'
         run: |
@@ -21,7 +21,7 @@ jobs:
       - name: appimage
         run: |
           SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh ${{ matrix.arch }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: appimage-${{ matrix.arch }}
           path: build/*.AppImage
@@ -34,9 +34,9 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - run: mkdir -p build
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           path: build
       - run: ./deploy.sh build/**/*.AppImage
