@@ -11,7 +11,7 @@
   <launchable type="desktop-id">streamlink.desktop</launchable>
   <url type="homepage">https://streamlink.github.io/</url>
   <provides>
-    <binary>python3.9</binary>
+    <binary>python3.10</binary>
     <python3>streamlink</python3>
   </provides>
 </component>
