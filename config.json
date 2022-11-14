@@ -10,7 +10,7 @@
       "tag": "manylinux2014_aarch64",
       "abi": "cp310-cp310",
       "dependencies": {
-        "certifi": "2022.9.14 --hash=sha256:e232343de1ab72c2aa521b625c80f699e356830fd0e2c620b465b304b17b0516",
+        "certifi": "2022.9.24 --hash=sha256:90c1a32f1d68f940488354e36370f6cca89f0f106db09518524c88d6ed83f382",
         "charset-normalizer": "2.1.1 --hash=sha256:83e9a75d1911279afd89352c68b45348559d1fc0506b054b346651b5e7fee29f",
         "idna": "3.4 --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2",
         "isodate": "0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96",
@@ -22,7 +22,7 @@
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
         "streamlink": "5.0.1 --hash=sha256:17a7adf50d83fec0a785f7045ed3a59dfcc62fc8a28333bcefd01cde57b60c25",
         "urllib3": "1.26.12 --hash=sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997",
-        "websocket-client": "1.4.1 --hash=sha256:398909eb7e261f44b8f4bd474785b6ec5f5b499d4953342fe9755e01ef624090"
+        "websocket-client": "1.4.2 --hash=sha256:d6b06432f184438d99ac1f456eaf22fe1ade524c3dd16e661142dc54e9cba574"
       }
     },
     "i686": {
@@ -30,7 +30,7 @@
       "tag": "manylinux2014_i686",
       "abi": "cp310-cp310",
       "dependencies": {
-        "certifi": "2022.9.14 --hash=sha256:e232343de1ab72c2aa521b625c80f699e356830fd0e2c620b465b304b17b0516",
+        "certifi": "2022.9.24 --hash=sha256:90c1a32f1d68f940488354e36370f6cca89f0f106db09518524c88d6ed83f382",
         "charset-normalizer": "2.1.1 --hash=sha256:83e9a75d1911279afd89352c68b45348559d1fc0506b054b346651b5e7fee29f",
         "idna": "3.4 --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2",
         "isodate": "0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96",
@@ -42,7 +42,7 @@
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
         "streamlink": "5.0.1 --hash=sha256:17a7adf50d83fec0a785f7045ed3a59dfcc62fc8a28333bcefd01cde57b60c25",
         "urllib3": "1.26.12 --hash=sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997",
-        "websocket-client": "1.4.1 --hash=sha256:398909eb7e261f44b8f4bd474785b6ec5f5b499d4953342fe9755e01ef624090"
+        "websocket-client": "1.4.2 --hash=sha256:d6b06432f184438d99ac1f456eaf22fe1ade524c3dd16e661142dc54e9cba574"
       }
     },
     "x86_64": {
@@ -50,7 +50,7 @@
       "tag": "manylinux2014_x86_64",
       "abi": "cp310-cp310",
       "dependencies": {
-        "certifi": "2022.9.14 --hash=sha256:e232343de1ab72c2aa521b625c80f699e356830fd0e2c620b465b304b17b0516",
+        "certifi": "2022.9.24 --hash=sha256:90c1a32f1d68f940488354e36370f6cca89f0f106db09518524c88d6ed83f382",
         "charset-normalizer": "2.1.1 --hash=sha256:83e9a75d1911279afd89352c68b45348559d1fc0506b054b346651b5e7fee29f",
         "idna": "3.4 --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2",
         "isodate": "0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96",
@@ -62,7 +62,7 @@
         "six": "1.16.0 --hash=sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254",
         "streamlink": "5.0.1 --hash=sha256:17a7adf50d83fec0a785f7045ed3a59dfcc62fc8a28333bcefd01cde57b60c25",
         "urllib3": "1.26.12 --hash=sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997",
-        "websocket-client": "1.4.1 --hash=sha256:398909eb7e261f44b8f4bd474785b6ec5f5b499d4953342fe9755e01ef624090"
+        "websocket-client": "1.4.2 --hash=sha256:d6b06432f184438d99ac1f456eaf22fe1ade524c3dd16e661142dc54e9cba574"
       }
     }
   }
