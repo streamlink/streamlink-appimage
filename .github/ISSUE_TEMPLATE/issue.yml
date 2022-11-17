@@ -1,0 +1,31 @@
+name: Issue
+description: An issue with one of Streamlink's AppImages
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ## Thanks for reporting an issue with Streamlink's AppImages!
+
+        **Issues and questions related to Streamlink itself DO NOT BELONG here and will be closed immediately.**
+  - type: dropdown
+    attributes:
+      label: AppImage architecture
+      options:
+        - aarch64
+        - i686
+        - x86_64
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: AppImage version
+      description: |
+        The exact file name of the AppImage.
+  - type: textarea
+    attributes:
+      label: Description
+      description: |
+        Explain the issue as thoroughly as you can and list the steps which lead to the problem.
+        Please also provide details about your operating system and its configuration if you can.
+    validations:
+      required: true
