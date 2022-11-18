@@ -6,7 +6,7 @@ ARCH="${1:-$(uname -m)}"
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || dirname "$(readlink -f "${0}")")
 CONFIG="${ROOT}/config.json"
 DIR_APP="${ROOT}/app"
-DIR_BUILD="${ROOT}/build"
+DIR_DIST="${ROOT}/dist"
 SCRIPT_DOCKER="${ROOT}/build-docker.sh"
 
 declare -A DEPS=(
@@ -44,7 +44,7 @@ docker_image=$(jq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
 tag=$(jq -r ".builds[\"${ARCH}\"].tag" <<< "${config}")
 abi=$(jq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
 
-mkdir -p "${DIR_BUILD}"
+mkdir -p "${DIR_DIST}"
 tempdir=$(mktemp -d) && trap "rm -rf ${tempdir}" EXIT || exit 255
 cd "${tempdir}"
 
@@ -107,7 +107,7 @@ cd '${target}'
   requirements.txt
 EOF
 
-  install -m777 "${tempdir}/${name}" "${DIR_BUILD}/${name}"
+  install -m777 "${tempdir}/${name}" "${DIR_DIST}/${name}"
 }
 
 

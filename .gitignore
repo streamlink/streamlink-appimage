@@ -13,4 +13,4 @@ nbproject
 *.sublime-workspace
 .idea
 
-build
+dist

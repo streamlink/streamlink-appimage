@@ -35,10 +35,10 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v3
-      - run: mkdir -p build
+      - run: mkdir -p dist
       - uses: actions/download-artifact@v3
         with:
-          path: build
-      - run: ./deploy.sh build/**/*.AppImage
+          path: dist
+      - run: ./deploy.sh dist/**/*.AppImage
         env:
           RELEASES_API_KEY: ${{ secrets.GITHUB_TOKEN }}
