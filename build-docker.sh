@@ -125,6 +125,13 @@ install_application() {
     --no-deps \
     --require-hashes \
     -r "${REQUIREMENTSFILE}"
+
+  # Delete all bytecode, as the missing bytecode of the stdlib is being built undeterministically when running pip:
+  # For some very weird reason, the PYTHONHASHSEED and PYTHONDONTWRITEBYTECODE env vars and the -B flag don't show any effect,
+  # and recompiling bytecode using the compileall module is undeterministic as well.
+  # So just delete all bytecode for now. :(
+  # This seems to be only the case on cp38, cp38 and cp310
+  find "${PYTHON_LIB}" -type d -name __pycache__ -print0 | xargs -0 rm -r
 }
 
 
