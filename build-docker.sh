@@ -120,6 +120,7 @@ install_application() {
   export PYTHONHASHSEED=0
   "${PYTHON_BIN}/${PYTHON_X_Y}" -m pip install \
     --disable-pip-version-check \
+    --root-user-action=ignore \
     --no-cache-dir \
     --no-deps \
     --require-hashes \
