@@ -64,5 +64,6 @@
         "urllib3": "1.26.12 --hash=sha256:b930dd878d5a8afb066a637fbb35144fe7901e3b209d1cd4f524bd0e9deee997",
         "websocket-client": "1.4.2 --hash=sha256:d6b06432f184438d99ac1f456eaf22fe1ade524c3dd16e661142dc54e9cba574"
       }
+    }
   }
 }
