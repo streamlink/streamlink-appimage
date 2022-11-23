@@ -24,7 +24,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: appimage-${{ matrix.arch }}
-          path: build/*.AppImage
+          path: dist/*.AppImage
   deploy:
     name: Deploy
     needs:
