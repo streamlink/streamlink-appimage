@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "streamlink",
-    "version": "5.1.1-2",
+    "version": "5.1.1-3",
     "entry": "streamlink"
   },
   "builds": {
