@@ -4,9 +4,13 @@
     "version": "5.1.1-3",
     "entry": "streamlink"
   },
+  "git": {
+    "repo": "https://github.com/streamlink/streamlink.git",
+    "ref": "5.1.1"
+  },
   "builds": {
     "aarch64": {
-      "image": "ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:558641b89af0abc88744d266ae0b19d0daf6d7637c43c65a9f89f7a29132025c",
+      "image": "ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:509543ba36a76aa74e1a4c2b6f3de6931db5fa81e4a2c51631c68c7de3fd3d46",
       "tag": "manylinux2014_aarch64",
       "abi": "cp310-cp310",
       "dependencies": {
@@ -26,7 +30,7 @@
       }
     },
     "i686": {
-      "image": "ghcr.io/streamlink/appimage-buildenv-i686@sha256:db9c66a51981adf8d6b76cb4b50d972e6de02e195f2c0bcf1ff74e92c8e37711",
+      "image": "ghcr.io/streamlink/appimage-buildenv-i686@sha256:c54973bb8e2b73c3a28724dc382f1aca68efe0a7f4d5e36bfe800c403205f277",
       "tag": "manylinux2014_i686",
       "abi": "cp310-cp310",
       "dependencies": {
@@ -46,7 +50,7 @@
       }
     },
     "x86_64": {
-      "image": "ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:9e7a5d2080d903f7a1b358659738ed9dc9a6e74342a286b7aaf47c1fa8857a0d",
+      "image": "ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:c53bb666bd2b53e0ad967d80d82d7830d6c95d6c8f6e2a64e690a18a589c81d0",
       "tag": "manylinux2014_x86_64",
       "abi": "cp310-cp310",
       "dependencies": {

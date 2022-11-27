@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-PACKAGES="${1}"
-ARCH="${2:-$(uname -m)}"
+ARCH="${1:-$(uname -m)}"
+GITREPO="${2}"
+GITREF="${3}"
 
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || dirname "$(readlink -f "${0}")")
 CONFIG="${ROOT}/config.json"
@@ -16,7 +17,7 @@ declare -A DEPS=(
 # ----
 
 
-SELF=$(basename "$(readlink -f "${0}")")
+SELF=$(basename -- "$(readlink -f -- "${0}")")
 log() {
   echo "[${SELF}] $@"
 }
@@ -35,6 +36,9 @@ config=$(cat "${CONFIG}")
 jq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
  || err "Unsupported arch"
 
+git_repo="${GITREPO:-$(jq -r '.git.repo' <<< "${config}")}"
+git_ref="${GITREF:-$(jq -r '.git.ref' <<< "${config}")}"
+
 docker_image=$(jq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
 abi=$(jq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
 
@@ -50,41 +54,37 @@ get_docker_image() {
 
 
 get_deps() {
-  log "Finding dependencies (${ARCH} / ${abi}) for ${PACKAGES}"
+  log "Finding dependencies (${ARCH} / ${abi}) for ${git_repo}@${git_ref}"
   local script=$(cat <<EOF
-shopt -s nullglob
-
-cd "\$(mktemp -d)"
 PYTHON="/opt/python/${abi}/bin/python"
+REPORT=\$(mktemp)
 
-(
-  "\${PYTHON}" -m pip download --disable-pip-version-check ${PACKAGES}
-  "\${PYTHON}" -m pip install --disable-pip-version-check --no-deps --no-compile * >/dev/null
-  echo
-) 1>&2
-
-packages=\$("\${PYTHON}" -m pip list \
+"\${PYTHON}" -m pip install \
   --disable-pip-version-check \
-  --format columns \
-  --exclude build \
-  --exclude packaging \
-  --exclude pep517 \
-  --exclude pip \
-  --exclude pyparsing \
-  --exclude setuptools \
-  --exclude tomli \
-  --exclude wheel \
-  | tail -n+3
-)
+  --root-user-action=ignore \
+  --isolated \
+  --no-cache-dir \
+  --check-build-dependencies \
+  --ignore-installed \
+  --dry-run \
+  --report="\${REPORT}" \
+  "git+${git_repo}@${git_ref}"
 
-while read -r name version; do
-  hash=\$("\${PYTHON}" -m pip hash \
-    "\${name}-\${version}"*.tar{,.gz} \
-    "\${name//-/_}-\${version}-"*.whl \
-    | tail -n1
-  )
-  echo "\${name}==\${version} \${hash}"
-done <<< "\${packages}"
+jq -C \
+  '
+    [
+     .install[]
+     | select(.is_direct != true)
+     | .download_info.archive_info.hash |= sub("^(?<hash>[^=]+)="; "\(.hash):")
+     | {
+       key: .metadata.name,
+       value: "\(.metadata.version) --hash=\(.download_info.archive_info.hash)"
+     }
+    ]
+    | sort_by(.key | ascii_upcase)
+    | from_entries
+  ' \
+  "\${REPORT}"
 EOF
   )
 
@@ -92,8 +92,7 @@ EOF
     --interactive \
     --rm \
     "${docker_image}" \
-    /usr/bin/bash <<< "${script}" \
-    | jq -CRn '[(inputs | split("\n")) | .[] | split("==") | {key: .[0], value: .[1]}] | from_entries'
+    /usr/bin/bash <<< "${script}"
 }
 
 
