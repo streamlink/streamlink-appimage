@@ -2,15 +2,21 @@
 set -e
 
 DEST="${1}"
-APPDIR="${2}"
-ABI="${3}"
-REQUIREMENTSFILE="${4}"
+ABI="${2}"
+
+PIP_ARGS=(
+  --disable-pip-version-check
+  --root-user-action=ignore
+  --isolated
+  --no-cache-dir
+  --no-deps
+)
 
 
 # ----
 
 
-SELF=$(basename "$(readlink -f "${0}")")
+SELF=$(basename -- "$(readlink -f -- "${0}")")
 log() {
   echo "[${SELF}] $@"
 }
@@ -37,9 +43,10 @@ libraries=()
 
 
 PYTHON="/opt/python/${ABI}/bin/python"
-VERSION=$("${PYTHON}" -c 'import sys; print("{}.{}".format(*sys.version_info[:2]))')
+VERSION=$("${PYTHON}" -B -c 'import sys; print("{}.{}".format(*sys.version_info[:2]))')
 PYTHON_X_Y="python${VERSION}"
 
+APPDIR=AppDir
 APPDIR_BIN="${APPDIR}/usr/bin"
 APPDIR_LIB="${APPDIR}/usr/lib"
 
@@ -61,14 +68,14 @@ patch_binary() {
   local libdir="${2}"
   local recursive="${3:-false}"
 
+  local newrpath
   local rpath=$(patchelf --print-rpath "${path}")
-  local relpath="$(realpath --relative-to="$(dirname "${path}")" "${libdir}")"
-  if [[ "${relpath}" == "." ]]; then local relpath=""; else local relpath="/${relpath}"; fi
-  local expected="\$ORIGIN${relpath}"
+  local relpath="$(realpath --relative-to="$(dirname -- "${path}")" "${libdir}")"
+  if [[ "${relpath}" == "." ]]; then newrpath="\$ORIGIN"; else newrpath="\$ORIGIN/${relpath}"; fi
 
-  if ! [[ "${rpath}" == "${expected}" ]]; then
-    log "Patching RPATH: ${path} (${rpath} -> ${expected})"
-    patchelf --set-rpath "${expected}" "${path}"
+  if [[ "${rpath}" != "${newrpath}" ]]; then
+    log "Patching RPATH: ${path} (\"${rpath}\" -> \"${newrpath}\")"
+    patchelf --set-rpath "${newrpath}" "${path}"
   fi
 
   for dep in $(ldd "${path}" 2>/dev/null | grep -E ' => \S+' | sed -E 's/.+ => (.+) \(0x.+/\1/'); do
@@ -118,13 +125,25 @@ setup_python() {
 
 install_application() {
   export PYTHONHASHSEED=0
-  "${PYTHON_BIN}/${PYTHON_X_Y}" -m pip install \
-    --disable-pip-version-check \
-    --root-user-action=ignore \
-    --no-cache-dir \
-    --no-deps \
+
+  log "Installing dependencies"
+  "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m pip install \
+    "${PIP_ARGS[@]}" \
     --require-hashes \
-    -r "${REQUIREMENTSFILE}"
+    -r requirements.txt
+
+  log "Installing application"
+  # fix git permission issue when getting version string via versioningit
+  git config --global --add safe.directory /app/source.git
+  "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m pip install \
+    --verbose \
+    "${PIP_ARGS[@]}" \
+    /app/source.git
+
+  log "Removing unneeded dependencies"
+  "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m pip uninstall \
+    -y \
+    -r <("${HOST_BIN}/${PYTHON_X_Y}" -B -m pip list --format=freeze)
 
   # Delete all bytecode, as the missing bytecode of the stdlib is being built undeterministically when running pip:
   # For some very weird reason, the PYTHONHASHSEED and PYTHONDONTWRITEBYTECODE env vars and the -B flag don't show any effect,
