@@ -42,7 +42,7 @@ jq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
  || err "Unsupported arch"
 
 app_name=$(jq -r '.app.name' <<< "${config}")
-app_version=$(jq -r '.app.version' <<< "${config}")
+app_rel=$(jq -r '.app.rel' <<< "${config}")
 app_entry=$(jq -r '.app.entry' <<< "${config}")
 git_repo="${GITREPO:-$(jq -r '.git.repo' <<< "${config}")}"
 git_ref="${GITREF:-$(jq -r '.git.ref' <<< "${config}")}"
@@ -113,7 +113,6 @@ EOF
 build_app() {
   log "Building app inside container"
   local target=/app
-  local name="${app_name}-${app_version}-${abi}-${tag}.AppImage"
 
   docker run \
     --interactive \
@@ -125,10 +124,35 @@ build_app() {
 set -e
 trap "chown -R $(id -u):$(id -g) '${target}'" EXIT
 cd '${target}'
-'./$(basename -- "${SCRIPT_DOCKER}")' '${name}' '${abi}'
+'./$(basename -- "${SCRIPT_DOCKER}")' '${abi}' '${app_entry}'
 EOF
 
-  install -m777 "${tempdir}/${name}" "${DIR_DIST}/${name}"
+  local versionstring versionplain versionmeta version
+  versionstring=$(cat "${tempdir}/version.txt")
+  versionplain="${versionstring%%+*}"
+  versionmeta="${versionstring##*+}"
+
+  # Not a custom git reference (assume that only tagged releases are used as source)
+  # Use plain version string with app release number and no abbreviated commit ID
+  if [[ -z "${GITREF}" ]]; then
+    version="${versionplain}-${app_rel}"
+
+  # Custom ref -> tagged release (no build metadata in version string)
+  # Add abbreviated commit ID to the plain version string to distinguish it from regular releases, set 0 as app release number
+  elif [[ "${versionstring}" != *+* ]]; then
+    local _commit="$(git -C "${tempdir}/source.git" -c core.abbrev=7 rev-parse --short HEAD)"
+    version="${versionplain}-0-g${_commit}"
+
+  # Custom ref -> arbitrary untagged commit (version string includes build metadata)
+  # Translate into correct format
+  else
+    version="${versionplain}-${versionmeta/./-}"
+  fi
+
+  local name="${app_name}-${version}-${abi}-${tag}.AppImage"
+
+  install -m777 "${tempdir}/out.AppImage" "${DIR_DIST}/${name}"
+  ( cd "${DIR_DIST}"; sha256sum "${name}"; )
 }
 
 

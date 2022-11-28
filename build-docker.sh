@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
-DEST="${1}"
-ABI="${2}"
+ABI="${1}"
+ENTRY="${2}"
 
 PIP_ARGS=(
   --disable-pip-version-check
@@ -41,6 +41,7 @@ libraries=()
 # based on niess/python-appimage (GPLv3)
 # https://github.com/niess/python-appimage/blob/d0d64c3316ced7660476d50b5c049f3939213519/python_appimage/appimage/relocate.py
 
+DEST=out.AppImage
 
 PYTHON="/opt/python/${ABI}/bin/python"
 VERSION=$("${PYTHON}" -B -c 'import sys; print("{}.{}".format(*sys.version_info[:2]))')
@@ -139,12 +140,21 @@ install_application() {
     --verbose \
     "${PIP_ARGS[@]}" \
     /app/source.git
+}
 
+get_version() {
+  log "Reading version string"
+  "${PYTHON_BIN}/${PYTHON_X_Y}" -Bsc "from importlib.metadata import version;print(version('${ENTRY}'))" \
+    | tee version.txt
+}
+
+cleanup() {
   log "Removing unneeded dependencies"
   "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m pip uninstall \
     -y \
     -r <("${HOST_BIN}/${PYTHON_X_Y}" -B -m pip list --format=freeze)
 
+  log "Deleting bytecode"
   # Delete all bytecode, as the missing bytecode of the stdlib is being built undeterministically when running pip:
   # For some very weird reason, the PYTHONHASHSEED and PYTHONDONTWRITEBYTECODE env vars and the -B flag don't show any effect,
   # and recompiling bytecode using the compileall module is undeterministic as well.
@@ -210,9 +220,6 @@ build_appimage() {
     "${APPDIR}" \
     "${DEST}"
   chmod +x "${DEST}"
-
-  log "Successfully built appimage"
-  sha256sum "${DEST}"
 }
 
 
@@ -220,7 +227,11 @@ build() {
   setup_python
   copy_licenses
   install_application
+  get_version
+  cleanup
   build_appimage
+
+  log "Successfully built appimage"
 }
 
 build
