@@ -38,6 +38,8 @@ CURL_OPTIONS=(
 )
 GH_API="https://api.github.com/repos/${GITHUB_REPOSITORY}"
 GH_UPLOAD="https://uploads.github.com/repos/${GITHUB_REPOSITORY}"
+BODY="${ROOT}/.github/release-body.md"
+
 
 get_release_id() {
   curl -fsSL \
@@ -48,10 +50,20 @@ get_release_id() {
 }
 
 create_release() {
+  local data="$(jq -cnR \
+    --arg tag_name "${TAG}" \
+    --arg name "${GITHUB_REPOSITORY} ${TAG}" \
+    --arg body "$(cat "${BODY}")" \
+    '{
+      "tag_name": $tag_name,
+      "name": $name,
+      "body": $body
+    }'
+  )"
   curl -fsSL \
     -X POST \
     "${CURL_OPTIONS[@]}" \
-    -d "{\"tag_name\":\"${TAG}\",\"name\":\"Streamlink-AppImage ${TAG}\",\"body\":\"\"}" \
+    -d "${data}" \
     "${GH_API}/releases" \
     | jq -re ".id"
 }
