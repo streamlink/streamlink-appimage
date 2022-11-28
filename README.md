@@ -14,6 +14,7 @@ Linux [AppImage][appimage] build config for [Streamlink][streamlink]
    chmod +x ./streamlink-2.0.0-1-cp39-cp39-manylinux2014_x86_64.AppImage
    ```
 3. **Run the AppImage**  
+   Set any command-line parameters supported by Streamlink, e.g. `--version`:  
    ```
    ./streamlink-2.0.0-1-cp39-cp39-manylinux2014_x86_64.AppImage --version
    ```
@@ -22,25 +23,27 @@ Linux [AppImage][appimage] build config for [Streamlink][streamlink]
 
 AppImages are portable apps which are independent of the distro and package management. Just set the executable flag on the AppImage file and run it.
 
+The only requirement is having [FUSE][appimage-fuse] installed for being able to mount the contents of the AppImage's SquashFS, which is done automatically. Also, only glibc-based systems are supported.
+
 Note: Check out [AppImageLauncher][appimagelauncher], which automates the setup and system integration of AppImages. AppImageLauncher may also be available via your distro's package management.
 
 Additional information, like for example how to inspect the AppImage contents or how to extract the contents if [FUSE][appimage-fuse] is not available on your system, can be found in the [AppImage documentation][appimage-documentation].
 
 ### About
 
-These AppImages are built using the [`streamlink/appimage-buildenv-*`][streamlink-appimage-buildenv] containers, which are based on the [`pypa/manylinux`][manylinux] project and the [`manylinux2014`][manylinux2014] platform, which is based on CentOS 7. The pre-built Python 3.9 install and its needed runtime libraries are copied from the docker container (see the manylinux build files and CentOS 7 packages for the available sources) into the AppImages, in addition to the main Python application code, namely Streamlink and its dependencies, which are pulled from PyPI.
+These AppImages are built using the [`streamlink/appimage-buildenv-*`][streamlink-appimage-buildenv] containers, which are based on the [`pypa/manylinux`][manylinux] project and the [`manylinux2014`][manylinux2014] platform, which is based on CentOS 7. The pre-built Python install and its needed runtime libraries are copied from the docker image (see the manylinux build files) into the AppImages, in addition to the main Python application code, namely Streamlink and its dependencies, which are pulled from GitHub and PyPI.
 
 ### Build
 
-Requirements: `jq`, `docker`  
-Architectures currently supported: `x86_64`, `i686`, `aarch64`
+Requirements: `git`, `jq`, `docker`  
+Supported architectures: `x86_64`, `i686`, `aarch64`
 
 ```bash
 # Build
-./build.sh $ARCH
+./build.sh [$ARCH] [$GITREPO] [$GITREF]
 
 # Get new list of Python dependencies (for updating config.json)
-./get-dependencies.sh streamlink==$VERSION $ARCH
+./get-dependencies.sh [$ARCH] [$GITREPO] [$GITREF]
 ```
 
 The AppImages are reproducible when `SOURCE_DATE_EPOCH` is set:
