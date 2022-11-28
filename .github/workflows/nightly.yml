@@ -1,0 +1,33 @@
+name: Nightly builds
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        arch:
+          - aarch64
+          - i686
+          - x86_64
+    steps:
+      - uses: actions/checkout@v3
+      - name: docker qemu multi-arch
+        if: matrix.arch != 'x86_64'
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset --persistent yes
+      - name: Build
+        run: |
+          SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh ${{ matrix.arch }} "" master
+      - name: Get file name
+        id: vars
+        run: |
+          echo "file_name=$(cd dist && ls *.*)" >> $GITHUB_OUTPUT
+      - uses: actions/upload-artifact@v3
+        with:
+          name: ${{ steps.vars.outputs.file_name }}
+          path: dist/*
