@@ -3,19 +3,38 @@ Streamlink AppImage
 
 Linux [AppImage][appimage] build config for [Streamlink][streamlink]
 
+### Contents
+
+- a Python environment
+- Streamlink and its dependencies
+
+### Supported architectures
+
+- x86_64
+- i686
+- aarch64
+
 ### How to
 
-1. [Download the latest Streamlink AppImage from the Github releases page.][releases]
-2. **Set the executable flag**  
-   This can either be done via a GUI or command line shell.  
+1. [Download the latest Streamlink AppImage matching your CPU architecture][releases]
+
+   If unsure, run `uname -m` to check the CPU's architecture.
+
+2. **Set the executable flag**
+
+   This can either be done in a regular file browser, or a command line shell via `chmod +x filename`.
+
    ```bash
-   # Note that all AppImage release file names include the
-   # release version, Python version, platform name and CPU architecture
+   # AppImage file names include the release version, Python version, platform name and CPU architecture
    chmod +x ./streamlink-2.0.0-1-cp39-cp39-manylinux2014_x86_64.AppImage
    ```
-3. **Run the AppImage**  
-   Set any command-line parameters supported by Streamlink, e.g. `--version`:  
-   ```
+
+3. **Run the AppImage**
+
+   Set any command-line parameters supported by Streamlink, e.g. `--version`:
+
+   ```bash
+   # Run the Streamlink AppImage with any parameter supported by Streamlink
    ./streamlink-2.0.0-1-cp39-cp39-manylinux2014_x86_64.AppImage --version
    ```
 
@@ -31,7 +50,7 @@ Additional information, like for example how to inspect the AppImage contents or
 
 ### About
 
-These AppImages are built using the [`streamlink/appimage-buildenv-*`][streamlink-appimage-buildenv] containers, which are based on the [`pypa/manylinux`][manylinux] project and the [`manylinux2014`][manylinux2014] platform, which is based on CentOS 7. The pre-built Python install and its needed runtime libraries are copied from the docker image (see the manylinux build files) into the AppImages, in addition to the main Python application code, namely Streamlink and its dependencies, which are pulled from GitHub and PyPI.
+These AppImages are built using the [`streamlink/appimage-buildenv-*`][streamlink-appimage-buildenv] docker images, which are based on the [`pypa/manylinux`][manylinux] project and the [`manylinux2014`][manylinux2014] platform, which is based on CentOS 7. The pre-built Python install and its needed runtime libraries are copied from the docker image (see the manylinux build files) into the AppImages, in addition to the main Python application code, namely Streamlink and its dependencies, which are pulled from GitHub and PyPI.
 
 ### Build
 
