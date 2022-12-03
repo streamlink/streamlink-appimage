@@ -1,10 +1,11 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
-## master
+## 5.1.2-1 (2022-12-03)
 
 - Rewritten the build config and scripts in order to be more consistent with the window-builds repository
 - Switched to building Streamlink from git instead of PyPI
+- Updated Streamlink to 5.1.2, updated its dependencies
 - Updated build images, with new SquashFS and appimagetool versions
 - Added nightly builds
 - Added changelog
