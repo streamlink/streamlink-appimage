@@ -10,7 +10,7 @@
   },
   "builds": {
     "aarch64": {
-      "image": "ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:509543ba36a76aa74e1a4c2b6f3de6931db5fa81e4a2c51631c68c7de3fd3d46",
+      "image": "ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:8af812f740ade6b0f6be2c1ca58155ef958c5410abb6373e727e00e5e0e59a92",
       "tag": "manylinux2014_aarch64",
       "abi": "cp310-cp310",
       "dependencies": {
@@ -30,7 +30,7 @@
       }
     },
     "i686": {
-      "image": "ghcr.io/streamlink/appimage-buildenv-i686@sha256:c54973bb8e2b73c3a28724dc382f1aca68efe0a7f4d5e36bfe800c403205f277",
+      "image": "ghcr.io/streamlink/appimage-buildenv-i686@sha256:59a41fd2a084246877c284d3b0e67524d80f9f6e81a7391dc2e2d43fef519a08",
       "tag": "manylinux2014_i686",
       "abi": "cp310-cp310",
       "dependencies": {
@@ -50,7 +50,7 @@
       }
     },
     "x86_64": {
-      "image": "ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:c53bb666bd2b53e0ad967d80d82d7830d6c95d6c8f6e2a64e690a18a589c81d0",
+      "image": "ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:66658390b152087f77a488d2bf57b5202bb13a8760c54bd62e3e987d7fdecbc9",
       "tag": "manylinux2014_x86_64",
       "abi": "cp310-cp310",
       "dependencies": {
