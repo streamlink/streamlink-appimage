@@ -130,6 +130,7 @@ install_application() {
   log "Installing dependencies"
   "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m pip install \
     "${PIP_ARGS[@]}" \
+    --no-compile \
     --require-hashes \
     -r requirements.txt
 
@@ -139,6 +140,7 @@ install_application() {
   "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m pip install \
     --verbose \
     "${PIP_ARGS[@]}" \
+    --no-compile \
     /app/source.git
 }
 
@@ -153,14 +155,11 @@ cleanup() {
   "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m pip uninstall \
     -y \
     -r <("${HOST_BIN}/${PYTHON_X_Y}" -B -m pip list --format=freeze)
+}
 
-  log "Deleting bytecode"
-  # Delete all bytecode, as the missing bytecode of the stdlib is being built undeterministically when running pip:
-  # For some very weird reason, the PYTHONHASHSEED and PYTHONDONTWRITEBYTECODE env vars and the -B flag don't show any effect,
-  # and recompiling bytecode using the compileall module is undeterministic as well.
-  # So just delete all bytecode for now. :(
-  # This seems to be only the case on cp38, cp38 and cp310
-  find "${PYTHON_LIB}" -type d -name __pycache__ -print0 | xargs -0 rm -r
+build_bytecode() {
+  log "Building bytecode"
+  "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m compileall -q -j1 -f -r9999 -x 'lib2to3|test' "${PYTHON_LIB}"
 }
 
 
@@ -229,6 +228,7 @@ build() {
   install_application
   get_version
   cleanup
+  build_bytecode
   build_appimage
 
   log "Successfully built appimage"
