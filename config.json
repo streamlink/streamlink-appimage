@@ -12,13 +12,13 @@
     "aarch64": {
       "image": "ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:8af812f740ade6b0f6be2c1ca58155ef958c5410abb6373e727e00e5e0e59a92",
       "tag": "manylinux2014_aarch64",
-      "abi": "cp310-cp310",
+      "abi": "cp311-cp311",
       "dependencies": {
         "certifi": "2022.12.7 --hash=sha256:4ad3232f5e926d6718ec31cfc1fcadfde020920e278684144551c91769c7bc18",
         "charset-normalizer": "2.1.1 --hash=sha256:83e9a75d1911279afd89352c68b45348559d1fc0506b054b346651b5e7fee29f",
         "idna": "3.4 --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2",
         "isodate": "0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96",
-        "lxml": "4.9.1 --hash=sha256:d9fc0bf3ff86c17348dfc5d322f627d78273eba545db865c3cd14b3f19e57fa5",
+        "lxml": "4.9.2 --hash=sha256:2a87fa548561d2f4643c99cd13131acb607ddabb70682dcf1dff5f71f781a4bf",
         "pycountry": "22.3.5 --hash=sha256:b2163a246c585894d808f18783e19137cb70a0c18fb36748dc01fc6f109c1646",
         "pycryptodome": "3.16.0 --hash=sha256:69adf32522b75968e1cbf25b5d83e87c04cd9a55610ce1e4a19012e58e7e4023",
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
@@ -32,13 +32,13 @@
     "i686": {
       "image": "ghcr.io/streamlink/appimage-buildenv-i686@sha256:59a41fd2a084246877c284d3b0e67524d80f9f6e81a7391dc2e2d43fef519a08",
       "tag": "manylinux2014_i686",
-      "abi": "cp310-cp310",
+      "abi": "cp311-cp311",
       "dependencies": {
         "certifi": "2022.12.7 --hash=sha256:4ad3232f5e926d6718ec31cfc1fcadfde020920e278684144551c91769c7bc18",
         "charset-normalizer": "2.1.1 --hash=sha256:83e9a75d1911279afd89352c68b45348559d1fc0506b054b346651b5e7fee29f",
         "idna": "3.4 --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2",
         "isodate": "0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96",
-        "lxml": "4.9.1 --hash=sha256:f9ced82717c7ec65a67667bb05865ffe38af0e835cdd78728f1209c8fffe0cad",
+        "lxml": "4.9.2 --hash=sha256:c83203addf554215463b59f6399835201999b5e48019dc17f182ed5ad87205c9",
         "pycountry": "22.3.5 --hash=sha256:b2163a246c585894d808f18783e19137cb70a0c18fb36748dc01fc6f109c1646",
         "pycryptodome": "3.16.0 --hash=sha256:d67a2d2fe344953e4572a7d30668cceb516b04287b8638170d562065e53ee2e0",
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
@@ -52,13 +52,13 @@
     "x86_64": {
       "image": "ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:66658390b152087f77a488d2bf57b5202bb13a8760c54bd62e3e987d7fdecbc9",
       "tag": "manylinux2014_x86_64",
-      "abi": "cp310-cp310",
+      "abi": "cp311-cp311",
       "dependencies": {
         "certifi": "2022.12.7 --hash=sha256:4ad3232f5e926d6718ec31cfc1fcadfde020920e278684144551c91769c7bc18",
         "charset-normalizer": "2.1.1 --hash=sha256:83e9a75d1911279afd89352c68b45348559d1fc0506b054b346651b5e7fee29f",
         "idna": "3.4 --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2",
         "isodate": "0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96",
-        "lxml": "4.9.1 --hash=sha256:e5f66bdf0976ec667fc4594d2812a00b07ed14d1b44259d19a41ae3fff99f2b8",
+        "lxml": "4.9.2 --hash=sha256:d6b430a9938a5a5d85fc107d852262ddcd48602c120e3dbb02137c83d212b380",
         "pycountry": "22.3.5 --hash=sha256:b2163a246c585894d808f18783e19137cb70a0c18fb36748dc01fc6f109c1646",
         "pycryptodome": "3.16.0 --hash=sha256:e750a21d8a265b1f9bfb1a28822995ea33511ba7db5e2b55f41fb30781d0d073",
         "PySocks": "1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5",
