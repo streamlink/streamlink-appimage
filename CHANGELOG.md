@@ -1,6 +1,12 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 5.1.2-2 (2022-12-14)
+
+- Switched from Python 3.10 to Python 3.11
+- Updated build images, with Python 3.11.1
+- Added back compiled Python bytecode of stdlib and site-packages
+
 ## 5.1.2-1 (2022-12-03)
 
 - Rewritten the build config and scripts in order to be more consistent with the window-builds repository
