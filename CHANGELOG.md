@@ -1,6 +1,11 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 5.4.0-1 (2023-04-12)
+
+- Updated Streamlink to 5.4.0, updated its dependencies
+- Updated build images, with Python 3.11.3
+
 ## 5.3.1-1 (2023-02-25)
 
 - Updated Streamlink to 5.3.1
