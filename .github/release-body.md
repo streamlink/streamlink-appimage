@@ -1,18 +1,18 @@
 ## 📦 Release contents
 
-Linux AppImages for Streamlink, which contain
+Linux AppImages for [Streamlink](https://github.com/streamlink/streamlink), which contain
 
 - a Python environment
 - Streamlink and its dependencies
 
 Please see the [README.md](https://github.com/streamlink/streamlink-appimage) on how to set up and use AppImages.
 
-## 📝 Source code and changelog
+For more information, please see Streamlink's [install docs](https://streamlink.github.io/install.html#linux-appimages).
 
-Streamlink's own git repository and issue tracker can be found at [streamlink/streamlink](https://github.com/streamlink/streamlink).  
-Before continuing, please read [Streamlink's changelog of this release](https://streamlink.github.io/changelog.html).
+## 📝 Changelog
 
-The streamlink-appimage changelog can be found [here](https://github.com/streamlink/streamlink-appimage/blob/master/CHANGELOG.md).
+- [streamlink/streamlink](https://github.com/streamlink/streamlink/releases) (release changelog)
+- [streamlink/streamlink-appimage](https://github.com/streamlink/streamlink-appimage/blob/master/CHANGELOG.md) (packaging changelog)
 
 ## ⚙️ How to use
 
