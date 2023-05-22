@@ -1,6 +1,10 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 5.5.1-2 (2023-05-22)
+
+- Updated dependencies ([urllib3 2.x](https://urllib3.readthedocs.io/en/2.0.2/v2-migration-guide.html#what-are-the-important-changes), [requests 2.31.0](https://github.com/psf/requests/releases/tag/v2.31.0))
+
 ## 5.5.1-1 (2023-05-08)
 
 - Updated Streamlink to 5.5.1, updated its dependencies
