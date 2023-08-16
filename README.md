@@ -62,7 +62,7 @@ Supported architectures: `x86_64`, `i686`, `aarch64`
 ./build.sh [$ARCH] [$GITREPO] [$GITREF]
 
 # Get new list of Python dependencies (for updating config.json)
-./get-dependencies.sh [$ARCH] [$GITREPO] [$GITREF]
+./get-dependencies.sh [$ARCH] [$GITREPO] [$GITREF] [$OPT_DEPS]
 ```
 
 The AppImages are reproducible when `SOURCE_DATE_EPOCH` is set:

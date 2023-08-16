@@ -2,8 +2,10 @@
 set -e
 
 ARCH="${1:-$(uname -m)}"
-GITREPO="${2}"
-GITREF="${3}"
+GITREPO="${2:-}"
+GITREF="${3:-}"
+OPT_DEPSPEC=("${@}")
+OPT_DEPSPEC=("${OPT_DEPSPEC[@]:3}")
 
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || dirname "$(readlink -f "${0}")")
 CONFIG="${ROOT}/config.json"
@@ -55,6 +57,7 @@ get_docker_image() {
 
 get_deps() {
   log "Finding dependencies (${ARCH} / ${abi}) for ${git_repo}@${git_ref}"
+  local deps=("git+${git_repo}@${git_ref}" "${OPT_DEPSPEC[@]}")
   local script=$(cat <<EOF
 PYTHON="/opt/python/${abi}/bin/python"
 REPORT=\$(mktemp)
@@ -68,7 +71,7 @@ REPORT=\$(mktemp)
   --ignore-installed \
   --dry-run \
   --report="\${REPORT}" \
-  "git+${git_repo}@${git_ref}"
+  "\$@"
 
 jq -C \
   '
@@ -92,7 +95,7 @@ EOF
     --interactive \
     --rm \
     "${docker_image}" \
-    /usr/bin/bash <<< "${script}"
+    /usr/bin/bash /dev/stdin "${deps[@]}" <<< "${script}"
 }
 
 
