@@ -1,12 +1,12 @@
 {
   "app": {
     "name": "streamlink",
-    "rel": "2",
+    "rel": "1",
     "entry": "streamlink"
   },
   "git": {
     "repo": "https://github.com/streamlink/streamlink.git",
-    "ref": "6.1.0"
+    "ref": "6.2.0"
   },
   "builds": {
     "aarch64": {
