@@ -10,7 +10,8 @@ builds:
     image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:d9180a2b9d55b3ae953ae2756e69905d29862bb7530b1cca2efad74f511c7586
     tag: manylinux2014_aarch64
     abi: cp311-cp311
-    dependency_override: []
+    dependency_override:
+      - lxml==4.9.2
     dependencies:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
       certifi: 2023.7.22 --hash=sha256:92d6037539857d8206b8f6ae472e8b77db8058fec5937a1ef3f54304089edbb9
