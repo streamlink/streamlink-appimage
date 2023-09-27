@@ -10,6 +10,7 @@ builds:
     image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:d9180a2b9d55b3ae953ae2756e69905d29862bb7530b1cca2efad74f511c7586
     tag: manylinux2014_aarch64
     abi: cp311-cp311
+    dependency_override: []
     dependencies:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
       certifi: 2023.7.22 --hash=sha256:92d6037539857d8206b8f6ae472e8b77db8058fec5937a1ef3f54304089edbb9
@@ -38,6 +39,7 @@ builds:
     image: ghcr.io/streamlink/appimage-buildenv-i686@sha256:446d030c9af1fcd8c3dcb1dfe4c9ae3af28e6640b603584b24b6a38666a37566
     tag: manylinux2014_i686
     abi: cp311-cp311
+    dependency_override: []
     dependencies:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
       certifi: 2023.7.22 --hash=sha256:92d6037539857d8206b8f6ae472e8b77db8058fec5937a1ef3f54304089edbb9
@@ -66,6 +68,7 @@ builds:
     image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:8347b2081536723e8d618c6657d3529aca11e87d117a9d7eeb61584714e14bd7
     tag: manylinux2014_x86_64
     abi: cp311-cp311
+    dependency_override: []
     dependencies:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
       certifi: 2023.7.22 --hash=sha256:92d6037539857d8206b8f6ae472e8b77db8058fec5937a1ef3f54304089edbb9

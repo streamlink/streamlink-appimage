@@ -42,6 +42,8 @@ yq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
 git_repo="${GITREPO:-$(yq -r '.git.repo' <<< "${config}")}"
 git_ref="${GITREF:-$(yq -r '.git.ref' <<< "${config}")}"
 
+dependency_override=($(yq -r ".builds[\"${ARCH}\"].dependency_override[]" <<< "${config}"))
+
 docker_image=$(yq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
 abi=$(yq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
 
@@ -58,7 +60,7 @@ get_docker_image() {
 
 get_deps() {
   log "Finding dependencies (${ARCH} / ${abi}) for ${git_repo}@${git_ref}"
-  local deps=("git+${git_repo}@${git_ref}" "${OPT_DEPSPEC[@]}")
+  local deps=("git+${git_repo}@${git_ref}" "${dependency_override[@]}" "${OPT_DEPSPEC[@]}")
   local script=$(cat <<EOF
 PYTHON="/opt/python/${abi}/bin/python"
 REPORT=\$(mktemp)
