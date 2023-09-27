@@ -11,19 +11,20 @@ builds:
     tag: manylinux2014_aarch64
     abi: cp311-cp311
     dependency_override:
+      # no manylinux2014/manylinux_2_17 wheels for lxml==4.9.3 on aarch64
+      # https://bugs.launchpad.net/lxml/+bug/2028154
       - lxml==4.9.2
     dependencies:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
       certifi: 2023.7.22 --hash=sha256:92d6037539857d8206b8f6ae472e8b77db8058fec5937a1ef3f54304089edbb9
       charset-normalizer: 3.2.0 --hash=sha256:f25c229a6ba38a35ae6e25ca1264621cc25d4d38dca2942a7fce0b67a4efe918
-      exceptiongroup: 1.1.3 --hash=sha256:343280667a4585d195ca1cf9cef84a4e178c4b6cf2274caef9859782b567d5e3
       h11: 0.14.0 --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
       idna: 3.4 --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2
       isodate: 0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96
       lxml: 4.9.2 --hash=sha256:2a87fa548561d2f4643c99cd13131acb607ddabb70682dcf1dff5f71f781a4bf
       outcome: 1.2.0 --hash=sha256:c4ab89a56575d6d38a05aa16daeaa333109c1f96167aba8901ab18b6b5e0f7f5
       pycountry: 22.3.5 --hash=sha256:b2163a246c585894d808f18783e19137cb70a0c18fb36748dc01fc6f109c1646
-      pycryptodome: 3.18.0 --hash=sha256:10da29526a2a927c7d64b8f34592f461d92ae55fc97981aab5bbcde8cb465bb6
+      pycryptodome: 3.19.0 --hash=sha256:d49a6c715d8cceffedabb6adb7e0cbf41ae1a2ff4adaeec9432074a80627dea1
       PySocks: 1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5
       requests: 2.31.0 --hash=sha256:58cd2187c01e70e6e26505bca751777aa9f2ee0b7f4300988b709f44e013003f
       setuptools: 68.2.2 --hash=sha256:b454a35605876da60632df1a60f736524eb73cc47bbc9f3f1ef1b644de74fd2a
@@ -31,9 +32,9 @@ builds:
       sniffio: 1.3.0 --hash=sha256:eecefdce1e5bbfb7ad2eeaabf7c1eeb404d7757c379bd1f7e5cce9d8bf425384
       sortedcontainers: 2.4.0 --hash=sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0
       trio: 0.22.2 --hash=sha256:f43da357620e5872b3d940a2e3589aa251fd3f881b65a608d742e00809b1ec38
-      trio-websocket: 0.10.4 --hash=sha256:c7a620c4013c34b7e4477d89fe76695da1e455e4510a8d7ae13f81c632bdce1d
-      typing_extensions: 4.7.1 --hash=sha256:440d5dd3af93b060174bf433bccd69b0babc3b15b1a8dca43789fd7f61514b36
-      urllib3: 2.0.4 --hash=sha256:de7df1803967d2c2a98e4b11bb7d6bd9210474c46e8a0401514e3a42a75ebde4
+      trio-websocket: 0.11.1 --hash=sha256:520d046b0d030cf970b8b2b2e00c4c2245b3807853ecd44214acd33d74581638
+      typing_extensions: 4.8.0 --hash=sha256:8f92fc8806f9a6b641eaa5318da32b44d401efaac0f6678c9bc448ba3605faa0
+      urllib3: 2.0.5 --hash=sha256:ef16afa8ba34a1f989db38e1dbbe0c302e4289a47856990d0682e374563ce35e
       websocket-client: 1.6.3 --hash=sha256:6cfc30d051ebabb73a5fa246efdcc14c8fbebbd0330f8984ac3bb6d9edd2ad03
       wsproto: 1.2.0 --hash=sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736
   i686:
@@ -45,14 +46,13 @@ builds:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
       certifi: 2023.7.22 --hash=sha256:92d6037539857d8206b8f6ae472e8b77db8058fec5937a1ef3f54304089edbb9
       charset-normalizer: 3.2.0 --hash=sha256:9bd9b3b31adcb054116447ea22caa61a285d92e94d710aa5ec97992ff5eb7cf3
-      exceptiongroup: 1.1.3 --hash=sha256:343280667a4585d195ca1cf9cef84a4e178c4b6cf2274caef9859782b567d5e3
       h11: 0.14.0 --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
       idna: 3.4 --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2
       isodate: 0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96
-      lxml: 4.9.2 --hash=sha256:c83203addf554215463b59f6399835201999b5e48019dc17f182ed5ad87205c9
+      lxml: 4.9.3 --hash=sha256:57d6ba0ca2b0c462f339640d22882acc711de224d769edf29962b09f77129cbf
       outcome: 1.2.0 --hash=sha256:c4ab89a56575d6d38a05aa16daeaa333109c1f96167aba8901ab18b6b5e0f7f5
       pycountry: 22.3.5 --hash=sha256:b2163a246c585894d808f18783e19137cb70a0c18fb36748dc01fc6f109c1646
-      pycryptodome: 3.18.0 --hash=sha256:4944defabe2ace4803f99543445c27dd1edbe86d7d4edb87b256476a91e9ffa4
+      pycryptodome: 3.19.0 --hash=sha256:d033947e7fd3e2ba9a031cb2d267251620964705a013c5a461fa5233cc025270
       PySocks: 1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5
       requests: 2.31.0 --hash=sha256:58cd2187c01e70e6e26505bca751777aa9f2ee0b7f4300988b709f44e013003f
       setuptools: 68.2.2 --hash=sha256:b454a35605876da60632df1a60f736524eb73cc47bbc9f3f1ef1b644de74fd2a
@@ -60,9 +60,9 @@ builds:
       sniffio: 1.3.0 --hash=sha256:eecefdce1e5bbfb7ad2eeaabf7c1eeb404d7757c379bd1f7e5cce9d8bf425384
       sortedcontainers: 2.4.0 --hash=sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0
       trio: 0.22.2 --hash=sha256:f43da357620e5872b3d940a2e3589aa251fd3f881b65a608d742e00809b1ec38
-      trio-websocket: 0.10.4 --hash=sha256:c7a620c4013c34b7e4477d89fe76695da1e455e4510a8d7ae13f81c632bdce1d
-      typing_extensions: 4.7.1 --hash=sha256:440d5dd3af93b060174bf433bccd69b0babc3b15b1a8dca43789fd7f61514b36
-      urllib3: 2.0.4 --hash=sha256:de7df1803967d2c2a98e4b11bb7d6bd9210474c46e8a0401514e3a42a75ebde4
+      trio-websocket: 0.11.1 --hash=sha256:520d046b0d030cf970b8b2b2e00c4c2245b3807853ecd44214acd33d74581638
+      typing_extensions: 4.8.0 --hash=sha256:8f92fc8806f9a6b641eaa5318da32b44d401efaac0f6678c9bc448ba3605faa0
+      urllib3: 2.0.5 --hash=sha256:ef16afa8ba34a1f989db38e1dbbe0c302e4289a47856990d0682e374563ce35e
       websocket-client: 1.6.3 --hash=sha256:6cfc30d051ebabb73a5fa246efdcc14c8fbebbd0330f8984ac3bb6d9edd2ad03
       wsproto: 1.2.0 --hash=sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736
   x86_64:
@@ -74,14 +74,13 @@ builds:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
       certifi: 2023.7.22 --hash=sha256:92d6037539857d8206b8f6ae472e8b77db8058fec5937a1ef3f54304089edbb9
       charset-normalizer: 3.2.0 --hash=sha256:246de67b99b6851627d945db38147d1b209a899311b1305dd84916f2b88526c6
-      exceptiongroup: 1.1.3 --hash=sha256:343280667a4585d195ca1cf9cef84a4e178c4b6cf2274caef9859782b567d5e3
       h11: 0.14.0 --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
       idna: 3.4 --hash=sha256:90b77e79eaa3eba6de819a0c442c0b4ceefc341a7a2ab77d7562bf49f425c5c2
       isodate: 0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96
-      lxml: 4.9.2 --hash=sha256:d6b430a9938a5a5d85fc107d852262ddcd48602c120e3dbb02137c83d212b380
+      lxml: 4.9.3 --hash=sha256:9767e79108424fb6c3edf8f81e6730666a50feb01a328f4a016464a5893f835a
       outcome: 1.2.0 --hash=sha256:c4ab89a56575d6d38a05aa16daeaa333109c1f96167aba8901ab18b6b5e0f7f5
       pycountry: 22.3.5 --hash=sha256:b2163a246c585894d808f18783e19137cb70a0c18fb36748dc01fc6f109c1646
-      pycryptodome: 3.18.0 --hash=sha256:f21efb8438971aa16924790e1c3dba3a33164eb4000106a55baaed522c261acf
+      pycryptodome: 3.19.0 --hash=sha256:e249a784cc98a29c77cea9df54284a44b40cafbfae57636dd2f8775b48af2434
       PySocks: 1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5
       requests: 2.31.0 --hash=sha256:58cd2187c01e70e6e26505bca751777aa9f2ee0b7f4300988b709f44e013003f
       setuptools: 68.2.2 --hash=sha256:b454a35605876da60632df1a60f736524eb73cc47bbc9f3f1ef1b644de74fd2a
@@ -89,8 +88,8 @@ builds:
       sniffio: 1.3.0 --hash=sha256:eecefdce1e5bbfb7ad2eeaabf7c1eeb404d7757c379bd1f7e5cce9d8bf425384
       sortedcontainers: 2.4.0 --hash=sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0
       trio: 0.22.2 --hash=sha256:f43da357620e5872b3d940a2e3589aa251fd3f881b65a608d742e00809b1ec38
-      trio-websocket: 0.10.4 --hash=sha256:c7a620c4013c34b7e4477d89fe76695da1e455e4510a8d7ae13f81c632bdce1d
-      typing_extensions: 4.7.1 --hash=sha256:440d5dd3af93b060174bf433bccd69b0babc3b15b1a8dca43789fd7f61514b36
-      urllib3: 2.0.4 --hash=sha256:de7df1803967d2c2a98e4b11bb7d6bd9210474c46e8a0401514e3a42a75ebde4
+      trio-websocket: 0.11.1 --hash=sha256:520d046b0d030cf970b8b2b2e00c4c2245b3807853ecd44214acd33d74581638
+      typing_extensions: 4.8.0 --hash=sha256:8f92fc8806f9a6b641eaa5318da32b44d401efaac0f6678c9bc448ba3605faa0
+      urllib3: 2.0.5 --hash=sha256:ef16afa8ba34a1f989db38e1dbbe0c302e4289a47856990d0682e374563ce35e
       websocket-client: 1.6.3 --hash=sha256:6cfc30d051ebabb73a5fa246efdcc14c8fbebbd0330f8984ac3bb6d9edd2ad03
       wsproto: 1.2.0 --hash=sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736
