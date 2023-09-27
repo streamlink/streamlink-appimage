@@ -54,14 +54,14 @@ These AppImages are built using the [`streamlink/appimage-buildenv-*`][streamlin
 
 ### Build
 
-Requirements: `git`, `jq`, `docker`  
+Requirements: `git`, `jq`, `yq`, `docker`  
 Supported architectures: `x86_64`, `i686`, `aarch64`
 
 ```bash
 # Build
 ./build.sh [$ARCH] [$GITREPO] [$GITREF]
 
-# Get new list of Python dependencies (for updating config.json)
+# Get new list of Python dependencies (for updating config.yml)
 ./get-dependencies.sh [$ARCH] [$GITREPO] [$GITREF] [$OPT_DEPS]
 ```
 

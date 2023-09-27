@@ -8,10 +8,11 @@ OPT_DEPSPEC=("${@}")
 OPT_DEPSPEC=("${OPT_DEPSPEC[@]:3}")
 
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || dirname "$(readlink -f "${0}")")
-CONFIG="${ROOT}/config.json"
+CONFIG="${ROOT}/config.yml"
 
 declare -A DEPS=(
   [jq]=jq
+  [yq]=yq
   [docker]=docker
 )
 
@@ -35,14 +36,14 @@ done
 
 config=$(cat "${CONFIG}")
 
-jq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
+yq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
  || err "Unsupported arch"
 
-git_repo="${GITREPO:-$(jq -r '.git.repo' <<< "${config}")}"
-git_ref="${GITREF:-$(jq -r '.git.ref' <<< "${config}")}"
+git_repo="${GITREPO:-$(yq -r '.git.repo' <<< "${config}")}"
+git_ref="${GITREF:-$(yq -r '.git.ref' <<< "${config}")}"
 
-docker_image=$(jq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
-abi=$(jq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
+docker_image=$(yq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
+abi=$(yq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
 
 
 # ----
@@ -73,7 +74,7 @@ REPORT=\$(mktemp)
   --report="\${REPORT}" \
   "\$@"
 
-jq -C \
+yq -y -C \
   '
     [
      .install[]
@@ -86,6 +87,7 @@ jq -C \
     ]
     | sort_by(.key | ascii_upcase)
     | from_entries
+    | {"dependencies": .}
   ' \
   "\${REPORT}"
 EOF

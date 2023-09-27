@@ -6,7 +6,7 @@ GITREPO="${2}"
 GITREF="${3}"
 
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || dirname "$(readlink -f "${0}")")
-CONFIG="${ROOT}/config.json"
+CONFIG="${ROOT}/config.yml"
 DIR_APP="${ROOT}/app"
 DIR_DIST="${ROOT}/dist"
 SCRIPT_DOCKER="${ROOT}/build-docker.sh"
@@ -15,6 +15,7 @@ GIT_FETCHDEPTH=300
 declare -A DEPS=(
   [git]=git
   [jq]=jq
+  [yq]=yq
   [docker]=docker
 )
 
@@ -38,18 +39,18 @@ done
 
 config=$(cat "${CONFIG}")
 
-jq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
+yq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
  || err "Unsupported arch"
 
-app_name=$(jq -r '.app.name' <<< "${config}")
-app_rel=$(jq -r '.app.rel' <<< "${config}")
-app_entry=$(jq -r '.app.entry' <<< "${config}")
-git_repo="${GITREPO:-$(jq -r '.git.repo' <<< "${config}")}"
-git_ref="${GITREF:-$(jq -r '.git.ref' <<< "${config}")}"
+app_name=$(yq -r '.app.name' <<< "${config}")
+app_rel=$(yq -r '.app.rel' <<< "${config}")
+app_entry=$(yq -r '.app.entry' <<< "${config}")
+git_repo="${GITREPO:-$(yq -r '.git.repo' <<< "${config}")}"
+git_ref="${GITREF:-$(yq -r '.git.ref' <<< "${config}")}"
 
-docker_image=$(jq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
-tag=$(jq -r ".builds[\"${ARCH}\"].tag" <<< "${config}")
-abi=$(jq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
+docker_image=$(yq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
+tag=$(yq -r ".builds[\"${ARCH}\"].tag" <<< "${config}")
+abi=$(yq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
 
 mkdir -p "${DIR_DIST}"
 tempdir=$(mktemp -d) && trap "rm -rf ${tempdir}" EXIT || exit 255
@@ -89,7 +90,7 @@ prepare_tempdir() {
   cp -vt "${tempdir}" "${SCRIPT_DOCKER}"
 
   log "Building requirements.txt"
-  jq -r ".builds[\"${ARCH}\"].dependencies | to_entries | .[] | \"\(.key)==\(.value)\"" <<< "${config}" \
+  yq -r ".builds[\"${ARCH}\"].dependencies | to_entries | .[] | \"\(.key)==\(.value)\"" <<< "${config}" \
     > "${tempdir}/requirements.txt"
 
   log "Installing AppDir files"
