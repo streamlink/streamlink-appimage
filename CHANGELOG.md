@@ -1,6 +1,12 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 6.2.1-1 (2023-10-03)
+
+- Updated Streamlink to 6.2.1, updated its dependencies
+- Updated build images, with Python 3.11.5 and OpenSSL 3.0.11
+- Switched build-config format from JSON to YML
+
 ## 6.2.0-1 (2023-09-14)
 
 - Updated Streamlink to 6.2.0, updated its dependencies

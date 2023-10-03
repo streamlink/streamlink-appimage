@@ -1,10 +1,10 @@
 app:
   name: streamlink
-  rel: '1'
+  rel: 1
   entry: streamlink
 git:
   repo: https://github.com/streamlink/streamlink.git
-  ref: 6.2.0
+  ref: 6.2.1
 builds:
   aarch64:
     image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:d9180a2b9d55b3ae953ae2756e69905d29862bb7530b1cca2efad74f511c7586
