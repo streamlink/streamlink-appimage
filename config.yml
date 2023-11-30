@@ -14,8 +14,11 @@ builds:
       # no manylinux2014/manylinux_2_17 wheels for lxml==4.9.3 on aarch64
       # https://bugs.launchpad.net/lxml/+bug/2028154
       - lxml==4.9.2
+      # optional dependency of urllib3
+      - brotli==1.1.0
     dependencies:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
+      Brotli: 1.1.0 --hash=sha256:30924eb4c57903d5a7526b08ef4a584acc22ab1ffa085faceb521521d2de32dd
       certifi: 2023.11.17 --hash=sha256:e036ab49d5b79556f99cfc2d9320b34cfbe5be05c5871b51de9329f0603b0474
       charset-normalizer: 3.3.2 --hash=sha256:f27273b60488abe721a075bcca6d7f3964f9f6f067c8c4c605743023d7d3944f
       h11: 0.14.0 --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
@@ -41,9 +44,12 @@ builds:
     image: ghcr.io/streamlink/appimage-buildenv-i686@sha256:a8170149b1fa4b21efd8535adf4f3611346521c1d1073def12a8fd1f821753d3
     tag: manylinux2014_i686
     abi: cp311-cp311
-    dependency_override: []
+    dependency_override:
+      # optional dependency of urllib3
+      - brotli==1.1.0
     dependencies:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
+      Brotli: 1.1.0 --hash=sha256:524f35912131cc2cabb00edfd8d573b07f2d9f21fa824bd3fb19725a9cf06327
       certifi: 2023.11.17 --hash=sha256:e036ab49d5b79556f99cfc2d9320b34cfbe5be05c5871b51de9329f0603b0474
       charset-normalizer: 3.3.2 --hash=sha256:4a78b2b446bd7c934f5dcedc588903fb2f5eec172f3d29e52a9096a43722adfc
       h11: 0.14.0 --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
@@ -69,9 +75,12 @@ builds:
     image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:1dfd7e4d0740246d1d01ec0908cc6b94a638ea477ea540354bfd72fff303bf81
     tag: manylinux2014_x86_64
     abi: cp311-cp311
-    dependency_override: []
+    dependency_override:
+      # optional dependency of urllib3
+      - brotli==1.1.0
     dependencies:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
+      Brotli: 1.1.0 --hash=sha256:a469274ad18dc0e4d316eefa616d1d0c2ff9da369af19fa6f3daa4f09671fd61
       certifi: 2023.11.17 --hash=sha256:e036ab49d5b79556f99cfc2d9320b34cfbe5be05c5871b51de9329f0603b0474
       charset-normalizer: 3.3.2 --hash=sha256:753f10e867343b4511128c6ed8c82f7bec3bd026875576dfd88483c5c73b2fd8
       h11: 0.14.0 --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
