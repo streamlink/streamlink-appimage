@@ -1,6 +1,12 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 6.5.0-1 (2023-12-16)
+
+- Updated Streamlink to 6.5.0, updated its dependencies
+- Updated build images, with Python 3.11.7
+- Added brotli dependency
+
 ## 6.4.2-1 (2023-11-28)
 
 - Updated Streamlink to 6.4.2
