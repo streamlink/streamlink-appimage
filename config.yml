@@ -11,9 +11,6 @@ builds:
     tag: manylinux2014_aarch64
     abi: cp311-cp311
     dependency_override:
-      # no manylinux2014/manylinux_2_17 wheels for lxml==4.9.3 on aarch64
-      # https://bugs.launchpad.net/lxml/+bug/2028154
-      - lxml==4.9.2
       # optional dependency of urllib3
       - brotli==1.1.0
     dependencies:
@@ -24,7 +21,7 @@ builds:
       h11: 0.14.0 --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
       idna: 3.6 --hash=sha256:c05567e9c24a6b9faaa835c4821bad0590fbb9d5779e7caa6e1cc4978e7eb24f
       isodate: 0.6.1 --hash=sha256:0751eece944162659049d35f4f549ed815792b38793f07cf73381c1c87cbed96
-      lxml: 4.9.2 --hash=sha256:2a87fa548561d2f4643c99cd13131acb607ddabb70682dcf1dff5f71f781a4bf
+      lxml: 4.9.4 --hash=sha256:4855161013dfb2b762e02b3f4d4a21cc7c6aec13c69e3bffbf5022b3e708dd97
       outcome: 1.3.0.post0 --hash=sha256:e771c5ce06d1415e356078d3bdd68523f284b4ce5419828922b6871e65eda82b
       pycountry: 23.12.11 --hash=sha256:2ff91cff4f40ff61086e773d61e72005fe95de4a57bfc765509db05695dc50ab
       pycryptodome: 3.19.0 --hash=sha256:d49a6c715d8cceffedabb6adb7e0cbf41ae1a2ff4adaeec9432074a80627dea1
