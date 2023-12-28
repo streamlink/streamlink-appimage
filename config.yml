@@ -11,8 +11,8 @@ builds:
     tag: manylinux2014_aarch64
     abi: cp311-cp311
     dependency_override:
-      # optional dependency of urllib3
-      - brotli==1.1.0
+      # https://github.com/urllib3/urllib3/blob/2.0.6/pyproject.toml#L43
+      - brotli>=1.0.9  # optional urllib3 dependency
     dependencies:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
       Brotli: 1.1.0 --hash=sha256:30924eb4c57903d5a7526b08ef4a584acc22ab1ffa085faceb521521d2de32dd
@@ -41,8 +41,8 @@ builds:
     tag: manylinux2014_i686
     abi: cp311-cp311
     dependency_override:
-      # optional dependency of urllib3
-      - brotli==1.1.0
+      # https://github.com/urllib3/urllib3/blob/2.0.6/pyproject.toml#L43
+      - brotli>=1.0.9  # optional urllib3 dependency
     dependencies:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
       Brotli: 1.1.0 --hash=sha256:524f35912131cc2cabb00edfd8d573b07f2d9f21fa824bd3fb19725a9cf06327
@@ -71,8 +71,8 @@ builds:
     tag: manylinux2014_x86_64
     abi: cp311-cp311
     dependency_override:
-      # optional dependency of urllib3
-      - brotli==1.1.0
+      # https://github.com/urllib3/urllib3/blob/2.0.6/pyproject.toml#L43
+      - brotli>=1.0.9  # optional urllib3 dependency
     dependencies:
       attrs: 23.1.0 --hash=sha256:1f28b4522cdc2fb4256ac1a020c78acf9cba2c6b461ccd2c126f3aa8e8335d04
       Brotli: 1.1.0 --hash=sha256:a469274ad18dc0e4d316eefa616d1d0c2ff9da369af19fa6f3daa4f09671fd61
