@@ -18,7 +18,7 @@ PIP_ARGS=(
 
 SELF=$(basename -- "$(readlink -f -- "${0}")")
 log() {
-  echo "[${SELF}] $@"
+  echo "[${SELF}]" "${@}"
 }
 err() {
   log >&2 "$@"
@@ -28,9 +28,9 @@ err() {
 [[ -f /.dockerenv ]] || err "This script is supposed to be run from build.sh inside a docker container"
 
 declare -A excludelist
-for lib in $(sed -e '/#.*/d; /^[[:space:]]*|[[:space:]]*$/d; /^$/d' /usr/local/share/appimage/excludelist); do
+while read -r lib; do
   excludelist["${lib}"]="${lib}"
-done
+done <<< "$(sed -e '/#.*/d; /^[[:space:]]*|[[:space:]]*$/d; /^$/d' /usr/local/share/appimage/excludelist)"
 
 libraries=()
 
@@ -69,9 +69,9 @@ patch_binary() {
   local libdir="${2}"
   local recursive="${3:-false}"
 
-  local newrpath
-  local rpath=$(patchelf --print-rpath "${path}")
-  local relpath="$(realpath --relative-to="$(dirname -- "${path}")" "${libdir}")"
+  local newrpath rpath relpath
+  rpath=$(patchelf --print-rpath "${path}")
+  relpath="$(realpath --relative-to="$(dirname -- "${path}")" "${libdir}")"
   if [[ "${relpath}" == "." ]]; then newrpath="\$ORIGIN"; else newrpath="\$ORIGIN/${relpath}"; fi
 
   if [[ "${rpath}" != "${newrpath}" ]]; then
@@ -80,7 +80,8 @@ patch_binary() {
   fi
 
   for dep in $(ldd "${path}" 2>/dev/null | grep -E ' => \S+' | sed -E 's/.+ => (.+) \(0x.+/\1/'); do
-    local name=$(basename "${dep}")
+    local name
+    name=$(basename "${dep}")
     [[ -n "${excludelist[${name}]}" ]] && continue
     local target="${libdir}/${name}"
     if ! [[ -f "${target}" ]]; then
@@ -98,6 +99,7 @@ patch_binary() {
 setup_python() {
   log "Setting up python install"
 
+  local file
   install -Dm777 "${HOST_BIN}/${PYTHON_X_Y}" "${PYTHON_BIN}/${PYTHON_X_Y}"
 
   mkdir -p "${PYTHON_PKG}" "${PYTHON_INC}"
@@ -115,12 +117,12 @@ setup_python() {
 
   mkdir -p "${APPDIR_LIB}"
   patch_binary "${PYTHON_BIN}/${PYTHON_X_Y}" "${APPDIR_LIB}" false
-  for file in $(find "${PYTHON_PKG}/lib-dynload" -type f -name '*.so' -print); do
+  while read -r file; do
     patch_binary "${file}" "${APPDIR_LIB}" false
-  done
-  for file in $(find "${APPDIR_LIB}" -type f -name 'lib*.so*' -print); do
+  done <<< "$(find "${PYTHON_PKG}/lib-dynload" -type f -name '*.so' -print)"
+  while read -r file; do
     patch_binary "${file}" "${APPDIR_LIB}" true
-  done
+  done <<< "$(find "${APPDIR_LIB}" -type f -name 'lib*.so*' -print)"
 }
 
 
@@ -166,8 +168,9 @@ build_bytecode() {
 copy_licenses() {
   log "Finding library licenses"
   declare -A packages
+  local package
   for library in "${libraries[@]}"; do
-    local package=$(repoquery --installed --file "${library}")
+    package=$(repoquery --installed --file "${library}")
     if [[ -z "${package}" ]]; then
       log "Could not find package for library ${library}"
       continue
@@ -191,7 +194,7 @@ copy_licenses() {
     fi
   done
 
-  log "Re-installing packages without suppressing license files: ${!packages[@]}"
+  log "Re-installing packages without suppressing license files:" "${!packages[@]}"
   yum reinstall -y -v --setopt=timeout=5 --setopt=retries=3 --setopt=tsflags= "${!packages[@]}"
 
   for package in "${!packages[@]}"; do

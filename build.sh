@@ -10,7 +10,6 @@ CONFIG="${ROOT}/config.yml"
 DIR_APP="${ROOT}/app"
 DIR_DIST="${ROOT}/dist"
 SCRIPT_DOCKER="${ROOT}/build-docker.sh"
-GIT_FETCHDEPTH=300
 
 declare -A DEPS=(
   [git]=git
@@ -25,7 +24,7 @@ declare -A DEPS=(
 
 SELF=$(basename -- "$(readlink -f -- "${0}")")
 log() {
-  echo "[${SELF}] $@"
+  echo "[${SELF}]" "$@"
 }
 err() {
   log >&2 "$@"
@@ -34,7 +33,7 @@ err() {
 
 
 for dep in "${!DEPS[@]}"; do
-  command -v "${dep}" 2>&1 >/dev/null || err "Missing dependency: ${DEPS["${dep}"]}"
+  command -v "${dep}" >/dev/null 2>&1 || err "Missing dependency: ${DEPS["${dep}"]}"
 done
 
 config=$(cat "${CONFIG}")
@@ -53,7 +52,9 @@ tag=$(yq -r ".builds[\"${ARCH}\"].tag" <<< "${config}")
 abi=$(yq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
 
 mkdir -p "${DIR_DIST}"
-tempdir=$(mktemp -d) && trap "rm -rf ${tempdir}" EXIT || exit 255
+
+# shellcheck disable=SC2064
+tempdir=$(mktemp -d) && trap "rm -rf -- '${tempdir}'" EXIT || exit 255
 cd "${tempdir}"
 
 
@@ -77,7 +78,8 @@ get_sources() {
     "${tempdir}/source.git"
 
   log "Commit information"
-  GIT_PAGER=cat git \
+  git \
+    --no-pager \
     -C "${tempdir}/source.git" \
     log \
     -1 \
@@ -141,7 +143,8 @@ EOF
   # Custom ref -> tagged release (no build metadata in version string)
   # Add abbreviated commit ID to the plain version string to distinguish it from regular releases, set 0 as app release number
   elif [[ "${versionstring}" != *+* ]]; then
-    local _commit="$(git -C "${tempdir}/source.git" -c core.abbrev=7 rev-parse --short HEAD)"
+    local _commit
+    _commit="$(git -C "${tempdir}/source.git" -c core.abbrev=7 rev-parse --short HEAD)"
     version="${versionplain}-0-g${_commit}"
 
   # Custom ref -> arbitrary untagged commit (version string includes build metadata)
