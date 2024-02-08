@@ -27,7 +27,7 @@ jobs:
       - name: appimage
         run: |
           SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh ${{ matrix.arch }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: appimage-${{ matrix.arch }}
           path: dist/*.AppImage
@@ -42,7 +42,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: mkdir -p dist
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           path: dist
       - run: ./deploy.sh dist/**/*.AppImage
