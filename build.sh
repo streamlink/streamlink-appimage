@@ -107,6 +107,7 @@ prepare_tempdir() {
 HERE=\$(dirname -- "\$(readlink -f -- "\$0")")
 PYTHON=\$(readlink -f -- "\${HERE}/usr/bin/python")
 export PYTHONPATH=\$(realpath -- "\$(dirname -- "\${PYTHON}")/../lib/\$(basename -- "\${PYTHON}")/site-packages")
+export SSL_CERT_FILE=\${SSL_CERT_FILE:-"\${PYTHONPATH}/certifi/cacert.pem"}
 "\${PYTHON}" -m '${app_entry}' "\$@"
 EOF
   chmod +x "${tempdir}/AppDir/AppRun"
