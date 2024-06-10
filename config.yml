@@ -7,7 +7,7 @@ git:
   ref: 6.7.4
 builds:
   aarch64:
-    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:08bcfd9ff701a1df56f2c0ebdfed5943c33209f436669ff63a2e935e3fe71ccc
+    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:4c4567d9aa75d80142dc4eef37a05dd6235cac785eba15cf9cd0f109b8e8e6e5
     tag: manylinux2014_aarch64
     abi: cp312-cp312
     dependency_override:
