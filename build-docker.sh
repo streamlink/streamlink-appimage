@@ -69,17 +69,19 @@ patch_binary() {
   local libdir="${2}"
   local recursive="${3:-false}"
 
-  local newrpath rpath relpath
+  local newrpath rpath relpath deps
   rpath=$(patchelf --print-rpath "${path}")
   relpath="$(realpath --relative-to="$(dirname -- "${path}")" "${libdir}")"
   if [[ "${relpath}" == "." ]]; then newrpath="\$ORIGIN"; else newrpath="\$ORIGIN/${relpath}"; fi
+
+  mapfile -t deps < <(ldd "${path}" 2>/dev/null | grep -E ' => \S+' | sed -E 's/.+ => (.+) \(0x.+/\1/')
 
   if [[ "${rpath}" != "${newrpath}" ]]; then
     log "Patching RPATH: ${path} (\"${rpath}\" -> \"${newrpath}\")"
     patchelf --set-rpath "${newrpath}" "${path}"
   fi
 
-  for dep in $(ldd "${path}" 2>/dev/null | grep -E ' => \S+' | sed -E 's/.+ => (.+) \(0x.+/\1/'); do
+  for dep in "${deps[@]}"; do
     local name
     name=$(basename "${dep}")
     [[ -n "${excludelist[${name}]}" ]] && continue
