@@ -1,6 +1,13 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 6.8.0-1 (2024-06-17)
+
+- Updated Streamlink to 6.8.0, updated its dependencies
+- Updated build images, with Python 3.12.4
+- Made AppImages use the bundled cert file from `certifi` (unless `SSL_CERT_FILE` env var is set to a different path)
+- Fixed rpath patch issue in build script
+
 ## 6.7.4-1 (2024-05-12)
 
 - Updated Streamlink to 6.7.4, updated its dependencies
