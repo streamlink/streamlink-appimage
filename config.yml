@@ -7,7 +7,7 @@ git:
   ref: 6.8.2
 builds:
   aarch64:
-    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:4c4567d9aa75d80142dc4eef37a05dd6235cac785eba15cf9cd0f109b8e8e6e5
+    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:fd511596adca0d7eeba5926e65f61a7c4d707bf5a2500a9ddde73aa0aff581e2
     tag: manylinux2014_aarch64
     abi: cp312-cp312
     dependency_override:
@@ -37,7 +37,7 @@ builds:
       websocket-client: 1.8.0 --hash=sha256:17b44cc997f5c498e809b22cdf2d9c7a9e71c02c8cc2b6c56e7c2d1239bfa526
       wsproto: 1.2.0 --hash=sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736
   i686:
-    image: ghcr.io/streamlink/appimage-buildenv-i686@sha256:08bcfd9ff701a1df56f2c0ebdfed5943c33209f436669ff63a2e935e3fe71ccc
+    image: ghcr.io/streamlink/appimage-buildenv-i686@sha256:1029dcb3d097601f6c48fb85c91d6fa50eed67fdfda425b00dd41a44855affd5
     tag: manylinux2014_i686
     abi: cp312-cp312
     dependency_override:
@@ -67,7 +67,7 @@ builds:
       websocket-client: 1.8.0 --hash=sha256:17b44cc997f5c498e809b22cdf2d9c7a9e71c02c8cc2b6c56e7c2d1239bfa526
       wsproto: 1.2.0 --hash=sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736
   x86_64:
-    image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:2fc18df6c162099279a5e6820fa467232eafe412531dc9afeef674f8fe779740
+    image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:1272c41523027ad08e44a4b651a6a7af79ed32550239f42e207d26f37f043373
     tag: manylinux2014_x86_64
     abi: cp312-cp312
     dependency_override:
