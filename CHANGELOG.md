@@ -1,6 +1,10 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 6.10.0-1 (2024-09-06)
+
+- Updated Streamlink to 6.10.0, updated its dependencies
+
 ## 6.9.0-1 (2024-08-12)
 
 - Updated Streamlink to 6.9.0, updated its dependencies
