@@ -10,8 +10,7 @@ Linux [AppImage][appimage] build config for [Streamlink][streamlink]
 
 ### Supported architectures
 
-- x86_64
-- i686
+- x86\_64
 - aarch64
 
 ### How to
@@ -55,7 +54,7 @@ These AppImages are built using the [`streamlink/appimage-buildenv-*`][streamlin
 ### Build
 
 Requirements: `git`, `jq`, `yq`, `docker`  
-Supported architectures: `x86_64`, `i686`, `aarch64`
+Supported architectures: `x86_64`, `aarch64`
 
 ```bash
 # Build

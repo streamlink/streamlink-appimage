@@ -12,7 +12,6 @@ jobs:
       matrix:
         arch:
           - aarch64
-          - i686
           - x86_64
     steps:
       - uses: actions/checkout@v4
