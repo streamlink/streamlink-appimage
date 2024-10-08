@@ -25,7 +25,7 @@ Linux [AppImage][appimage] build config for [Streamlink][streamlink]
 
    ```bash
    # AppImage file names include the release version, Python version, platform name and CPU architecture
-   chmod +x ./streamlink-2.0.0-1-cp39-cp39-manylinux2014_x86_64.AppImage
+   chmod +x ./streamlink-7.0.0-1-cp312-cp312-manylinux_2_28_x86_64.AppImage.AppImage
    ```
 
 3. **Run the AppImage**
@@ -34,7 +34,7 @@ Linux [AppImage][appimage] build config for [Streamlink][streamlink]
 
    ```bash
    # Run the Streamlink AppImage with any parameter supported by Streamlink
-   ./streamlink-2.0.0-1-cp39-cp39-manylinux2014_x86_64.AppImage --version
+   ./streamlink-7.0.0-1-cp312-cp312-manylinux_2_28_x86_64.AppImage --version
    ```
 
 ### What are AppImages
@@ -49,7 +49,7 @@ Additional information, like for example how to inspect the AppImage contents or
 
 ### About
 
-These AppImages are built using the [`streamlink/appimage-buildenv-*`][streamlink-appimage-buildenv] docker images, which are based on the [`pypa/manylinux`][manylinux] project and the [`manylinux2014`][manylinux2014] platform, which is based on CentOS 7. The pre-built Python install and its needed runtime libraries are copied from the docker image (see the manylinux build files) into the AppImages, in addition to the main Python application code, namely Streamlink and its dependencies, which are pulled from GitHub and PyPI.
+These AppImages are built using the [`streamlink/appimage-buildenv-*`][streamlink-appimage-buildenv] docker images, which are based on the [`pypa/manylinux`][manylinux] project and the [`manylinux_2_28`][manylinux_2_28] platform, which is based on AlmaLinux 8. The pre-built Python install and its needed runtime libraries are copied from the docker image (see the manylinux build files) into the AppImages, in addition to the main Python application code, namely Streamlink and its dependencies, which are pulled from GitHub and PyPI.
 
 ### Build
 
@@ -79,4 +79,4 @@ export SOURCE_DATE_EPOCH=$(git show -s --format=%ct)
 [releases]: https://github.com/streamlink/streamlink-appimage/releases
 [appimagelauncher]: https://github.com/TheAssassin/AppImageLauncher
 [manylinux]: https://github.com/pypa/manylinux
-[manylinux2014]: https://github.com/pypa/manylinux#manylinux2014-centos-7-based
+[manylinux_2_28]: https://github.com/pypa/manylinux#manylinux_2_28-almalinux-8-based

@@ -172,7 +172,7 @@ copy_licenses() {
   declare -A packages
   local package
   for library in "${libraries[@]}"; do
-    package=$(repoquery --installed --file "${library}")
+    package=$(dnf repoquery --installed --file "${library}")
     if [[ -z "${package}" ]]; then
       log "Could not find package for library ${library}"
       continue
@@ -183,10 +183,10 @@ copy_licenses() {
   for package in "${!packages[@]}"; do
     if ! find_licenses "${package}" >/dev/null; then
       log "Could not find license files for package ${package}"
-      for dependency in $(repoquery --installed --requires --resolve "${package}"); do
+      for dependency in $(dnf repoquery --installed --requires --resolve "${package}"); do
         if [[ -z "${packages["${dependency}"]}" ]]; then
           # ignore dependencies with files in the excludelist
-          for depfile in $(repoquery --installed --list "${dependency}"); do
+          for depfile in $(dnf repoquery --installed --list "${dependency}"); do
             [[ "${excludelist["$(basename "${depfile}")"]}" ]] && continue 2
           done
           echo "Attempting to find licenses in dependency ${dependency}"
@@ -208,7 +208,7 @@ copy_licenses() {
 }
 
 find_licenses() {
-  repoquery --installed --list "${1}" \
+  dnf repoquery --installed --list "${1}" \
     | grep -Ei '^/usr/share/(doc|licenses)/.*(copying|licen[cs]e|readme|terms).*'
 }
 
