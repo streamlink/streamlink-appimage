@@ -3,6 +3,11 @@ Streamlink AppImage
 
 Linux [AppImage][appimage] build config for [Streamlink][streamlink]
 
+> [!IMPORTANT]  
+> Streamlink `7.0.0` changes:
+> - ⚠️ Upgraded from `manylinux2014` to `manylinux_2_28` (requires glibc 2.28+ - Aug 2018).
+> - ⚠️ No more `i686` AppImage builds (unsupported on `manylinux_2_28`).
+
 ### Contents
 
 - a Python environment
@@ -15,33 +20,29 @@ Linux [AppImage][appimage] build config for [Streamlink][streamlink]
 
 ### How to
 
-1. [Download the latest Streamlink AppImage matching your CPU architecture][releases]
+1. Verify that the system is running on at least [glibc][glibc-wikipedia] [2.28 (Aug 2018)][glibc-release-distro-mapping] (see `ld.so --version`)
 
-   If unsure, run `uname -m` to check the CPU's architecture.
+2. [Download the AppImage file matching the system's CPU architecture][releases] (see `uname --machine`)
 
-2. **Set the executable flag**
-
-   This can either be done in a regular file browser, or a command line shell via `chmod +x filename`.
+3. Set the executable flag via a file browser or `chmod +x filename` from a command-line shell
 
    ```bash
-   # AppImage file names include the release version, Python version, platform name and CPU architecture
-   chmod +x ./streamlink-7.0.0-1-cp312-cp312-manylinux_2_28_x86_64.AppImage.AppImage
+   # AppImage file names include the release version,
+   # the Python version, platform name and CPU architecture
+   chmod +x streamlink-7.0.0-1-cp312-cp312-manylinux_2_28_x86_64.AppImage
    ```
 
-3. **Run the AppImage**
-
-   Set any command-line parameters supported by Streamlink, e.g. `--version`:
+4. Run the AppImage with any command-line parameters supported by Streamlink
 
    ```bash
-   # Run the Streamlink AppImage with any parameter supported by Streamlink
-   ./streamlink-7.0.0-1-cp312-cp312-manylinux_2_28_x86_64.AppImage --version
+   ./streamlink-7.0.0-1-cp312-cp312-manylinux_2_28_x86_64.AppImage --loglevel=debug
    ```
 
 ### What are AppImages
 
-AppImages are portable apps which are independent of the distro and package management. Just set the executable flag on the AppImage file and run it.
+AppImages are portable applications which are independent of the Linux distribution in use and its package management. Just set the executable flag on the AppImage file and run it.
 
-The only requirement is having [FUSE][appimage-fuse] installed for being able to mount the contents of the AppImage's SquashFS, which is done automatically. Also, only glibc-based systems are supported.
+The only requirement is having [FUSE][appimage-fuse] installed for being able to mount the contents of the AppImage's SquashFS, which is done automatically. Also, only glibc-based systems are currently supported.
 
 Note: Check out [AppImageLauncher][appimagelauncher], which automates the setup and system integration of AppImages. AppImageLauncher may also be available via your distro's package management.
 
@@ -80,3 +81,5 @@ export SOURCE_DATE_EPOCH=$(git show -s --format=%ct)
 [appimagelauncher]: https://github.com/TheAssassin/AppImageLauncher
 [manylinux]: https://github.com/pypa/manylinux
 [manylinux_2_28]: https://github.com/pypa/manylinux#manylinux_2_28-almalinux-8-based
+[glibc-wikipedia]: https://en.wikipedia.org/wiki/Glibc
+[glibc-release-distro-mapping]: https://sourceware.org/glibc/wiki/Release#Distribution_Branch_Mapping
