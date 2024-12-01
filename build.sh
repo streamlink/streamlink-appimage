@@ -70,20 +70,22 @@ get_docker_image() {
 
 get_sources() {
   log "Getting sources"
-  git \
-    -c advice.detachedHead=false \
-    clone \
-    -b "${git_ref}" \
-    "${git_repo}" \
-    "${tempdir}/source.git"
+  mkdir -p "${tempdir}/source.git"
+  pushd "${tempdir}/source.git"
+
+  git clone --depth 1 "${git_repo}" .
+  git fetch origin --depth 300 "${git_ref}"
+  git -c advice.detachedHead=false checkout --force "${git_ref}"
+  git ls-remote --tags --sort=version:refname 2>&- \
+    | awk "END{printf \"+%s:%s\\n\",\$2,\$2}" \
+    | git fetch origin --depth=300
+  git fetch origin --depth=300 --update-shallow
 
   log "Commit information"
-  git \
-    --no-pager \
-    -C "${tempdir}/source.git" \
-    log \
-    -1 \
-    --pretty=full
+  git describe --tags --long --dirty
+  git --no-pager log -1 --pretty=full
+
+  popd
 }
 
 
