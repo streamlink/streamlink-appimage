@@ -172,7 +172,7 @@ copy_licenses() {
   declare -A packages
   local package
   for library in "${libraries[@]}"; do
-    package=$(dnf repoquery --installed --file "${library}")
+    package=$(dnf repoquery --installed --file "$(readlink -f -- "${library}")")
     if [[ -z "${package}" ]]; then
       log "Could not find package for library ${library}"
       continue
