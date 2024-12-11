@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
-set -e
+# shellcheck disable=SC2016
+
+set -euo pipefail
 
 ARCH="${1:-$(uname -m)}"
-GITREPO="${2}"
-GITREF="${3}"
+GITREPO="${2:-}"
+GITREF="${3:-}"
 
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || dirname "$(readlink -f "${0}")")
 CONFIG="${ROOT}/config.yml"
@@ -36,46 +38,50 @@ for dep in "${!DEPS[@]}"; do
   command -v "${dep}" >/dev/null 2>&1 || err "Missing dependency: ${DEPS["${dep}"]}"
 done
 
-config=$(cat "${CONFIG}")
+[[ -f "${CONFIG}" ]] \
+  || err "Missing config file: ${CONFIG}"
+CONFIGJSON=$(cat "${CONFIG}")
 
-yq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
+yq -e --arg a "${ARCH}" '.builds[$a]' >/dev/null <<< "${CONFIGJSON}" \
  || err "Unsupported arch"
 
-app_name=$(yq -r '.app.name' <<< "${config}")
-app_rel=$(yq -r '.app.rel' <<< "${config}")
-app_entry=$(yq -r '.app.entry' <<< "${config}")
-git_repo="${GITREPO:-$(yq -r '.git.repo' <<< "${config}")}"
-git_ref="${GITREF:-$(yq -r '.git.ref' <<< "${config}")}"
+read -r appname apprel appentry \
+  < <(yq -r '.app | "\(.name) \(.rel) \(.entry)"' <<< "${CONFIGJSON}")
+read -r gitrepo gitref \
+  < <(yq -r '.git | "\(.repo) \(.ref)"' <<< "${CONFIGJSON}")
+read -r image tag abi \
+  < <(yq -r --arg a "${ARCH}" '.builds[$a] | "\(.image) \(.tag) \(.abi)"' <<< "${CONFIGJSON}")
 
-docker_image=$(yq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
-tag=$(yq -r ".builds[\"${ARCH}\"].tag" <<< "${config}")
-abi=$(yq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
-
-mkdir -p "${DIR_DIST}"
-
-# shellcheck disable=SC2064
-tempdir=$(mktemp -d) && trap "rm -rf -- '${tempdir}'" EXIT || exit 255
-cd "${tempdir}"
+gitrepo="${GITREPO:-${gitrepo}}"
+gitref="${GITREF:-${gitref}}"
 
 
 # ----
 
 
+# shellcheck disable=SC2064
+TEMP=$(mktemp -d) && trap "rm -rf -- '${TEMP}'" EXIT || exit 255
+cd "${TEMP}"
+
+mkdir -p \
+  "${DIR_DIST}"
+
+
 get_docker_image() {
   log "Getting docker image"
-  [[ -n "$(docker image ls -q "${docker_image}")" ]] \
-    || docker image pull "${docker_image}"
+  [[ -n "$(docker image ls -q "${image}")" ]] \
+    || docker image pull "${image}"
 }
 
 
 get_sources() {
   log "Getting sources"
-  mkdir -p "${tempdir}/source.git"
-  pushd "${tempdir}/source.git"
+  mkdir -p "${TEMP}/source.git"
+  pushd "${TEMP}/source.git"
 
-  git clone --depth 1 "${git_repo}" .
-  git fetch origin --depth 300 "${git_ref}"
-  git -c advice.detachedHead=false checkout --force "${git_ref}"
+  git clone --depth 1 "${gitrepo}" .
+  git fetch origin --depth 300 "${gitref}"
+  git -c advice.detachedHead=false checkout --force "${gitref}"
   git ls-remote --tags --sort=version:refname 2>&- \
     | awk "END{printf \"+%s:%s\\n\",\$2,\$2}" \
     | git fetch origin --depth=300
@@ -91,28 +97,28 @@ get_sources() {
 
 prepare_tempdir() {
   log "Copying container build files"
-  cp -vt "${tempdir}" "${SCRIPT_DOCKER}"
+  cp -vt "${TEMP}" "${SCRIPT_DOCKER}"
 
   log "Building requirements.txt"
-  yq -r ".builds[\"${ARCH}\"].dependencies | to_entries | .[] | \"\(.key)==\(.value)\"" <<< "${config}" \
-    > "${tempdir}/requirements.txt"
+  yq -r --arg a "${ARCH}" '.builds[$a].dependencies | to_entries | .[] | "\(.key)==\(.value)"' <<< "${CONFIGJSON}" \
+    > "${TEMP}/requirements.txt"
 
   log "Installing AppDir files"
-  install -Dm644 -t "${tempdir}/AppDir/usr/share/applications/" "${DIR_APP}/${app_name}.desktop"
-  install -Dm644 -t "${tempdir}/AppDir/usr/share/icons/hicolor/scalable/apps/" "${DIR_APP}/${app_name}.svg"
-  install -Dm644 -t "${tempdir}/AppDir/usr/share/metainfo/" "${DIR_APP}/${app_name}.appdata.xml"
-  ln -sr "${tempdir}/AppDir/usr/share/applications/${app_name}.desktop" "${tempdir}/AppDir/${app_name}.desktop"
-  ln -sr "${tempdir}/AppDir/usr/share/icons/hicolor/scalable/apps/${app_name}.svg" "${tempdir}/AppDir/${app_name}.svg"
-  ln -sr "${tempdir}/AppDir/usr/share/icons/hicolor/scalable/apps/${app_name}.svg" "${tempdir}/AppDir/.DirIcon"
-  cat > "${tempdir}/AppDir/AppRun" <<EOF
+  install -Dm644 -t "${TEMP}/AppDir/usr/share/applications/" "${DIR_APP}/${appname}.desktop"
+  install -Dm644 -t "${TEMP}/AppDir/usr/share/icons/hicolor/scalable/apps/" "${DIR_APP}/${appname}.svg"
+  install -Dm644 -t "${TEMP}/AppDir/usr/share/metainfo/" "${DIR_APP}/${appname}.appdata.xml"
+  ln -sr "${TEMP}/AppDir/usr/share/applications/${appname}.desktop" "${TEMP}/AppDir/${appname}.desktop"
+  ln -sr "${TEMP}/AppDir/usr/share/icons/hicolor/scalable/apps/${appname}.svg" "${TEMP}/AppDir/${appname}.svg"
+  ln -sr "${TEMP}/AppDir/usr/share/icons/hicolor/scalable/apps/${appname}.svg" "${TEMP}/AppDir/.DirIcon"
+  cat > "${TEMP}/AppDir/AppRun" <<EOF
 #!/usr/bin/env bash
 HERE=\$(dirname -- "\$(readlink -f -- "\$0")")
 PYTHON=\$(readlink -f -- "\${HERE}/usr/bin/python")
 export PYTHONPATH=\$(realpath -- "\$(dirname -- "\${PYTHON}")/../lib/\$(basename -- "\${PYTHON}")/site-packages")
 export SSL_CERT_FILE=\${SSL_CERT_FILE:-"\${PYTHONPATH}/certifi/cacert.pem"}
-"\${PYTHON}" -m '${app_entry}' "\$@"
+"\${PYTHON}" -m '${appentry}' "\$@"
 EOF
-  chmod +x "${tempdir}/AppDir/AppRun"
+  chmod +x "${TEMP}/AppDir/AppRun"
 }
 
 
@@ -124,30 +130,30 @@ build_app() {
     --interactive \
     --rm \
     --env SOURCE_DATE_EPOCH \
-    --mount "type=bind,source=${tempdir},target=${target}" \
-    "${docker_image}" \
+    --mount "type=bind,source=${TEMP},target=${target}" \
+    "${image}" \
     /usr/bin/bash <<EOF
 set -e
 trap "chown -R $(id -u):$(id -g) '${target}'" EXIT
 cd '${target}'
-'./$(basename -- "${SCRIPT_DOCKER}")' '${abi}' '${app_entry}'
+'./$(basename -- "${SCRIPT_DOCKER}")' '${abi}' '${appentry}'
 EOF
 
   local versionstring versionplain versionmeta version
-  versionstring=$(cat "${tempdir}/version.txt")
+  versionstring=$(cat "${TEMP}/version.txt")
   versionplain="${versionstring%%+*}"
   versionmeta="${versionstring##*+}"
 
   # Not a custom git reference (assume that only tagged releases are used as source)
   # Use plain version string with app release number and no abbreviated commit ID
   if [[ -z "${GITREF}" ]]; then
-    version="${versionplain}-${app_rel}"
+    version="${versionplain}-${apprel}"
 
   # Custom ref -> tagged release (no build metadata in version string)
   # Add abbreviated commit ID to the plain version string to distinguish it from regular releases, set 0 as app release number
   elif [[ "${versionstring}" != *+* ]]; then
     local _commit
-    _commit="$(git -C "${tempdir}/source.git" -c core.abbrev=7 rev-parse --short HEAD)"
+    _commit="$(git -C "${TEMP}/source.git" -c core.abbrev=7 rev-parse --short HEAD)"
     version="${versionplain}-0-g${_commit}"
 
   # Custom ref -> arbitrary untagged commit (version string includes build metadata)
@@ -156,9 +162,9 @@ EOF
     version="${versionplain}-${versionmeta/./-}"
   fi
 
-  local name="${app_name}-${version}-${abi}-${tag}.AppImage"
+  local name="${appname}-${version}-${abi}-${tag}.AppImage"
 
-  install -m777 "${tempdir}/out.AppImage" "${DIR_DIST}/${name}"
+  install -m777 "${TEMP}/out.AppImage" "${DIR_DIST}/${name}"
   ( cd "${DIR_DIST}"; sha256sum "${name}"; )
 }
 
