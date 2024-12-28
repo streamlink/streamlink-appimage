@@ -1,9 +1,15 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 7.1.0-1 (2024-12-28)
+
+- Updated Streamlink to 7.1.0, updated its dependencies
+- Updated build images, with Python 3.12.8
+- Fixed missing license files after the manylinux\_2\_28 switch
+
 ## 7.0.0-1 (2024-11-04)
 
-- Updated Streamlink to 7.0.0, updates its dependencies
+- Updated Streamlink to 7.0.0, updated its dependencies
 - Switched from EOL manylinux2014 to manylinux\_2\_28 (glibc 2.28+ is now required)
 - Dropped i686 ("32 bit") builds (unsupported on manylinux\_2\_28)
 - Updated build images, with Python 3.12.7
