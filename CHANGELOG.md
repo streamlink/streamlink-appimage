@@ -1,6 +1,10 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 7.1.2-1 (2025-01-08)
+
+- Updated Streamlink to 7.1.2
+
 ## 7.1.1-1 (2024-12-28)
 
 - Updated Streamlink to 7.1.1
