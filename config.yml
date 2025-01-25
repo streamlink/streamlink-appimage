@@ -14,7 +14,7 @@ builds:
       # https://github.com/urllib3/urllib3/blob/2.3.0/pyproject.toml#L43
       - brotli>=1.0.9  # optional urllib3 dependency
     dependencies:
-      attrs: 24.3.0 --hash=sha256:ac96cd038792094f438ad1f6ff80837353805ac950cd2aa0e0625ef19850c308
+      attrs: 25.1.0 --hash=sha256:c75a69e28a550a7e93789579c22aa26b0f5b83b75dc4e08fe092980051e1090a
       Brotli: 1.1.0 --hash=sha256:70051525001750221daa10907c77830bc889cb6d865cc0b813d9db7fefc21451
       certifi: 2024.12.14 --hash=sha256:1275f7a45be9464efc1173084eaa30f866fe2e47d389406136d332ed4967ec56
       charset-normalizer: 3.4.1 --hash=sha256:dad3e487649f498dd991eeb901125411559b22e8d7ab25d3aeb1af367df5efd7
@@ -42,7 +42,7 @@ builds:
       # https://github.com/urllib3/urllib3/blob/2.3.0/pyproject.toml#L43
       - brotli>=1.0.9  # optional urllib3 dependency
     dependencies:
-      attrs: 24.3.0 --hash=sha256:ac96cd038792094f438ad1f6ff80837353805ac950cd2aa0e0625ef19850c308
+      attrs: 25.1.0 --hash=sha256:c75a69e28a550a7e93789579c22aa26b0f5b83b75dc4e08fe092980051e1090a
       Brotli: 1.1.0 --hash=sha256:d0c5516f0aed654134a2fc936325cc2e642f8a0e096d075209672eb321cff408
       certifi: 2024.12.14 --hash=sha256:1275f7a45be9464efc1173084eaa30f866fe2e47d389406136d332ed4967ec56
       charset-normalizer: 3.4.1 --hash=sha256:bc2722592d8998c870fa4e290c2eec2c1569b87fe58618e67d38b4665dfa680d
