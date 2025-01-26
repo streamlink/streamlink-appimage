@@ -25,7 +25,7 @@ jobs:
           python -m pip install -U --upgrade-strategy=eager -r requirements.txt
       - name: Build
         run: |
-          SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh "" "" master
+          SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh --gitref=master
       - name: Get file name
         id: vars
         run: |

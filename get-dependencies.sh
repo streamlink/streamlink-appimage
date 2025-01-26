@@ -3,11 +3,10 @@
 
 set -euo pipefail
 
-ARCH="${1:-$(uname -m)}"
-GITREPO="${2:-}"
-GITREF="${3:-}"
-OPT_DEPSPEC=("${@}")
-OPT_DEPSPEC=("${OPT_DEPSPEC[@]:3}")
+ARCH="$(uname -m)"
+GITREPO=""
+GITREF=""
+OPT_DEPSPEC=()
 
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || dirname "$(readlink -f "${0}")")
 CONFIG="${ROOT}/config.yml"
@@ -17,6 +16,10 @@ declare -A DEPS=(
   [yq]=yq
   [docker]=docker
 )
+
+_OPTS=$(getopt --name "$0" --long 'help,arch:,gitrepo:,gitref:' --options 'help,a:' -- "$@")
+eval set -- "${_OPTS}"
+unset _OPTS
 
 
 # ----
@@ -30,6 +33,52 @@ err() {
   log >&2 "$@"
   exit 1
 }
+
+print_help() {
+  echo "Usage: ${0} [options] [depspec]"
+  echo
+  echo "Options:"
+  echo "  -a, --arch <arch>    Target architecture"
+  echo "      --gitrepo <url>  Source"
+  echo "      --gitref <ref>   Git branch/tag/commit"
+  exit 0
+}
+
+
+# ----
+
+
+while true; do
+  case "${1}" in
+    -h | --help)
+      print_help
+      ;;
+    -a | --arch)
+      ARCH="${2}"
+      shift 2
+      ;;
+    --gitrepo)
+      GITREPO="${2}"
+      shift 2
+      ;;
+    --gitref)
+      GITREF="${2}"
+      shift 2
+      ;;
+    --)
+      shift
+      break
+      ;;
+    *)
+      err "Invalid option: ${1}"
+      ;;
+  esac
+done
+
+OPT_DEPSPEC+=("${@}")
+
+
+# ----
 
 
 for dep in "${!DEPS[@]}"; do
