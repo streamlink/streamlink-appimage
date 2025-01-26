@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-set -e
+# shellcheck disable=SC2016
+
+set -euo pipefail
 
 ARCH="${1:-$(uname -m)}"
 GITREPO="${2:-}"
@@ -22,7 +24,7 @@ declare -A DEPS=(
 
 SELF=$(basename -- "$(readlink -f -- "${0}")")
 log() {
-  echo "[${SELF}] $@"
+  echo "[${SELF}]" "$@"
 }
 err() {
   log >&2 "$@"
@@ -31,21 +33,24 @@ err() {
 
 
 for dep in "${!DEPS[@]}"; do
-  command -v "${dep}" 2>&1 >/dev/null || err "Missing dependency: ${DEPS["${dep}"]}"
+  command -v "${dep}" >/dev/null 2>&1 || err "Missing dependency: ${DEPS["${dep}"]}"
 done
 
-config=$(cat "${CONFIG}")
+CONFIGJSON=$(cat "${CONFIG}")
 
-yq -e ".builds[\"${ARCH}\"]" >/dev/null <<< "${config}" \
+yq -e --arg a "${ARCH}" '.builds[$a]' >/dev/null <<< "${CONFIGJSON}" \
  || err "Unsupported arch"
 
-git_repo="${GITREPO:-$(yq -r '.git.repo' <<< "${config}")}"
-git_ref="${GITREF:-$(yq -r '.git.ref' <<< "${config}")}"
+read -r gitrepo gitref \
+  < <(yq -r '.git | "\(.repo) \(.ref)"' <<< "${CONFIGJSON}")
+read -r image abi \
+  < <(yq -r --arg a "${ARCH}" '.builds[$a] | "\(.image) \(.abi)"' <<< "${CONFIGJSON}")
 
-dependency_override=($(yq -r ".builds[\"${ARCH}\"].dependency_override[]" <<< "${config}"))
+# shellcheck disable=SC2207
+dependency_override=($(yq -r --arg a "${ARCH}" '.builds[$a].dependency_override[]' <<< "${CONFIGJSON}"))
 
-docker_image=$(yq -r ".builds[\"${ARCH}\"].image" <<< "${config}")
-abi=$(yq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
+gitrepo="${GITREPO:-${gitrepo}}"
+gitref="${GITREF:-${gitref}}"
 
 
 # ----
@@ -53,15 +58,16 @@ abi=$(yq -r ".builds[\"${ARCH}\"].abi" <<< "${config}")
 
 get_docker_image() {
   log "Getting docker image"
-  [[ -n "$(docker image ls -q "${docker_image}")" ]] \
-    || docker image pull "${docker_image}"
+  [[ -n "$(docker image ls -q "${image}")" ]] \
+    || docker image pull "${image}"
 }
 
 
 get_deps() {
-  log "Finding dependencies (${ARCH} / ${abi}) for ${git_repo}@${git_ref}"
-  local deps=("git+${git_repo}@${git_ref}" "${dependency_override[@]}" "${OPT_DEPSPEC[@]}")
-  local script=$(cat <<EOF
+  log "Finding dependencies (${ARCH} / ${abi}) for ${gitrepo}@${gitref}"
+  local deps script
+  deps=("git+${gitrepo}@${gitref}" "${dependency_override[@]}" "${OPT_DEPSPEC[@]}")
+  script=$(cat <<EOF
 PYTHON="/opt/python/${abi}/bin/python"
 REPORT=\$(mktemp)
 
@@ -98,7 +104,7 @@ EOF
   docker run \
     --interactive \
     --rm \
-    "${docker_image}" \
+    "${image}" \
     /usr/bin/bash /dev/stdin "${deps[@]}" <<< "${script}"
 }
 
