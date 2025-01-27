@@ -59,7 +59,7 @@ Supported architectures: `x86_64`, `aarch64`
 
 ```bash
 # Build
-./build.sh [--arch=$ARCH] [--gitrepo=$GITREPO] [--gitref=$GITREF]
+./build.sh [--arch=$ARCH] [--gitrepo=$GITREPO] [--gitref=$GITREF] [--bundle=...]
 
 # Get new list of Python dependencies (for updating config.yml)
 ./get-dependencies.sh [--arch=$ARCH] [--gitrepo=$GITREPO] [--gitref=$GITREF] [depspec...]

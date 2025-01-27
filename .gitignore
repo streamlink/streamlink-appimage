@@ -13,4 +13,5 @@ nbproject
 *.sublime-workspace
 .idea
 
+cache
 dist

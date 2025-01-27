@@ -10,6 +10,7 @@ builds:
     image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:b1af5e783e3d7d9ac0dcc68e760147cc1c8de4eadc6ffb8880d5a332d7cdae37
     tag: manylinux_2_28_aarch64
     abi: cp312-cp312
+    bundles: {}
     dependency_override:
       # https://github.com/urllib3/urllib3/blob/2.3.0/pyproject.toml#L43
       - brotli>=1.0.9  # optional urllib3 dependency
@@ -38,6 +39,7 @@ builds:
     image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:7928d542510b837c0a66fc5887ab1c9dcb6c7844e01fbe3c5126ae622c423d99
     tag: manylinux_2_28_x86_64
     abi: cp312-cp312
+    bundles: {}
     dependency_override:
       # https://github.com/urllib3/urllib3/blob/2.3.0/pyproject.toml#L43
       - brotli>=1.0.9  # optional urllib3 dependency
