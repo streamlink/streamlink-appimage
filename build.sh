@@ -111,8 +111,11 @@ gitref="${GITREF:-${gitref}}"
 TEMP=$(mktemp -d) && trap "rm -rf -- '${TEMP}'" EXIT || exit 255
 cd "${TEMP}"
 
+DIR_APPDIR="${TEMP}/AppDir"
+
 mkdir -p \
-  "${DIR_DIST}"
+  "${DIR_DIST}" \
+  "${DIR_APPDIR}"
 
 
 get_docker_image() {
@@ -153,13 +156,13 @@ prepare_tempdir() {
     > "${TEMP}/requirements.txt"
 
   log "Installing AppDir files"
-  install -Dm644 -t "${TEMP}/AppDir/usr/share/applications/" "${DIR_APP}/${appname}.desktop"
-  install -Dm644 -t "${TEMP}/AppDir/usr/share/icons/hicolor/scalable/apps/" "${DIR_APP}/${appname}.svg"
-  install -Dm644 -t "${TEMP}/AppDir/usr/share/metainfo/" "${DIR_APP}/${appname}.appdata.xml"
-  ln -sr "${TEMP}/AppDir/usr/share/applications/${appname}.desktop" "${TEMP}/AppDir/${appname}.desktop"
-  ln -sr "${TEMP}/AppDir/usr/share/icons/hicolor/scalable/apps/${appname}.svg" "${TEMP}/AppDir/${appname}.svg"
-  ln -sr "${TEMP}/AppDir/usr/share/icons/hicolor/scalable/apps/${appname}.svg" "${TEMP}/AppDir/.DirIcon"
-  cat > "${TEMP}/AppDir/AppRun" <<EOF
+  install -Dm644 -t "${DIR_APPDIR}/usr/share/applications/" "${DIR_APP}/${appname}.desktop"
+  install -Dm644 -t "${DIR_APPDIR}/usr/share/icons/hicolor/scalable/apps/" "${DIR_APP}/${appname}.svg"
+  install -Dm644 -t "${DIR_APPDIR}/usr/share/metainfo/" "${DIR_APP}/${appname}.appdata.xml"
+  ln -sr "${DIR_APPDIR}/usr/share/applications/${appname}.desktop" "${DIR_APPDIR}/${appname}.desktop"
+  ln -sr "${DIR_APPDIR}/usr/share/icons/hicolor/scalable/apps/${appname}.svg" "${DIR_APPDIR}/${appname}.svg"
+  ln -sr "${DIR_APPDIR}/usr/share/icons/hicolor/scalable/apps/${appname}.svg" "${DIR_APPDIR}/.DirIcon"
+  cat > "${DIR_APPDIR}/AppRun" <<EOF
 #!/usr/bin/env bash
 HERE=\$(dirname -- "\$(readlink -f -- "\$0")")
 PYTHON=\$(readlink -f -- "\${HERE}/usr/bin/python")
@@ -167,7 +170,7 @@ export PYTHONPATH=\$(realpath -- "\$(dirname -- "\${PYTHON}")/../lib/\$(basename
 export SSL_CERT_FILE=\${SSL_CERT_FILE:-"\${PYTHONPATH}/certifi/cacert.pem"}
 "\${PYTHON}" -m '${appentry}' "\$@"
 EOF
-  chmod +x "${TEMP}/AppDir/AppRun"
+  chmod +x "${DIR_APPDIR}/AppRun"
 }
 
 
