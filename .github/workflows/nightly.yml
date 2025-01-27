@@ -12,8 +12,16 @@ jobs:
         include:
           - arch: aarch64
             runs-on: ubuntu-24.04-arm
+            bundle: ""
           - arch: x86_64
             runs-on: ubuntu-24.04
+            bundle: ""
+          - arch: aarch64
+            runs-on: ubuntu-24.04-arm
+            bundle: ffmpeg
+          - arch: x86_64
+            runs-on: ubuntu-24.04
+            bundle: ffmpeg
     runs-on: ${{ matrix.runs-on }}
     steps:
       - uses: actions/checkout@v4
@@ -25,7 +33,7 @@ jobs:
           python -m pip install -U --upgrade-strategy=eager -r requirements.txt
       - name: Build
         run: |
-          SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh --gitref=master
+          SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh --gitref=master --bundle=${{ matrix.bundle }}
       - name: Get file name
         id: vars
         run: |
