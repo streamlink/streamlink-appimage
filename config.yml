@@ -10,7 +10,20 @@ builds:
     image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:b1af5e783e3d7d9ac0dcc68e760147cc1c8de4eadc6ffb8880d5a332d7cdae37
     tag: manylinux_2_28_aarch64
     abi: cp312-cp312
-    bundles: {}
+    bundles:
+      ffmpeg:
+        filename: ffmpeg-n7.1-153-gaeb8631048-linuxarm64-gpl-7.1.tar.xz
+        url: https://github.com/streamlink/FFmpeg-Builds/releases/download/20250121-1/ffmpeg-n7.1-153-gaeb8631048-linuxarm64-gpl-7.1.tar.xz
+        sha256: ebc0423d7a5203bd75108d17d7ff57c756c1816cd79697d40aa1ff00db950868
+        type: tar
+        sourcedir: ffmpeg-n7.1-153-gaeb8631048-linuxarm64-gpl-7.1
+        files:
+          - from: bin/ffmpeg
+            to: usr/bin/ffmpeg
+          - from: LICENSE.txt
+            to: usr/share/licenses/ffmpeg.txt
+          - from: BUILDINFO.txt
+            to: usr/share/ffmpeg/buildinfo.txt
     dependency_override:
       # https://github.com/urllib3/urllib3/blob/2.3.0/pyproject.toml#L43
       - brotli>=1.0.9  # optional urllib3 dependency
@@ -39,7 +52,20 @@ builds:
     image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:7928d542510b837c0a66fc5887ab1c9dcb6c7844e01fbe3c5126ae622c423d99
     tag: manylinux_2_28_x86_64
     abi: cp312-cp312
-    bundles: {}
+    bundles:
+      ffmpeg:
+        filename: ffmpeg-n7.1-153-gaeb8631048-linux64-gpl-7.1.tar.xz
+        url: https://github.com/streamlink/FFmpeg-Builds/releases/download/20250121-1/ffmpeg-n7.1-153-gaeb8631048-linux64-gpl-7.1.tar.xz
+        sha256: e50ae66b991e3f6afa1fae57fb3e8f6cfc0a9a2b82f68790bf08c3fd165e8a1a
+        type: tar
+        sourcedir: ffmpeg-n7.1-153-gaeb8631048-linux64-gpl-7.1
+        files:
+          - from: bin/ffmpeg
+            to: usr/bin/ffmpeg
+          - from: LICENSE.txt
+            to: usr/share/licenses/ffmpeg.txt
+          - from: BUILDINFO.txt
+            to: usr/share/ffmpeg/buildinfo.txt
     dependency_override:
       # https://github.com/urllib3/urllib3/blob/2.3.0/pyproject.toml#L43
       - brotli>=1.0.9  # optional urllib3 dependency

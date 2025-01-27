@@ -50,12 +50,13 @@ Additional information, like for example how to inspect the AppImage contents or
 
 ### About
 
-These AppImages are built using the [`streamlink/appimage-buildenv-*`][streamlink-appimage-buildenv] docker images, which are based on the [`pypa/manylinux`][manylinux] project and the [`manylinux_2_28`][manylinux_2_28] platform, which is based on AlmaLinux 8. The pre-built Python install and its needed runtime libraries are copied from the docker image (see the manylinux build files) into the AppImages, in addition to the main Python application code, namely Streamlink and its dependencies, which are pulled from GitHub and PyPI.
+These AppImages are built using the [`streamlink/appimage-buildenv-*`][streamlink-appimage-buildenv] docker images, which are based on the [`pypa/manylinux`][manylinux] project and the [`manylinux_2_28`][manylinux_2_28] platform, which is based on AlmaLinux 8. The pre-built Python install and its needed runtime libraries are copied from the docker image (see the manylinux build files) into the AppImages, in addition to the main Python application code, namely Streamlink and its dependencies, which are pulled from GitHub and PyPI. Streamlink's AppImages optionally bundle third-party software, like [Streamlink's own FFmpeg builds][ffmpeg-builds].
 
 ### Build
 
 Requirements: `git`, `jq`, `yq`, `docker`  
-Supported architectures: `x86_64`, `aarch64`
+Supported architectures: `x86_64`, `aarch64`  
+Optionally bundled software: `ffmpeg`
 
 ```bash
 # Build
@@ -77,6 +78,7 @@ export SOURCE_DATE_EPOCH=$(git show -s --format=%ct)
 [appimage-fuse]: https://docs.appimage.org/user-guide/troubleshooting/fuse.html
 [streamlink]: https://github.com/streamlink/streamlink
 [streamlink-appimage-buildenv]: https://github.com/streamlink/appimage-buildenv
+[ffmpeg-builds]: https://github.com/streamlink/FFmpeg-Builds
 [releases]: https://github.com/streamlink/streamlink-appimage/releases
 [appimagelauncher]: https://github.com/TheAssassin/AppImageLauncher
 [manylinux]: https://github.com/pypa/manylinux
