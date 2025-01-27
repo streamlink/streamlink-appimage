@@ -196,22 +196,22 @@ EOF
   # Not a custom git reference (assume that only tagged releases are used as source)
   # Use plain version string with app release number and no abbreviated commit ID
   if [[ -z "${GITREF}" ]]; then
-    version="${versionplain}-${apprel}"
+    version="${versionplain}"
 
   # Custom ref -> tagged release (no build metadata in version string)
   # Add abbreviated commit ID to the plain version string to distinguish it from regular releases, set 0 as app release number
   elif [[ "${versionstring}" != *+* ]]; then
     local _commit
     _commit="$(git -C "${TEMP}/source.git" -c core.abbrev=7 rev-parse --short HEAD)"
-    version="${versionplain}-0-g${_commit}"
+    version="${versionplain}+0+g${_commit}"
 
   # Custom ref -> arbitrary untagged commit (version string includes build metadata)
   # Translate into correct format
   else
-    version="${versionplain}-${versionmeta/./-}"
+    version="${versionplain}+${versionmeta/./-}"
   fi
 
-  local name="${appname}-${version}-${abi}-${tag}.AppImage"
+  local name="${appname}-${version}-${apprel}-${abi}-${tag}.AppImage"
 
   install -m777 "${TEMP}/out.AppImage" "${DIR_DIST}/${name}"
   ( cd "${DIR_DIST}"; sha256sum "${name}"; )
