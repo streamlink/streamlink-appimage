@@ -271,27 +271,16 @@ cd '${target}'
 './$(basename -- "${SCRIPT_DOCKER}")' '${abi}' '${appentry}'
 EOF
 
-  local versionstring versionplain versionmeta version
+  local versionstring version
   versionstring=$(cat "${TEMP}/version.txt")
-  versionplain="${versionstring%%+*}"
-  versionmeta="${versionstring##*+}"
 
-  # Not a custom git reference (assume that only tagged releases are used as source)
-  # Use plain version string with app release number and no abbreviated commit ID
-  if [[ -z "${GITREF}" ]]; then
-    version="${versionplain}"
-
-  # Custom ref -> tagged release (no build metadata in version string)
-  # Add abbreviated commit ID to the plain version string to distinguish it from regular releases, set 0 as app release number
-  elif [[ "${versionstring}" != *+* ]]; then
+  # custom gitrefs that point to a tag should use the same file name format as builds from untagged commits
+  if [[ -n "${GITREF}" && "${versionstring}" != *+* ]]; then
     local _commit
     _commit="$(git -C "${TEMP}/source.git" -c core.abbrev=7 rev-parse --short HEAD)"
-    version="${versionplain}+0+g${_commit}"
-
-  # Custom ref -> arbitrary untagged commit (version string includes build metadata)
-  # Translate into correct format
+    version="${versionstring%%+*}+0+g${_commit}"
   else
-    version="${versionplain}+${versionmeta/./-}"
+    version="${versionstring}"
   fi
 
   local bundle
