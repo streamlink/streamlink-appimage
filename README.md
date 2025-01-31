@@ -10,8 +10,9 @@ Linux [AppImage][appimage] build config for [Streamlink][streamlink]
 
 ### Contents
 
-- a Python environment
-- Streamlink and its dependencies
+- [a Python environment](https://github.com/streamlink/appimage-buildenv)
+- [Streamlink and its dependencies](https://github.com/streamlink/streamlink)
+- [FFmpeg, for muxing streams (optional)](https://github.com/streamlink/FFmpeg-Builds)
 
 ### Supported architectures
 
