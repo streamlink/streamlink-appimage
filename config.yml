@@ -9,7 +9,7 @@ builds:
   aarch64:
     image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:b1af5e783e3d7d9ac0dcc68e760147cc1c8de4eadc6ffb8880d5a332d7cdae37
     tag: manylinux_2_28_aarch64
-    abi: cp312-cp312
+    abi: cp313-cp313
     bundles:
       ffmpeg:
         filename: ffmpeg-n7.1-153-gaeb8631048-linuxarm64-gpl-7.1.tar.xz
@@ -29,13 +29,13 @@ builds:
       - brotli>=1.0.9  # optional urllib3 dependency
     dependencies:
       attrs: 25.1.0 --hash=sha256:c75a69e28a550a7e93789579c22aa26b0f5b83b75dc4e08fe092980051e1090a
-      Brotli: 1.1.0 --hash=sha256:70051525001750221daa10907c77830bc889cb6d865cc0b813d9db7fefc21451
-      certifi: 2024.12.14 --hash=sha256:1275f7a45be9464efc1173084eaa30f866fe2e47d389406136d332ed4967ec56
-      charset-normalizer: 3.4.1 --hash=sha256:dad3e487649f498dd991eeb901125411559b22e8d7ab25d3aeb1af367df5efd7
+      Brotli: 1.1.0 --hash=sha256:3c0ef38c7a7014ffac184db9e04debe495d317cc9c6fb10071f7fefd93100a4f
+      certifi: 2025.1.31 --hash=sha256:ca78db4565a652026a4db2bcdf68f2fb589ea80d0be70e03929ed730746b84fe
+      charset-normalizer: 3.4.1 --hash=sha256:22e14b5d70560b8dd51ec22863f370d1e595ac3d024cb8ad7d308b4cd95f8313
       h11: 0.14.0 --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
       idna: 3.10 --hash=sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3
       isodate: 0.7.2 --hash=sha256:28009937d8031054830160fce6d409ed342816b543597cece116d966c6d99e15
-      lxml: 5.3.0 --hash=sha256:62d172f358f33a26d6b41b28c170c63886742f5b6772a42b59b4f0fa10526cb1
+      lxml: 5.3.0 --hash=sha256:c00f323cc00576df6165cc9d21a4c21285fa6b9989c5c39830c3903dc4303ef3
       outcome: 1.3.0.post0 --hash=sha256:e771c5ce06d1415e356078d3bdd68523f284b4ce5419828922b6871e65eda82b
       pycountry: 24.6.1 --hash=sha256:f1a4fb391cd7214f8eefd39556d740adcc233c778a27f8942c8dca351d6ce06f
       pycryptodome: 3.21.0 --hash=sha256:2de4b7263a33947ff440412339cb72b28a5a4c769b5c1ca19e33dd6cd1dcec6e
@@ -51,7 +51,7 @@ builds:
   x86_64:
     image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:7928d542510b837c0a66fc5887ab1c9dcb6c7844e01fbe3c5126ae622c423d99
     tag: manylinux_2_28_x86_64
-    abi: cp312-cp312
+    abi: cp313-cp313
     bundles:
       ffmpeg:
         filename: ffmpeg-n7.1-153-gaeb8631048-linux64-gpl-7.1.tar.xz
@@ -71,13 +71,13 @@ builds:
       - brotli>=1.0.9  # optional urllib3 dependency
     dependencies:
       attrs: 25.1.0 --hash=sha256:c75a69e28a550a7e93789579c22aa26b0f5b83b75dc4e08fe092980051e1090a
-      Brotli: 1.1.0 --hash=sha256:d0c5516f0aed654134a2fc936325cc2e642f8a0e096d075209672eb321cff408
-      certifi: 2024.12.14 --hash=sha256:1275f7a45be9464efc1173084eaa30f866fe2e47d389406136d332ed4967ec56
-      charset-normalizer: 3.4.1 --hash=sha256:bc2722592d8998c870fa4e290c2eec2c1569b87fe58618e67d38b4665dfa680d
+      Brotli: 1.1.0 --hash=sha256:a93dde851926f4f2678e704fadeb39e16c35d8baebd5252c9fd94ce8ce68c4a0
+      certifi: 2025.1.31 --hash=sha256:ca78db4565a652026a4db2bcdf68f2fb589ea80d0be70e03929ed730746b84fe
+      charset-normalizer: 3.4.1 --hash=sha256:955f8851919303c92343d2f66165294848d57e9bba6cf6e3625485a70a038d11
       h11: 0.14.0 --hash=sha256:e3fe4ac4b851c468cc8363d500db52c2ead036020723024a109d37346efaa761
       idna: 3.10 --hash=sha256:946d195a0d259cbba61165e88e65941f16e9b36ea6ddb97f00452bae8b1287d3
       isodate: 0.7.2 --hash=sha256:28009937d8031054830160fce6d409ed342816b543597cece116d966c6d99e15
-      lxml: 5.3.0 --hash=sha256:3879cc6ce938ff4eb4900d901ed63555c778731a96365e53fadb36437a131a99
+      lxml: 5.3.0 --hash=sha256:1473427aff3d66a3fa2199004c3e601e6c4500ab86696edffdbc84954c72d832
       outcome: 1.3.0.post0 --hash=sha256:e771c5ce06d1415e356078d3bdd68523f284b4ce5419828922b6871e65eda82b
       pycountry: 24.6.1 --hash=sha256:f1a4fb391cd7214f8eefd39556d740adcc233c778a27f8942c8dca351d6ce06f
       pycryptodome: 3.21.0 --hash=sha256:0714206d467fc911042d01ea3a1847c847bc10884cf674c82e12915cfe1649f8
