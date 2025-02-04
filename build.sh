@@ -158,11 +158,11 @@ get_sources() {
 
   # TODO: re-investigate and optimize this
   git clone --depth 1 "${gitrepo}" .
-  git fetch origin --depth 300 "${gitref}"
+  git fetch origin --depth 300 "${gitref}:branch"
   git ls-remote --tags --sort=version:refname 2>&- \
     | awk "END{printf \"+%s:%s\\n\",\$2,\$2}" \
     | git fetch origin --depth=300
-  git -c advice.detachedHead=false checkout --force "${gitref}"
+  git -c advice.detachedHead=false checkout --force branch
   git fetch origin --depth=300 --update-shallow
 
   log "Commit information"
