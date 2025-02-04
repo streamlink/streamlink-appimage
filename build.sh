@@ -278,7 +278,7 @@ EOF
   if [[ -n "${GITREF}" && "${versionstring}" != *+* ]]; then
     local _commit
     _commit="$(git -C "${TEMP}/source.git" -c core.abbrev=7 rev-parse --short HEAD)"
-    version="${versionstring%%+*}+0+g${_commit}"
+    version="${versionstring%%+*}+0.g${_commit}"
   else
     version="${versionstring}"
   fi
