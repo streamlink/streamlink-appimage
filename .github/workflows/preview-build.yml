@@ -12,13 +12,17 @@ on:
 jobs:
   build:
     name: "${{ inputs.ref }} (${{ matrix.arch }})"
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.runs-on }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - arch: aarch64
+            runs-on: ubuntu-24.04-arm
+            bundle: ffmpeg
           - arch: x86_64
+            runs-on: ubuntu-24.04
+            bundle: ffmpeg
     steps:
       - uses: actions/checkout@v4
         with:
@@ -31,7 +35,7 @@ jobs:
           python -m pip install -U --upgrade-strategy=eager -r requirements.txt
       - name: Build
         run: |
-          ./build.sh --arch ${{ matrix.arch }} --gitref "${{ inputs.ref }}" --bundle ffmpeg
+          ./build.sh --arch "${{ matrix.arch }}" --gitref "${{ inputs.ref }}" --bundle "${{ matrix.bundle }}"
       - name: Get file name
         id: vars
         run: |
