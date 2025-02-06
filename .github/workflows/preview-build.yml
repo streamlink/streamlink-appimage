@@ -11,14 +11,14 @@ on:
 
 jobs:
   build:
-    name: "${{ inputs.ref }} (${{ matrix.build }})"
+    name: "${{ inputs.ref }} (${{ matrix.arch }})"
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         include:
-          - build: installer
-          - build: portable
+          - arch: aarch64
+          - arch: x86_64
     steps:
       - uses: actions/checkout@v4
         with:
@@ -28,10 +28,10 @@ jobs:
           python-version: "3.12"
       - name: Install dependencies
         run: |
-          ./install-build-dependencies.sh
+          python -m pip install -U --upgrade-strategy=eager -r requirements.txt
       - name: Build
         run: |
-          "./build-${{ matrix.build }}.sh" --gitref "${{ inputs.ref }}" --bundle ffmpeg
+          ./build.sh --arch ${{ matrix.arch }} --gitref "${{ inputs.ref }}" --bundle ffmpeg
       - name: Get file name
         id: vars
         run: |
