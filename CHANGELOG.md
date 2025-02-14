@@ -1,6 +1,16 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 7.1.3-1 (2025-02-14)
+
+- Updated Streamlink to 7.1.3, updated its dependencies
+- Updated build images, with Python 3.13.2
+- Added secondary AppImages with FFmpeg being bundled (x86\_64 and aarch64)
+- Added preview builds triggered from commits to Streamlink's master branch
+- Removed nightly builds
+- Refactored build scripts and replaced positional build parameters with getopt parameters
+- Changed AppImage file name format for builds of untagged commits
+
 ## 7.1.2-1 (2025-01-08)
 
 - Updated Streamlink to 7.1.2
