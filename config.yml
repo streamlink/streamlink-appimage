@@ -27,6 +27,7 @@ builds:
     dependency_override:
       # https://github.com/urllib3/urllib3/blob/2.3.0/pyproject.toml#L43
       - brotli>=1.0.9  # optional urllib3 dependency
+      - zstandard>=0.18.0  # optional urllib3 dependency
     dependencies:
       attrs: 25.3.0 --hash=sha256:427318ce031701fea540783410126f03899a97ffc6f61596ad581ac2e40e3bc3
       Brotli: 1.1.0 --hash=sha256:3c0ef38c7a7014ffac184db9e04debe495d317cc9c6fb10071f7fefd93100a4f
@@ -48,6 +49,7 @@ builds:
       urllib3: 2.3.0 --hash=sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df
       websocket-client: 1.8.0 --hash=sha256:17b44cc997f5c498e809b22cdf2d9c7a9e71c02c8cc2b6c56e7c2d1239bfa526
       wsproto: 1.2.0 --hash=sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736
+      zstandard: 0.23.0 --hash=sha256:d2240ddc86b74966c34554c49d00eaafa8200a18d3a5b6ffbf7da63b11d74ee2
   x86_64:
     image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:902d427b17bc49f9840634051a799acb40e14e0f2475bcaf6bd982eff8634608
     tag: manylinux_2_28_x86_64
@@ -69,6 +71,7 @@ builds:
     dependency_override:
       # https://github.com/urllib3/urllib3/blob/2.3.0/pyproject.toml#L43
       - brotli>=1.0.9  # optional urllib3 dependency
+      - zstandard>=0.18.0  # optional urllib3 dependency
     dependencies:
       attrs: 25.3.0 --hash=sha256:427318ce031701fea540783410126f03899a97ffc6f61596ad581ac2e40e3bc3
       Brotli: 1.1.0 --hash=sha256:a93dde851926f4f2678e704fadeb39e16c35d8baebd5252c9fd94ce8ce68c4a0
@@ -90,3 +93,4 @@ builds:
       urllib3: 2.3.0 --hash=sha256:1cee9ad369867bfdbbb48b7dd50374c0967a0bb7710050facf0dd6911440e3df
       websocket-client: 1.8.0 --hash=sha256:17b44cc997f5c498e809b22cdf2d9c7a9e71c02c8cc2b6c56e7c2d1239bfa526
       wsproto: 1.2.0 --hash=sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736
+      zstandard: 0.23.0 --hash=sha256:6f77fa49079891a4aab203d0b1744acc85577ed16d767b52fc089d83faf8d8ed
