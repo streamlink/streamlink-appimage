@@ -217,12 +217,8 @@ build_appimage() {
   log "Building appimage"
   [ "${SOURCE_DATE_EPOCH}" ] && mtime="@${SOURCE_DATE_EPOCH}" || mtime=now
   find "${APPDIR}" -exec touch --no-dereference "--date=${mtime}" '{}' '+'
-  ARCH=$(uname -m) /usr/local/bin/appimagetool \
-    --verbose \
-    --comp gzip \
-    --no-appstream \
-    "${APPDIR}" \
-    "${DEST}"
+  /usr/local/bin/mksquashfs "${APPDIR}" AppDir.sqfs -comp zstd -root-owned -noappend -b 128k
+  cat /usr/local/share/appimage/runtime AppDir.sqfs > "${DEST}"
   chmod +x "${DEST}"
 }
 
