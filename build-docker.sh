@@ -197,7 +197,7 @@ copy_licenses() {
   done
 
   log "Re-installing packages without suppressing license files:" "${!packages[@]}"
-  yum reinstall -y -v --setopt=timeout=5 --setopt=retries=3 --setopt=tsflags= "${!packages[@]}"
+  dnf reinstall -y -v --setopt=timeout=5 --setopt=retries=3 --setopt=tsflags= "${!packages[@]}"
 
   for package in "${!packages[@]}"; do
     log "Copying license files for package ${package}"
