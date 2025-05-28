@@ -25,7 +25,7 @@ builds:
           - from: BUILDINFO.txt
             to: usr/share/ffmpeg/buildinfo.txt
     dependency_override:
-      # https://github.com/urllib3/urllib3/blob/2.3.0/pyproject.toml#L43
+      # https://github.com/urllib3/urllib3/blob/2.4.0/pyproject.toml#L44
       - brotli>=1.0.9  # optional urllib3 dependency
       - zstandard>=0.18.0  # optional urllib3 dependency
     dependencies:
@@ -39,7 +39,7 @@ builds:
       lxml: 5.4.0 --hash=sha256:e794f698ae4c5084414efea0f5cc9f4ac562ec02d66e1484ff822ef97c2cadff
       outcome: 1.3.0.post0 --hash=sha256:e771c5ce06d1415e356078d3bdd68523f284b4ce5419828922b6871e65eda82b
       pycountry: 24.6.1 --hash=sha256:f1a4fb391cd7214f8eefd39556d740adcc233c778a27f8942c8dca351d6ce06f
-      pycryptodome: 3.22.0 --hash=sha256:a31fa5914b255ab62aac9265654292ce0404f6b66540a065f538466474baedbc
+      pycryptodome: 3.23.0 --hash=sha256:67bd81fcbe34f43ad9422ee8fd4843c8e7198dd88dd3d40e6de42ee65fbe1490
       PySocks: 1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5
       requests: 2.32.3 --hash=sha256:70761cfe03c773ceb22aa2f671b4757976145175cdfca038c02654d061d6dcc6
       sniffio: 1.3.1 --hash=sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2
@@ -69,7 +69,7 @@ builds:
           - from: BUILDINFO.txt
             to: usr/share/ffmpeg/buildinfo.txt
     dependency_override:
-      # https://github.com/urllib3/urllib3/blob/2.3.0/pyproject.toml#L43
+      # https://github.com/urllib3/urllib3/blob/2.4.0/pyproject.toml#L44
       - brotli>=1.0.9  # optional urllib3 dependency
       - zstandard>=0.18.0  # optional urllib3 dependency
     dependencies:
@@ -83,7 +83,7 @@ builds:
       lxml: 5.4.0 --hash=sha256:1a42b3a19346e5601d1b8296ff6ef3d76038058f311902edd574461e9c036982
       outcome: 1.3.0.post0 --hash=sha256:e771c5ce06d1415e356078d3bdd68523f284b4ce5419828922b6871e65eda82b
       pycountry: 24.6.1 --hash=sha256:f1a4fb391cd7214f8eefd39556d740adcc233c778a27f8942c8dca351d6ce06f
-      pycryptodome: 3.22.0 --hash=sha256:a0092fd476701eeeb04df5cc509d8b739fa381583cda6a46ff0a60639b7cd70d
+      pycryptodome: 3.23.0 --hash=sha256:c8987bd3307a39bc03df5c8e0e3d8be0c4c3518b7f044b0f4c15d1aa78f52575
       PySocks: 1.7.1 --hash=sha256:2725bd0a9925919b9b51739eea5f9e2bae91e83288108a9ad338b2e3a4435ee5
       requests: 2.32.3 --hash=sha256:70761cfe03c773ceb22aa2f671b4757976145175cdfca038c02654d061d6dcc6
       sniffio: 1.3.1 --hash=sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2
