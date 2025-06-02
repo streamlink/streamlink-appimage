@@ -3,11 +3,6 @@
 - [streamlink/streamlink](https://github.com/streamlink/streamlink/releases) (release changelog)
 - [streamlink/streamlink-appimage](https://github.com/streamlink/streamlink-appimage/blob/master/CHANGELOG.md) (packaging changelog)
 
-> [!IMPORTANT]  
-> Streamlink `7.0.0` changes:
-> - ⚠️ Upgraded from `manylinux2014` to `manylinux_2_28` (requires glibc 2.28+ - Aug 2018).
-> - ⚠️ No more `i686` AppImage builds (unsupported on `manylinux_2_28`).
-
 ## ⚙️ Instructions
 
 Please see the [README.md](https://github.com/streamlink/streamlink-appimage#how-to) on how to set up and use AppImages.

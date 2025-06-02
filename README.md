@@ -3,11 +3,6 @@ Streamlink AppImage
 
 Linux [AppImage][appimage] build config for [Streamlink][streamlink]
 
-> [!IMPORTANT]  
-> Streamlink `7.0.0` changes:
-> - ⚠️ Upgraded from `manylinux2014` to `manylinux_2_28` (requires glibc 2.28+ - Aug 2018).
-> - ⚠️ No more `i686` AppImage builds (unsupported on `manylinux_2_28`).
-
 ### Contents
 
 - [a Python environment](https://github.com/streamlink/appimage-buildenv)
