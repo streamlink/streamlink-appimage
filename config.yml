@@ -7,7 +7,7 @@ git:
   ref: 7.3.0
 builds:
   aarch64:
-    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:d49dc1debf868f63981a0a433782063b695c13d30fa37b5ea0c6dcf390e0eee4
+    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:cc48131dea806767f2a285cf126686d0e0be5d21cd6466b90f6977413f749e24
     tag: manylinux_2_28_aarch64
     abi: cp313-cp313
     bundles:
@@ -51,7 +51,7 @@ builds:
       wsproto: 1.2.0 --hash=sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736
       zstandard: 0.23.0 --hash=sha256:d2240ddc86b74966c34554c49d00eaafa8200a18d3a5b6ffbf7da63b11d74ee2
   x86_64:
-    image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:47575371b63ff20642267f808557d03eb93b4689fb1ed200bb4152bbed869376
+    image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:21b080fdf179f88ddc315ce9fa3bd9566ae69c56bea6dcabc32807fa59178eaf
     tag: manylinux_2_28_x86_64
     abi: cp313-cp313
     bundles:
