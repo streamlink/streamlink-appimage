@@ -1,6 +1,13 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 7.4.0-1 (2025-06-08)
+
+- Updated Streamlink to 7.4.0, updated its dependencies
+- Updated build images, with Python 3.13.4
+- Switched to AppImage type2 runtime, dropping the libfuse2 requirement
+- Switched compression from gzip to zstd
+
 ## 7.3.0-1 (2025-04-26)
 
 - Updated Streamlink to 7.3.0, updated its dependencies

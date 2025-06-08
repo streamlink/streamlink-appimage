@@ -4,7 +4,7 @@ app:
   entry: streamlink
 git:
   repo: https://github.com/streamlink/streamlink.git
-  ref: 7.3.0
+  ref: 7.4.0
 builds:
   aarch64:
     image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:cc48131dea806767f2a285cf126686d0e0be5d21cd6466b90f6977413f749e24
