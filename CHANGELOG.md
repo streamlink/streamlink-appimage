@@ -1,6 +1,12 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 7.6.0-1 (2025-09-08)
+
+- Updated Streamlink to 7.6.0, updated its dependencies
+- Updated build images, with Python 3.13.7
+- Updated FFmpeg to ffmpeg-n8.0, with latest library versions
+
 ## 7.5.0-1 (2025-07-08)
 
 - Updated Streamlink to 7.5.0, updated its dependencies
