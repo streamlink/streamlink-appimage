@@ -1,8 +1,12 @@
 #!/usr/bin/env bash
-set -e
+# shellcheck disable=SC2269
+set -euo pipefail
 
-ABI="${1}"
-ENTRY="${2}"
+
+ABI="${ABI}"
+ENTRY="${ENTRY}"
+DEST="${DEST}"
+
 
 PIP_ARGS=(
   --disable-pip-version-check
@@ -40,8 +44,6 @@ libraries=()
 
 # based on niess/python-appimage (GPLv3)
 # https://github.com/niess/python-appimage/blob/d0d64c3316ced7660476d50b5c049f3939213519/python_appimage/appimage/relocate.py
-
-DEST=out.AppImage
 
 PYTHON="/opt/python/${ABI}/bin/python"
 VERSION=$("${PYTHON}" -B -c 'import sys; print("{}.{}".format(*sys.version_info[:2]))')
@@ -84,7 +86,7 @@ patch_binary() {
   for dep in "${deps[@]}"; do
     local name
     name=$(basename "${dep}")
-    [[ -n "${excludelist[${name}]}" ]] && continue
+    [[ -n "${excludelist[${name}]:-}" ]] && continue
     local target="${libdir}/${name}"
     if ! [[ -f "${target}" ]]; then
       log "Bundling library: ${dep} (${target})"
@@ -184,10 +186,10 @@ copy_licenses() {
     if ! find_licenses "${package}" >/dev/null; then
       log "Could not find license files for package ${package}"
       for dependency in $(dnf repoquery --installed --requires --resolve "${package}"); do
-        if [[ -z "${packages["${dependency}"]}" ]]; then
+        if [[ -z "${packages["${dependency}"]:-}" ]]; then
           # ignore dependencies with files in the excludelist
           for depfile in $(dnf repoquery --installed --list "${dependency}"); do
-            [[ "${excludelist["$(basename "${depfile}")"]}" ]] && continue 2
+            [[ -n "${excludelist["$(basename "${depfile}")"]:-}" ]] && continue 2
           done
           echo "Attempting to find licenses in dependency ${dependency}"
           packages["${dependency}"]="${packages["${package}"]}"
@@ -214,10 +216,12 @@ find_licenses() {
 
 
 build_appimage() {
-  log "Building appimage"
-  [ "${SOURCE_DATE_EPOCH}" ] && mtime="@${SOURCE_DATE_EPOCH}" || mtime=now
-  find "${APPDIR}" -exec touch --no-dereference "--date=${mtime}" '{}' '+'
+  log "Building AppImage"
+
+  find "${APPDIR}" -exec touch --no-dereference "--date=${SOURCE_DATE_EPOCH:+@}${SOURCE_DATE_EPOCH:-now}" '{}' '+'
+
   /usr/local/bin/mksquashfs "${APPDIR}" AppDir.sqfs -comp zstd -root-owned -noappend -b 128k
+
   cat /usr/local/share/appimage/runtime AppDir.sqfs > "${DEST}"
   chmod +x "${DEST}"
 }

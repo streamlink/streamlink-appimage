@@ -262,13 +262,16 @@ build_app() {
     --interactive \
     --rm \
     --env SOURCE_DATE_EPOCH \
+    --env ABI="${abi}" \
+    --env ENTRY="${appentry}" \
+    --env DEST="out.AppImage" \
     --mount "type=bind,source=${TEMP},target=${target}" \
     "${image}" \
     /usr/bin/bash <<EOF
 set -e
 trap "chown -R $(id -u):$(id -g) '${target}'" EXIT
 cd '${target}'
-'./$(basename -- "${SCRIPT_DOCKER}")' '${abi}' '${appentry}'
+'./$(basename -- "${SCRIPT_DOCKER}")'
 EOF
 
   local versionstring version
