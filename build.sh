@@ -290,7 +290,7 @@ EOF
 
   local name="${appname}-${version}-${apprel}-${abi}-${tag}.AppImage"
 
-  install -m777 "${TEMP}/out.AppImage" "${DIR_DIST}/${name}"
+  install -Dm755 "${TEMP}/out.AppImage" "${DIR_DIST}/${name}"
   ( cd "${DIR_DIST}"; sha256sum "${name}"; )
 }
 
