@@ -42,28 +42,12 @@ libraries=()
 # ----
 
 
-# based on niess/python-appimage (GPLv3)
-# https://github.com/niess/python-appimage/blob/d0d64c3316ced7660476d50b5c049f3939213519/python_appimage/appimage/relocate.py
-
 PYTHON="/opt/python/${ABI}/bin/python"
-VERSION=$("${PYTHON}" -B -c 'import sys; print("{}.{}".format(*sys.version_info[:2]))')
-PYTHON_X_Y="python${VERSION}"
+PYTHON_X_Y=$("${PYTHON}" -B -c 'import sys; print("python{}.{}".format(*sys.version_info[:2]))')
+PYTHON_PREFIX=$("${PYTHON}" -B -c 'import sys; print(sys.prefix)')
 
 APPDIR=AppDir
-APPDIR_BIN="${APPDIR}/usr/bin"
-APPDIR_LIB="${APPDIR}/usr/lib"
-
-HOST_PREFIX=$("${PYTHON}" -c 'import sys; print(sys.prefix)')
-HOST_BIN="${HOST_PREFIX}/bin"
-HOST_INC="${HOST_PREFIX}/include/${PYTHON_X_Y}"
-HOST_LIB="${HOST_PREFIX}/lib"
-HOST_PKG="${HOST_LIB}/${PYTHON_X_Y}"
-
-PYTHON_PREFIX="${APPDIR}/opt/${PYTHON_X_Y}"
-PYTHON_BIN="${PYTHON_PREFIX}/bin"
-PYTHON_INC="${PYTHON_PREFIX}/include/${PYTHON_X_Y}"
-PYTHON_LIB="${PYTHON_PREFIX}/lib"
-PYTHON_PKG="${PYTHON_LIB}/${PYTHON_X_Y}"
+PREFIX="${APPDIR}/usr"
 
 
 patch_binary() {
@@ -101,32 +85,26 @@ patch_binary() {
 
 
 setup_python() {
-  log "Setting up python install"
+  log "Setting up Python environment"
+
+  if [[ -d "${PREFIX}/bin" ]]; then
+    mv "${PREFIX}/bin" "${PREFIX}/_bin"
+  fi
+
+  "${PYTHON}" -m venv --copies --without-pip --without-scm-ignore-files "${PREFIX}"
+
+  ln -frsT "${PREFIX}/bin/${PYTHON_X_Y}" "${PREFIX}/bin/python"
+  ln -frsT "${PREFIX}/bin/${PYTHON_X_Y}" "${PREFIX}/bin/python3"
+  cp -a --no-preserve=ownership -t "${PREFIX}" "${PYTHON_PREFIX}"/{include,lib}
 
   local file
-  install -Dm777 "${HOST_BIN}/${PYTHON_X_Y}" "${PYTHON_BIN}/${PYTHON_X_Y}"
-
-  mkdir -p "${PYTHON_PKG}" "${PYTHON_INC}"
-  cp -aT "${HOST_PKG}" "${PYTHON_PKG}"
-  cp -aT "${HOST_INC}" "${PYTHON_INC}"
-  rm -rf \
-    "${PYTHON_LIB}/lib/${PYTHON_X_Y}.a" \
-    "${PYTHON_PKG}/"{test,dist-packages,config-*-linux-*} \
-    || true
-
-  mkdir -p "${APPDIR_BIN}"
-  ln -rs "${PYTHON_BIN}/${PYTHON_X_Y}" "${APPDIR_BIN}/${PYTHON_X_Y}"
-  ln -sfT "${PYTHON_X_Y}" "${APPDIR_BIN}/python"
-  ln -sfT "${PYTHON_X_Y}" "${APPDIR_BIN}/python3"
-
-  mkdir -p "${APPDIR_LIB}"
-  patch_binary "${PYTHON_BIN}/${PYTHON_X_Y}" "${APPDIR_LIB}" false
+  patch_binary "${PREFIX}/bin/${PYTHON_X_Y}" "${PREFIX}/lib" false
   while read -r file; do
-    patch_binary "${file}" "${APPDIR_LIB}" false
-  done <<< "$(find "${PYTHON_PKG}/lib-dynload" -type f -name '*.so' -print)"
+    patch_binary "${file}" "${PREFIX}/lib" false
+  done <<< "$(find "${PREFIX}/lib/${PYTHON_X_Y}/lib-dynload" -type f -name '*.so' -print)"
   while read -r file; do
-    patch_binary "${file}" "${APPDIR_LIB}" true
-  done <<< "$(find "${APPDIR_LIB}" -type f -name 'lib*.so*' -print)"
+    patch_binary "${file}" "${PREFIX}/lib" true
+  done <<< "$(find "${PREFIX}/lib" -type f -name 'lib*.so*' -print)"
 }
 
 
@@ -134,7 +112,8 @@ install_application() {
   export PYTHONHASHSEED=0
 
   log "Installing dependencies"
-  "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m pip install \
+  rm -rf "${PREFIX}/lib/${PYTHON_X_Y}/site-packages/"*
+  "${PYTHON}" -B -m pip install --prefix "${PREFIX}" \
     "${PIP_ARGS[@]}" \
     --no-compile \
     --require-hashes \
@@ -143,7 +122,7 @@ install_application() {
   log "Installing application"
   # fix git permission issue when getting version string via versioningit
   git config --global --add safe.directory /app/source.git
-  "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m pip install \
+  "${PYTHON}" -B -m pip install --prefix "${PREFIX}" \
     --verbose \
     "${PIP_ARGS[@]}" \
     --no-compile \
@@ -152,20 +131,28 @@ install_application() {
 
 get_version() {
   log "Reading version string"
-  "${PYTHON_BIN}/${PYTHON_X_Y}" -Bsc "from importlib.metadata import version;print(version('${ENTRY}'))" \
+  "${PREFIX}/bin/python" -Bsc "from importlib.metadata import version;print(version('${ENTRY}'))" \
     | tee version.txt
 }
 
-cleanup() {
-  log "Removing unneeded dependencies"
-  "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m pip uninstall \
-    -y \
-    -r <("${HOST_BIN}/${PYTHON_X_Y}" -B -m pip list --format=freeze)
+finalize() {
+  log "Removing unneeded files"
+  rm -rf \
+    "${PREFIX}/pyvenv.cfg" \
+    "${PREFIX}/include" \
+    "${PREFIX}/lib/pkgconfig" \
+    "${PREFIX}/lib/${PYTHON_X_Y}/"{test,config-*-linux-*}
+  find "${PREFIX}/bin/" -type f ! -name "python*" -delete
+
+  if [[ -d "${PREFIX}/_bin" ]]; then
+    cp -a "${PREFIX}/_bin/." "${PREFIX}/bin/"
+    rm -rf "${PREFIX}/_bin"
+  fi
 }
 
 build_bytecode() {
   log "Building bytecode"
-  "${PYTHON_BIN}/${PYTHON_X_Y}" -B -m compileall -q -j1 -f -r9999 -x 'lib2to3|test' "${PYTHON_LIB}"
+  "${PYTHON}" -B -m compileall -q -j1 -f -r9999 -x 'lib2to3|test' "${PREFIX}/lib"
 }
 
 
@@ -232,7 +219,7 @@ build() {
   copy_licenses
   install_application
   get_version
-  cleanup
+  finalize
   build_bytecode
   build_appimage
 
