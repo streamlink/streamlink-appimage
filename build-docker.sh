@@ -3,9 +3,10 @@
 set -euo pipefail
 
 
+FILENAME="${FILENAME}"
+GITREF="${GITREF}"
 ABI="${ABI}"
 ENTRY="${ENTRY}"
-DEST="${DEST}"
 
 
 PIP_ARGS=(
@@ -129,12 +130,6 @@ install_application() {
     /app/source.git
 }
 
-get_version() {
-  log "Reading version string"
-  "${PREFIX}/bin/python" -Bsc "from importlib.metadata import version;print(version('${ENTRY}'))" \
-    | tee version.txt
-}
-
 finalize() {
   log "Removing unneeded files"
   rm -rf \
@@ -209,8 +204,20 @@ build_appimage() {
 
   /usr/local/bin/mksquashfs "${APPDIR}" AppDir.sqfs -comp zstd -root-owned -noappend -b 128k
 
-  cat /usr/local/share/appimage/runtime AppDir.sqfs > "${DEST}"
-  chmod +x "${DEST}"
+  local filename version
+  version="$("${PREFIX}/bin/python" -Bsc "from importlib.metadata import version;print(version('${ENTRY}'))")"
+  # custom gitrefs that point to a tag should use the same file filename format as builds from untagged commits
+  if [[ -n "${GITREF}" && "${version}" != *+* ]]; then
+    version="${version%%+*}+0.g$(git -C "/app/source.git" -c core.abbrev=7 rev-parse --short HEAD)"
+  fi
+
+  # shellcheck disable=SC2059
+  filename="$(printf "${FILENAME}" "${version}")"
+
+  cat /usr/local/share/appimage/runtime AppDir.sqfs > "${filename}"
+  chmod +x "${filename}"
+
+  sha256sum "${filename}"
 }
 
 
@@ -218,7 +225,6 @@ build() {
   setup_python
   copy_licenses
   install_application
-  get_version
   finalize
   build_bytecode
   build_appimage

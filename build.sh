@@ -60,6 +60,12 @@ in_array() {
   return 1
 }
 
+join() {
+  local IFS="${1}"
+  shift
+  echo "${*}"
+}
+
 
 # ----
 
@@ -262,9 +268,10 @@ build_app() {
     --interactive \
     --rm \
     --env SOURCE_DATE_EPOCH \
+    --env FILENAME="$(join + "${appname}" "${BUNDLES[@]}")-%s-${apprel}-${abi}-${tag}.AppImage" \
+    --env GITREF="${GITREF}" \
     --env ABI="${abi}" \
     --env ENTRY="${appentry}" \
-    --env DEST="out.AppImage" \
     --mount "type=bind,source=${TEMP},target=${target}" \
     "${image}" \
     /usr/bin/bash <<EOF
@@ -274,27 +281,7 @@ cd '${target}'
 './$(basename -- "${SCRIPT_DOCKER}")'
 EOF
 
-  local versionstring version
-  versionstring=$(cat "${TEMP}/version.txt")
-
-  # custom gitrefs that point to a tag should use the same file name format as builds from untagged commits
-  if [[ -n "${GITREF}" && "${versionstring}" != *+* ]]; then
-    local _commit
-    _commit="$(git -C "${TEMP}/source.git" -c core.abbrev=7 rev-parse --short HEAD)"
-    version="${versionstring%%+*}+0.g${_commit}"
-  else
-    version="${versionstring}"
-  fi
-
-  local bundle
-  for bundle in "${BUNDLES[@]}"; do
-    appname+="+${bundle}"
-  done
-
-  local name="${appname}-${version}-${apprel}-${abi}-${tag}.AppImage"
-
-  install -Dm755 "${TEMP}/out.AppImage" "${DIR_DIST}/${name}"
-  ( cd "${DIR_DIST}"; sha256sum "${name}"; )
+  install -Dm755 -t "${DIR_DIST}" "${TEMP}"/*.AppImage
 }
 
 
