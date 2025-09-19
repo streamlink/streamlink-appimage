@@ -44,12 +44,12 @@ builds:
       requests: 2.32.5 --hash=sha256:2462f94637a34fd532264295e186976db0f5d453d1cdd31473c85a6a161affb6
       sniffio: 1.3.1 --hash=sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2
       sortedcontainers: 2.4.0 --hash=sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0
-      trio: 0.30.0 --hash=sha256:3bf4f06b8decf8d3cf00af85f40a89824669e2d033bb32469d34840edcfc22a5
+      trio: 0.31.0 --hash=sha256:b5d14cd6293d79298b49c3485ffd9c07e3ce03a6da8c7dfbe0cb3dd7dc9a4774
       trio-websocket: 0.12.2 --hash=sha256:df605665f1db533f4a386c94525870851096a223adcb97f72a07e8b4beba45b6
       urllib3: 2.5.0 --hash=sha256:e6b01673c0fa6a13e374b50871808eb3bf7046c4b125b216f6bf1cc604cff0dc
       websocket-client: 1.8.0 --hash=sha256:17b44cc997f5c498e809b22cdf2d9c7a9e71c02c8cc2b6c56e7c2d1239bfa526
       wsproto: 1.2.0 --hash=sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736
-      zstandard: 0.24.0 --hash=sha256:bcf69e0bcddbf2adcfafc1a7e864edcc204dd8171756d3a8f3340f6f6cc87b7b
+      zstandard: 0.25.0 --hash=sha256:bfc4e20784722098822e3eee42b8e576b379ed72cca4a7cb856ae733e62192ea
   x86_64:
     image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:75dcf70c4719716b65411a4d17775716870586bfb43e675f6440e6d081c5dc7a
     tag: manylinux_2_28_x86_64
@@ -88,9 +88,9 @@ builds:
       requests: 2.32.5 --hash=sha256:2462f94637a34fd532264295e186976db0f5d453d1cdd31473c85a6a161affb6
       sniffio: 1.3.1 --hash=sha256:2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2
       sortedcontainers: 2.4.0 --hash=sha256:a163dcaede0f1c021485e957a39245190e74249897e2ae4b2aa38595db237ee0
-      trio: 0.30.0 --hash=sha256:3bf4f06b8decf8d3cf00af85f40a89824669e2d033bb32469d34840edcfc22a5
+      trio: 0.31.0 --hash=sha256:b5d14cd6293d79298b49c3485ffd9c07e3ce03a6da8c7dfbe0cb3dd7dc9a4774
       trio-websocket: 0.12.2 --hash=sha256:df605665f1db533f4a386c94525870851096a223adcb97f72a07e8b4beba45b6
       urllib3: 2.5.0 --hash=sha256:e6b01673c0fa6a13e374b50871808eb3bf7046c4b125b216f6bf1cc604cff0dc
       websocket-client: 1.8.0 --hash=sha256:17b44cc997f5c498e809b22cdf2d9c7a9e71c02c8cc2b6c56e7c2d1239bfa526
       wsproto: 1.2.0 --hash=sha256:b9acddd652b585d75b20477888c56642fdade28bdfd3579aa24a4d2c037dd736
-      zstandard: 0.24.0 --hash=sha256:1b14bc92af065d0534856bf1b30fc48753163ea673da98857ea4932be62079b1
+      zstandard: 0.25.0 --hash=sha256:8e735494da3db08694d26480f1493ad2cf86e99bdd53e8e9771b2752a5c0246a
