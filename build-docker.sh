@@ -37,8 +37,6 @@ while read -r lib; do
   excludelist["${lib}"]="${lib}"
 done <<< "$(sed -e '/#.*/d; /^[[:space:]]*|[[:space:]]*$/d; /^$/d' /usr/local/share/appimage/excludelist)"
 
-libraries=()
-
 
 # ----
 
@@ -75,7 +73,6 @@ patch_binary() {
     local target="${libdir}/${name}"
     if ! [[ -f "${target}" ]]; then
       log "Bundling library: ${dep} (${target})"
-      libraries+=("${dep}")
       install -Dm777 "${dep}" "${target}"
       if [[ "${recursive}" == true ]]; then
         patch_binary "${target}" "${libdir}" true
@@ -152,48 +149,8 @@ build_bytecode() {
 
 
 copy_licenses() {
-  log "Finding library licenses"
-  declare -A packages
-  local package
-  for library in "${libraries[@]}"; do
-    package=$(dnf repoquery --installed --file "$(readlink -f -- "${library}")")
-    if [[ -z "${package}" ]]; then
-      log "Could not find package for library ${library}"
-      continue
-    fi
-    packages["${package}"]="${library}"
-  done
-
-  for package in "${!packages[@]}"; do
-    if ! find_licenses "${package}" >/dev/null; then
-      log "Could not find license files for package ${package}"
-      for dependency in $(dnf repoquery --installed --requires --resolve "${package}"); do
-        if [[ -z "${packages["${dependency}"]:-}" ]]; then
-          # ignore dependencies with files in the excludelist
-          for depfile in $(dnf repoquery --installed --list "${dependency}"); do
-            [[ -n "${excludelist["$(basename "${depfile}")"]:-}" ]] && continue 2
-          done
-          echo "Attempting to find licenses in dependency ${dependency}"
-          packages["${dependency}"]="${packages["${package}"]}"
-        fi
-      done
-    fi
-  done
-
-  log "Re-installing packages without suppressing license files:" "${!packages[@]}"
-  dnf reinstall -y -v --setopt=timeout=5 --setopt=retries=3 --setopt=tsflags= "${!packages[@]}"
-
-  for package in "${!packages[@]}"; do
-    log "Copying license files for package ${package}"
-    for file in $(find_licenses "${package}" || true); do
-      install -vDm644 "${file}" "${APPDIR}${file}"
-    done
-  done
-}
-
-find_licenses() {
-  dnf repoquery --installed --list "${1}" \
-    | grep -Ei '^/usr/share/(doc|licenses)/.*(copying|licen[cs]e|readme|terms).*'
+  log "Copying library licenses"
+  cp -av -t "${APPDIR}" /usr/local/share/appimage/licenses/*
 }
 
 
@@ -223,8 +180,8 @@ build_appimage() {
 
 build() {
   setup_python
-  copy_licenses
   install_application
+  copy_licenses
   finalize
   build_bytecode
   build_appimage
