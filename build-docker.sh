@@ -118,8 +118,6 @@ install_application() {
     -r requirements.txt
 
   log "Installing application"
-  # fix git permission issue when getting version string via versioningit
-  git config --global --add safe.directory /app/source.git
   "${PYTHON}" -B -m pip install --prefix "${PREFIX}" \
     --verbose \
     "${PIP_ARGS[@]}" \

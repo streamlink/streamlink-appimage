@@ -267,19 +267,16 @@ build_app() {
   docker run \
     --interactive \
     --rm \
+    --user "$(id -u):$(id -g)" \
+    --mount "type=bind,source=${TEMP},target=${target}" \
+    --workdir="${target}" \
     --env SOURCE_DATE_EPOCH \
     --env FILENAME="$(join + "${appname}" "${BUNDLES[@]}")-%s-${apprel}-${abi}-${tag}.AppImage" \
     --env GITREF="${GITREF}" \
     --env ABI="${abi}" \
     --env ENTRY="${appentry}" \
-    --mount "type=bind,source=${TEMP},target=${target}" \
     "${image}" \
-    /usr/bin/bash <<EOF
-set -e
-trap "chown -R $(id -u):$(id -g) '${target}'" EXIT
-cd '${target}'
-'./$(basename -- "${SCRIPT_DOCKER}")'
-EOF
+    /usr/bin/bash -e "${target}/$(basename -- "${SCRIPT_DOCKER}")"
 
   install -Dm755 -t "${DIR_DIST}" "${TEMP}"/*.AppImage
 }
