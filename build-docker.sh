@@ -7,6 +7,7 @@ FILENAME="${FILENAME}"
 GITREF="${GITREF}"
 ABI="${ABI}"
 ENTRY="${ENTRY}"
+UPDATEINFO="${UPDATEINFO}"
 
 
 PIP_ARGS=(
@@ -169,10 +170,22 @@ build_appimage() {
   # shellcheck disable=SC2059
   filename="$(printf "${FILENAME}" "${version}")"
 
-  cat /usr/local/share/appimage/runtime AppDir.sqfs > "${filename}"
+  cp /usr/local/share/appimage/runtime runtime
+  if [[ -n "${UPDATEINFO}" ]]; then
+    log "Setting update info in AppImage runtime"
+    objcopy --update-section .upd_info=<(echo -n "${UPDATEINFO}") runtime
+    log "Restoring magic bytes in AppImage runtime"
+    printf '\x41\x49\x02' | dd of=runtime bs=1 seek=8 count=3 conv=notrunc status=none
+  fi
+
+  cat runtime AppDir.sqfs > "${filename}"
   chmod +x "${filename}"
 
-  sha256sum "${filename}"
+  if [[ -n "${UPDATEINFO}" ]]; then
+    /usr/local/bin/zsyncmake2 -u "${filename}" "${filename}"
+  fi
+
+  sha256sum "${filename}"*
 }
 
 

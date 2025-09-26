@@ -7,6 +7,7 @@ ARCH="$(uname -m)"
 GITREPO=""
 GITREF=""
 BUNDLES=()
+UPDATEINFO=""
 
 ROOT=$(git rev-parse --show-toplevel 2>/dev/null || dirname "$(readlink -f "${0}")")
 CONFIG="${ROOT}/config.yml"
@@ -22,7 +23,7 @@ declare -A DEPS=(
   [docker]=docker
 )
 
-_OPTS=$(getopt --name "$0" --long 'help,arch:,gitrepo:,gitref:,bundle:' --options 'help,a:,b:' -- "$@")
+_OPTS=$(getopt --name "$0" --long 'help,arch:,gitrepo:,gitref:,bundle:,updinfo' --options 'help,a:,b:,u' -- "$@")
 eval set -- "${_OPTS}"
 unset _OPTS
 
@@ -47,6 +48,7 @@ print_help() {
   echo "      --gitrepo <url>  Source"
   echo "      --gitref <ref>   Git branch/tag/commit"
   echo "  -b, --bundle <name>  Comma-separated list of bundled software"
+  echo "  -u, --updinfo        Embed AppImage update info; requires GITHUB_REPOSITORY env var data"
   exit 0
 }
 
@@ -90,6 +92,10 @@ while true; do
     -b | --bundle)
       IFS=',' read -r -a BUNDLES <<< "${2}"
       shift 2
+      ;;
+    -u | --updinfo)
+      UPDATEINFO=1
+      shift
       ;;
     --)
       shift
@@ -264,6 +270,11 @@ build_app() {
   log "Building app inside container"
   local target=/app
 
+  local name filename updateinfo
+  name="$(join + "${appname}" "${BUNDLES[@]}")"
+  filename="${name}-%s-${apprel}-${abi}-${tag}.AppImage"
+  updateinfo="${name}-*_${ARCH}.AppImage.zsync"
+
   docker run \
     --interactive \
     --rm \
@@ -271,14 +282,18 @@ build_app() {
     --mount "type=bind,source=${TEMP},target=${target}" \
     --workdir="${target}" \
     --env SOURCE_DATE_EPOCH \
-    --env FILENAME="$(join + "${appname}" "${BUNDLES[@]}")-%s-${apprel}-${abi}-${tag}.AppImage" \
+    --env FILENAME="${filename}" \
     --env GITREF="${GITREF}" \
     --env ABI="${abi}" \
     --env ENTRY="${appentry}" \
+    --env UPDATEINFO="${UPDATEINFO:+${GITHUB_REPOSITORY:+gh-releases-zsync|${GITHUB_REPOSITORY/\//|}|latest|${updateinfo}}}" \
     "${image}" \
     /usr/bin/bash -e "${target}/$(basename -- "${SCRIPT_DOCKER}")"
 
   install -Dm755 -t "${DIR_DIST}" "${TEMP}"/*.AppImage
+  if [[ -n "${UPDATEINFO}" && -n "${GITHUB_REPOSITORY}" ]]; then
+    install -m644 -t "${DIR_DIST}" "${TEMP}"/*.zsync
+  fi
 }
 
 

@@ -56,7 +56,7 @@ Optionally bundled software: `ffmpeg`
 
 ```bash
 # Build
-./build.sh [--arch=$ARCH] [--gitrepo=$GITREPO] [--gitref=$GITREF] [--bundle=...]
+./build.sh [--arch=$ARCH] [--gitrepo=$GITREPO] [--gitref=$GITREF] [--bundle=...] [--updinfo]
 
 # Get new list of Python dependencies (for updating config.yml)
 ./get-dependencies.sh [--arch=$ARCH] [--gitrepo=$GITREPO] [--gitref=$GITREF] [depspec...]
