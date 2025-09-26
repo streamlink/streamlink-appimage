@@ -1,7 +1,8 @@
 ## 📝 Changelog
 
-- [streamlink/streamlink](https://github.com/streamlink/streamlink/releases) (release changelog)
-- [streamlink/streamlink-appimage](https://github.com/streamlink/streamlink-appimage/blob/master/CHANGELOG.md) (packaging changelog)
+[See the full Streamlink ${TAG} release changelog here.](https://github.com/streamlink/streamlink/releases/tag/${TAG})
+
+${CHANGELOG}
 
 ## ⚙️ Instructions
 
