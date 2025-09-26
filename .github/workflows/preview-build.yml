@@ -36,12 +36,12 @@ jobs:
           python -m pip install -U --upgrade-strategy=eager -r requirements.txt
       - name: Build
         run: |
-          ./build.sh --arch "${{ matrix.arch }}" --gitref "${{ inputs.ref }}" --bundle "${{ matrix.bundle }}"
+          ./build.sh --arch "${{ matrix.arch }}" --gitref "${{ inputs.ref }}" --updinfo --bundle "${{ matrix.bundle }}"
       - name: Get file name
         id: vars
         run: |
-          echo "file_name=$(cd dist && ls *.*)" >> $GITHUB_OUTPUT
+          echo "file_name=$(cd dist && ls *.AppImage)" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.vars.outputs.file_name }}
-          path: dist/*
+          path: dist/*.AppImage

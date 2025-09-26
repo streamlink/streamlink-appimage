@@ -31,15 +31,15 @@ jobs:
           python -m pip install -U --upgrade-strategy=eager -r requirements.txt
       - name: appimage
         run: |
-          SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh --bundle=${{ matrix.bundle }}
+          SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh --updinfo --bundle=${{ matrix.bundle }}
       - name: Get file name
         id: vars
         run: |
-          echo "file_name=$(cd dist && ls *.*)" >> $GITHUB_OUTPUT
+          echo "file_name=$(cd dist && ls *.AppImage)" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.vars.outputs.file_name }}
-          path: dist/*.AppImage
+          path: dist/*
   deploy:
     name: Deploy
     needs:
@@ -54,6 +54,6 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           path: dist
-      - run: ./deploy.sh dist/**/*.AppImage
+      - run: ./deploy.sh dist/**/*
         env:
           RELEASES_API_KEY: ${{ secrets.GITHUB_TOKEN }}
