@@ -90,13 +90,29 @@ CONFIGJSON=$(cat "${CONFIG}")
 yq -e --arg a "${ARCH}" '.builds[$a]' >/dev/null <<< "${CONFIGJSON}" \
  || err "Unsupported arch"
 
+read -r appname \
+  < <(yq -r '.app | "\(.name)"' <<< "${CONFIGJSON}")
 read -r gitrepo gitref \
   < <(yq -r '.git | "\(.repo) \(.ref)"' <<< "${CONFIGJSON}")
 read -r image abi \
   < <(yq -r --arg a "${ARCH}" '.builds[$a] | "\(.image) \(.abi)"' <<< "${CONFIGJSON}")
 
+optional_dependencies=$(yq \
+  -e -r \
+  --arg a "${ARCH}" \
+  '.builds[$a].optional_dependencies | "[\(. | join(","))]"' \
+  <<< "${CONFIGJSON}" \
+  2>/dev/null || true
+)
+
 # shellcheck disable=SC2207
-dependency_override=($(yq -r --arg a "${ARCH}" '.builds[$a].dependency_override[]' <<< "${CONFIGJSON}"))
+dependency_override=($(yq \
+  -e -r \
+  --arg a "${ARCH}" \
+  '.builds[$a].dependency_override[]' \
+  <<< "${CONFIGJSON}" \
+  2>/dev/null || true
+))
 
 gitrepo="${GITREPO:-${gitrepo}}"
 gitref="${GITREF:-${gitref}}"
@@ -115,7 +131,7 @@ get_docker_image() {
 get_deps() {
   log "Finding dependencies (${ARCH} / ${abi}) for ${gitrepo}@${gitref}"
   local deps script
-  deps=("git+${gitrepo}@${gitref}" "${dependency_override[@]}" "${OPT_DEPSPEC[@]}")
+  deps=("${appname}${optional_dependencies}@git+${gitrepo}@${gitref}" "${dependency_override[@]}" "${OPT_DEPSPEC[@]}")
   script=$(cat <<EOF
 PYTHON="/opt/python/${abi}/bin/python"
 REPORT=\$(mktemp)
