@@ -1,6 +1,16 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 8.0.0-1 (2025-11-11)
+
+- Updated Streamlink to 8.0.0, updated its dependencies
+- Updated build images, with Python 3.14.0
+- Added embedded update information for AppImage management tools
+- Restructured AppImage contents and fixed file permissions
+- Updated AppImage type2 runtime and SquashFS-tools
+- Optimized build script and build images
+- Added packaging changelog to GitHub releases
+
 ## 7.6.0-1 (2025-09-08)
 
 - Updated Streamlink to 7.6.0, updated its dependencies
