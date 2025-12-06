@@ -7,7 +7,7 @@ git:
   ref: 8.0.0
 builds:
   aarch64:
-    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:708841dd4eaaf835157b5c6cf1dc17d9a993462cdcd2929ca38893d3c038e594
+    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:7a03f6c2d2a86ce633dbefc0458f08eceb87bfcc4ad2ba3c3d161294f83bb1cd
     tag: manylinux_2_28_aarch64
     abi: cp314-cp314
     bundles:
@@ -49,7 +49,7 @@ builds:
       websocket-client: 1.9.0 --hash=sha256:af248a825037ef591efbf6ed20cc5faa03d3b47b9e5a2230a529eeee1c1fc3ef
       wsproto: 1.3.2 --hash=sha256:61eea322cdf56e8cc904bd3ad7573359a242ba65688716b0710a5eb12beab584
   x86_64:
-    image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:19743c22adedabf1b55653ee89045b853bd70efe771a31a60b1e6f38199a6bc6
+    image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:f3423095b5a577fae4943a2c623daa741e723fd967086da8078cc7010b99452f
     tag: manylinux_2_28_x86_64
     abi: cp314-cp314
     bundles:
