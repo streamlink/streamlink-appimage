@@ -1,6 +1,11 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 8.1.0-1 (2025-12-14)
+
+- Updated Streamlink to 8.1.0, updated its dependencies
+- Updated build images, with Python 3.14.2
+
 ## 8.0.0-1 (2025-11-11)
 
 - Updated Streamlink to 8.0.0, updated its dependencies
