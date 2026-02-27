@@ -35,7 +35,11 @@ jobs:
       - uses: actions/upload-artifact@v7
         with:
           archive: false
-          path: dist/*
+          path: dist/*.AppImage
+      - uses: actions/upload-artifact@v7
+        with:
+          archive: false
+          path: dist/*.zsync
   deploy:
     name: Deploy
     needs:
