@@ -32,13 +32,9 @@ jobs:
       - name: appimage
         run: |
           SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh --updinfo --bundle=${{ matrix.bundle }}
-      - name: Get file name
-        id: vars
-        run: |
-          echo "file_name=$(cd dist && ls *.AppImage)" >> $GITHUB_OUTPUT
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
-          name: ${{ steps.vars.outputs.file_name }}
+          archive: false
           path: dist/*
   deploy:
     name: Deploy
@@ -51,8 +47,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - run: mkdir -p dist
-      - uses: actions/download-artifact@v7
+      - uses: actions/download-artifact@v8
         with:
+          skip-decompress: true
           path: dist
       - run: ./deploy.sh dist/**/*
         env:

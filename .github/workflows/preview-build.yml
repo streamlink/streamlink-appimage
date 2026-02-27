@@ -37,11 +37,7 @@ jobs:
       - name: Build
         run: |
           ./build.sh --arch "${{ matrix.arch }}" --gitref "${{ inputs.ref }}" --updinfo --bundle "${{ matrix.bundle }}"
-      - name: Get file name
-        id: vars
-        run: |
-          echo "file_name=$(cd dist && ls *.AppImage)" >> $GITHUB_OUTPUT
-      - uses: actions/upload-artifact@v6
+      - uses: actions/upload-artifact@v7
         with:
-          name: ${{ steps.vars.outputs.file_name }}
+          archive: false
           path: dist/*.AppImage
