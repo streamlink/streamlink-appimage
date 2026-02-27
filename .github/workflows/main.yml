@@ -50,11 +50,12 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v6
-      - run: mkdir -p dist
+      - run: mkdir dist
       - uses: actions/download-artifact@v8
         with:
           skip-decompress: true
-          path: dist
-      - run: ./deploy.sh dist/**/*
+          merge-multiple: true
+          path: ./dist
+      - run: ./deploy.sh dist/*
         env:
           RELEASES_API_KEY: ${{ secrets.GITHUB_TOKEN }}
