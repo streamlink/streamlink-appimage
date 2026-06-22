@@ -237,10 +237,6 @@ prepare_tempdir() {
   log "Copying container build files"
   cp -vt "${TEMP}" "${SCRIPT_DOCKER}"
 
-  log "Building requirements.txt"
-  yq -r --arg a "${ARCH}" '.builds[$a].dependencies | to_entries | .[] | "\(.key)==\(.value)"' <<< "${CONFIGJSON}" \
-    > "${TEMP}/requirements.txt"
-
   log "Installing AppDir files"
   install -Dm644 -t "${DIR_APPDIR}/usr/share/applications/" "${DIR_APP}/${appname}.desktop"
   install -Dm644 -t "${DIR_APPDIR}/usr/share/icons/hicolor/scalable/apps/" "${DIR_APP}/${appname}.svg"
@@ -285,6 +281,7 @@ build_app() {
     --env FILENAME="${filename}" \
     --env GITREF="${GITREF}" \
     --env ABI="${abi}" \
+    --env PLATFORM="${ARCH}-${tag/%_${ARCH}/}" \
     --env ENTRY="${appentry}" \
     --env UPDATEINFO="${UPDATEINFO:+${GITHUB_REPOSITORY:+gh-releases-zsync|${GITHUB_REPOSITORY/\//|}|latest|${updateinfo}}}" \
     "${image}" \

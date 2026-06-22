@@ -6,6 +6,7 @@ set -euo pipefail
 FILENAME="${FILENAME}"
 GITREF="${GITREF}"
 ABI="${ABI}"
+PLATFORM="${PLATFORM}"
 ENTRY="${ENTRY}"
 UPDATEINFO="${UPDATEINFO}"
 
@@ -108,22 +109,23 @@ setup_python() {
 
 
 install_application() {
-  export PYTHONHASHSEED=0
-
-  log "Installing dependencies"
-  rm -rf "${PREFIX}/lib/${PYTHON_X_Y}/site-packages/"*
-  "${PYTHON}" -B -m pip install --prefix "${PREFIX}" \
-    "${PIP_ARGS[@]}" \
-    --no-compile \
-    --require-hashes \
-    -r requirements.txt
-
   log "Installing application"
-  "${PYTHON}" -B -m pip install --prefix "${PREFIX}" \
-    --verbose \
-    "${PIP_ARGS[@]}" \
-    --no-compile \
-    /app/source.git
+  rm -rf "${PREFIX}/lib/${PYTHON_X_Y}/site-packages/"*
+  (
+    source "${PREFIX}/bin/activate"
+    uv sync \
+      --no-config \
+      --verbose \
+      --project /app/source.git \
+      --no-managed-python \
+      --no-cache \
+      --python-platform "${PLATFORM}" \
+      --link-mode copy \
+      --active \
+      --no-editable \
+      --no-dev \
+      --all-extras
+  )
 }
 
 finalize() {
@@ -134,6 +136,12 @@ finalize() {
     "${PREFIX}/lib/pkgconfig" \
     "${PREFIX}/lib/${PYTHON_X_Y}/"{test,config-*-linux-*}
   find "${PREFIX}/bin/" -type f ! -name "python*" -delete
+
+  rm -r "${PREFIX}/lib/${PYTHON_X_Y}/site-packages"/*.dist-info/{direct_url,uv_{build,cache}}.json
+  sed -i -E \
+    -e '/^.+\.dist-info\/(direct_url|uv_(build|cache))\.json,sha256=/d' \
+    -e '/^\.\.\/\.\.\//d' \
+    "${PREFIX}/lib/${PYTHON_X_Y}/site-packages"/*.dist-info/RECORD
 
   if [[ -d "${PREFIX}/_bin" ]]; then
     cp -a "${PREFIX}/_bin/." "${PREFIX}/bin/"
@@ -190,6 +198,8 @@ build_appimage() {
 
 
 build() {
+  export PYTHONHASHSEED=0
+
   setup_python
   install_application
   copy_licenses
