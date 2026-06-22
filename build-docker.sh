@@ -11,15 +11,6 @@ ENTRY="${ENTRY}"
 UPDATEINFO="${UPDATEINFO}"
 
 
-PIP_ARGS=(
-  --disable-pip-version-check
-  --root-user-action=ignore
-  --isolated
-  --no-cache-dir
-  --no-deps
-)
-
-
 # ----
 
 
