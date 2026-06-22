@@ -28,7 +28,7 @@ jobs:
           python-version: "3.14"
       - name: Install dependencies
         run: |
-          python -m pip install -U --upgrade-strategy=eager -r requirements.txt
+          python -m pip install --require-hashes -r requirements.lock
       - name: appimage
         run: |
           SOURCE_DATE_EPOCH=$(git show -s --format=%ct) ./build.sh --updinfo --bundle=${{ matrix.bundle }}
