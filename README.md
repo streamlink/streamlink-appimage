@@ -55,11 +55,7 @@ Supported architectures: `x86_64`, `aarch64`
 Optionally bundled software: `ffmpeg`
 
 ```bash
-# Build
 ./build.sh [--arch=$ARCH] [--gitrepo=$GITREPO] [--gitref=$GITREF] [--bundle=...] [--updinfo]
-
-# Get new list of Python dependencies (for updating config.yml)
-./get-dependencies.sh [--arch=$ARCH] [--gitrepo=$GITREPO] [--gitref=$GITREF] [depspec...]
 ```
 
 The AppImages are reproducible when `SOURCE_DATE_EPOCH` is set:
