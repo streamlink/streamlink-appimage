@@ -33,7 +33,7 @@ jobs:
           python-version: "3.14"
       - name: Install dependencies
         run: |
-          python -m pip install -U --upgrade-strategy=eager -r requirements.txt
+          python -m pip install --require-hashes -r requirements.lock
       - name: Build
         run: |
           ./build.sh --arch "${{ matrix.arch }}" --gitref "${{ inputs.ref }}" --updinfo --bundle "${{ matrix.bundle }}"
