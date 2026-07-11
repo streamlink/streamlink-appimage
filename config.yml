@@ -7,7 +7,7 @@ git:
   ref: f7be2514407ccda542f0d113066827d48414f09b
 builds:
   aarch64:
-    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:207dc908f020450588f77b54ee05904ee716f9f7cc71c02a9ea7276e77d37078
+    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:4c4c155e49d2a594883572e9a64337b79f4e4e3496f63a2d6ed45e71421a9ad1
     tag: manylinux_2_28_aarch64
     abi: cp314-cp314
     bundles:
@@ -25,7 +25,7 @@ builds:
           - from: BUILDINFO.txt
             to: usr/share/ffmpeg/buildinfo.txt
   x86_64:
-    image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:880cfbf9190c1d1c302d6c86f45fbf98c5c788489d8c65abebda9dbf62d4abb1
+    image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:3b542ffcc710eaea87e235110942c8839a5704ef6c7e9b85511daf0f6c28ae12
     tag: manylinux_2_28_x86_64
     abi: cp314-cp314
     bundles:
