@@ -12,7 +12,6 @@ body:
       label: AppImage architecture
       options:
         - aarch64
-        - i686
         - x86_64
     validations:
       required: true
