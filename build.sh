@@ -168,14 +168,15 @@ get_sources() {
   mkdir -p "${TEMP}/source.git"
   pushd "${TEMP}/source.git"
 
-  # TODO: re-investigate and optimize this
-  git clone --depth 1 "${gitrepo}" .
-  git fetch origin --depth 300 "${gitref}:branch"
-  git ls-remote --tags --sort=version:refname 2>&- \
-    | awk "END{printf \"+%s:%s\\n\",\$2,\$2}" \
-    | git fetch origin --depth=300
-  git -c advice.detachedHead=false checkout --force branch
-  git fetch origin --depth=300 --update-shallow
+  git init .
+  git remote add origin "${gitrepo}"
+  git fetch origin --depth 300 "${gitref}"
+  git ls-remote --tags origin \
+    | awk '{ sub(/\^\{\}$/, "", $2); t[$2] = $1 } END { for (r in t) print t[r], "+" r ":" r }' \
+    | git cat-file --buffer --batch-check='%(rest)' \
+    | sed -n '/ missing$/!p' \
+    | git fetch origin --stdin
+  git -c advice.detachedHead=false checkout --force "${gitref}"
 
   log "Commit information"
   git describe --tags --long --dirty
