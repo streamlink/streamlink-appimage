@@ -12,11 +12,11 @@ builds:
     abi: cp314-cp314
     bundles:
       ffmpeg:
-        filename: ffmpeg-n8.1.2-linuxarm64-gpl-8.1.tar.xz
-        url: https://github.com/streamlink/FFmpeg-Builds/releases/download/20260623-1/ffmpeg-n8.1.2-linuxarm64-gpl-8.1.tar.xz
-        sha256: fc5224a0d3331123511a0b5ea52c948aefe19f69b6ba6c59d4e5ee5c5f65e59a
+        filename: ffmpeg-n9.0.1-6-g9d4ca21220-linuxarm64-gpl-9.0.tar.xz
+        url: https://github.com/streamlink/FFmpeg-Builds/releases/download/20260818-1/ffmpeg-n9.0.1-6-g9d4ca21220-linuxarm64-gpl-9.0.tar.xz
+        sha256: 1a88bd0a7c7b9dcd92f387957a3c5d6c00230d1b6a828d989beff607c673f173
         type: tar
-        sourcedir: ffmpeg-n8.1.2-linuxarm64-gpl-8.1
+        sourcedir: ffmpeg-n9.0.1-6-g9d4ca21220-linuxarm64-gpl-9.0
         files:
           - from: bin/ffmpeg
             to: usr/bin/ffmpeg
@@ -30,11 +30,11 @@ builds:
     abi: cp314-cp314
     bundles:
       ffmpeg:
-        filename: ffmpeg-n8.1.2-linux64-gpl-8.1.tar.xz
-        url: https://github.com/streamlink/FFmpeg-Builds/releases/download/20260623-1/ffmpeg-n8.1.2-linux64-gpl-8.1.tar.xz
-        sha256: 61989a0ccd4d30480e7bc04935820a2442e5ac19bb46a0f82238dbbb66ca2c47
+        filename: ffmpeg-n9.0.1-6-g9d4ca21220-linux64-gpl-9.0.tar.xz
+        url: https://github.com/streamlink/FFmpeg-Builds/releases/download/20260818-1/ffmpeg-n9.0.1-6-g9d4ca21220-linux64-gpl-9.0.tar.xz
+        sha256: 55727dbf352243e00e8cbe90389721e7e69377e0e38689b27b0866ac339c62bc
         type: tar
-        sourcedir: ffmpeg-n8.1.2-linux64-gpl-8.1
+        sourcedir: ffmpeg-n9.0.1-6-g9d4ca21220-linux64-gpl-9.0
         files:
           - from: bin/ffmpeg
             to: usr/bin/ffmpeg
