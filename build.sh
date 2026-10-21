@@ -237,6 +237,7 @@ prepare_bundles() {
 prepare_tempdir() {
   log "Copying container build files"
   cp -vt "${TEMP}" "${SCRIPT_DOCKER}"
+  cp -v "${ROOT}/requirements-override-${ARCH}.lock" "${TEMP}/requirements-override.lock"
 
   log "Installing AppDir files"
   install -Dm644 -t "${DIR_APPDIR}/usr/share/applications/" "${DIR_APP}/${appname}.desktop"
