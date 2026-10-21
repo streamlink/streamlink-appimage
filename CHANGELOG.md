@@ -1,6 +1,11 @@
 Changelog - streamlink/streamlink-appimage
 ====
 
+## 8.6.2-2 (2026-10-21)
+
+- Updated certifi to 2026.10.19
+- Updated build images
+
 ## 8.6.2-1 (2026-10-07)
 
 - Updated Streamlink to 8.6.2, updated its dependencies
