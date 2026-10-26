@@ -116,13 +116,15 @@ install_application() {
       --no-editable \
       --no-dev \
       --all-extras
-    uv pip install \
-      --no-config \
-      --verbose \
-      --no-managed-python \
-      --no-cache \
-      --python-platform "${PLATFORM}" \
-      -r "/app/requirements-override.lock"
+    if [[ -s "/app/requirements-override.lock" ]]; then
+      uv pip install \
+        --no-config \
+        --verbose \
+        --no-managed-python \
+        --no-cache \
+        --python-platform "${PLATFORM}" \
+        -r "/app/requirements-override.lock"
+    fi
   )
 }
 

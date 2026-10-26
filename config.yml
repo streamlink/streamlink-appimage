@@ -1,15 +1,15 @@
 app:
   name: streamlink
-  rel: 2
+  rel: 1
   entry: streamlink
 git:
   repo: https://github.com/streamlink/streamlink.git
-  ref: 8.6.2
+  ref: fcf065296b95de2d4881fe2c4bfa6d6798a55ebb
 builds:
   aarch64:
-    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:010a1d5676906cef5e3f8381f373454eb86d962632d423bd5ec9763ba7cf49eb
+    image: ghcr.io/streamlink/appimage-buildenv-aarch64@sha256:57ed2d8f1f4de0a41a1acc818eb7c30d6912d0eb942d15b268afb8a08506e805
     tag: manylinux_2_28_aarch64
-    abi: cp314-cp314
+    abi: cp315-cp315
     bundles:
       ffmpeg:
         filename: ffmpeg-n9.0.1-6-g9d4ca21220-linuxarm64-gpl-9.0.tar.xz
@@ -25,9 +25,9 @@ builds:
           - from: BUILDINFO.txt
             to: usr/share/ffmpeg/buildinfo.txt
   x86_64:
-    image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:f66dec88169e7c224bd2eeea1d965a693c9baf6923058c055d613beef32713c5
+    image: ghcr.io/streamlink/appimage-buildenv-x86_64@sha256:82c8b454424664ecc2f9c958e788ebe87a83cfc4e884c943f8948c2d6ef5097b
     tag: manylinux_2_28_x86_64
-    abi: cp314-cp314
+    abi: cp315-cp315
     bundles:
       ffmpeg:
         filename: ffmpeg-n9.0.1-6-g9d4ca21220-linux64-gpl-9.0.tar.xz
